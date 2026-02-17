@@ -1,0 +1,75 @@
+baseURL = 'https://manujg.com/'
+languageCode = 'en-us'
+title = 'Manuj Gupta'
+theme = 'PaperMod'
+
+[params]
+  defaultTheme = "auto"     # Respects user's system preference (Dark/Light)
+  ShowShareButtons = true
+  ShowReadingTime = true
+  ShowSearch = true         # <--- ENABLES SEARCH (The Magnifying Glass)
+  
+  # SCALABILITY SETTING: 
+  # This makes both "Projects" and "Journal" appear on the homepage feed.
+  mainSections = ["posts", "lab"] 
+
+  # PROFILE MODE (The Homepage Hero Section)
+  [params.homeInfoParams]
+    Title = "Hi there, I'm Manuj 👋"
+    Content = "Head of R&D | Embedded Systems | Human Resilience \n\n Welcome to my digital garden. Here I share my engineering projects and my journey through life's transitions."
+
+  [params.socialIcons]
+    Linkedin = "https://linkedin.com/in/your-actual-profile"
+    Github = "https://github.com/manujguptain"
+    Email = "mailto:your-email@example.com"
+
+# --- NAVIGATION MENU ---
+[[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "lab"
+  name = "Lab"
+  url = "/lab/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "consulting"
+  name = "Consulting"
+  url = "/consulting/"
+  weight = 30
+
+
+[[menu.main]]
+  identifier = "frameworks"
+  name = "Frameworks"
+  url = "/frameworks/"
+  weight = 40
+
+
+[[menu.main]]
+  identifier = "journal"
+  name = "Journal"
+  url = "/posts/"
+  weight = 50
+
+[[menu.main]]
+  identifier = "archives"
+  name = "Archive"
+  url = "/archives/"
+  weight = 60
+
+[[menu.main]]
+  identifier = "tags"
+  name = "Tags"
+  url = "/tags/"
+  weight = 70
+
+  [[menu.main]]
+  identifier = "contact"
+  name = "Contact"
+  url = "/contact/"
+  weight = 80
