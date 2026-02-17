@@ -66,3 +66,9 @@ theme = 'PaperMod'
   name = "Contact"
   url = "/contact/"
   weight = 60
+
+[markup.goldmark.renderer]
+    unsafe = true
+
+# This stops the warning message from cluttering your logs
+ignoreLogs = ['warning-goldmark-raw-html']
