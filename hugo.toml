@@ -2,6 +2,7 @@ baseURL = 'https://manujg.com/'
 languageCode = 'en-us'
 title = 'Manuj Gupta'
 theme = 'PaperMod'
+env = "production"
 
 [params]
   defaultTheme = "auto"
