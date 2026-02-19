@@ -2,7 +2,6 @@ baseURL = 'https://manujg.com/'
 languageCode = 'en-us'
 title = 'Manuj Gupta'
 theme = 'PaperMod'
-env = "production"
 
 [params]
   defaultTheme = "auto"
@@ -73,6 +72,3 @@ env = "production"
 
 # This stops the warning message from cluttering your logs
 ignoreLogs = ['warning-goldmark-raw-html']
-
-[services.googleAnalytics]
-  ID = "G-11MT51E5S1"
