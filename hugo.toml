@@ -1,6 +1,7 @@
 baseURL = 'https://manujg.com/'
 languageCode = 'en-us'
 title = 'Manuj Gupta'
+googleAnalytics = "G-11MT51E5S1"
 theme = 'PaperMod'
 
 [params]
