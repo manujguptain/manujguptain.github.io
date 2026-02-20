@@ -4,11 +4,12 @@ title = 'Manuj Gupta'
 theme = 'PaperMod'
 
 [params]
+  comments = true
   defaultTheme = "auto"
   ShowShareButtons = true
   ShowReadingTime = true
   ShowSearch = true
-  comments = true
+
   
   # Both "Lab" and "Journal" appear on the homepage feed
   mainSections = ["posts", "lab"] 
@@ -79,3 +80,7 @@ theme = 'PaperMod'
 
 # This stops the warning message from cluttering your logs
 ignoreLogs = ['warning-goldmark-raw-html']
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
