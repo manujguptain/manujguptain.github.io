@@ -75,6 +75,12 @@ theme = 'PaperMod'
   url = "/privacy/"
   weight = 70
 
+[[menu.main]]
+  identifier = "tags"
+  name = "Tags"
+  url = "/tags/"
+  weight = 80
+
 [markup.goldmark.renderer]
     unsafe = true
 
