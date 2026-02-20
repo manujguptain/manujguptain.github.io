@@ -8,6 +8,7 @@ theme = 'PaperMod'
   ShowShareButtons = true
   ShowReadingTime = true
   ShowSearch = true
+  comments = true
   
   # Both "Lab" and "Journal" appear on the homepage feed
   mainSections = ["posts", "lab"] 
@@ -66,6 +67,12 @@ theme = 'PaperMod'
   name = "Contact"
   url = "/contact/"
   weight = 60
+
+[[menu.main]]
+  identifier = "privacy"
+  name = "Privacy"
+  url = "/privacy/"
+  weight = 70
 
 [markup.goldmark.renderer]
     unsafe = true
