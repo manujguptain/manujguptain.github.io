@@ -45,11 +45,6 @@ theme = 'PaperMod'
   url = "/lab/"
   weight = 20
 
-[[menu.main]]
-  identifier = "frameworks"
-  name = "Frameworks"
-  url = "/frameworks/"
-  weight = 30
 
 [[menu.main]]
   identifier = "consulting"
@@ -69,17 +64,6 @@ theme = 'PaperMod'
   url = "/contact/"
   weight = 60
 
-[[menu.main]]
-  identifier = "privacy"
-  name = "Privacy"
-  url = "/privacy/"
-  weight = 70
-
-[[menu.main]]
-  identifier = "tags"
-  name = "Tags"
-  url = "/tags/"
-  weight = 80
 
 [markup.goldmark.renderer]
     unsafe = true
