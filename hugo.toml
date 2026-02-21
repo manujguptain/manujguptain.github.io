@@ -4,11 +4,12 @@ title = 'Manuj Gupta'
 theme = 'PaperMod'
 
 [params]
+  images = ["images/social-cover.png"] # <-- This sets your default social preview image
   comments = true
   defaultTheme = "auto"
   ShowShareButtons = false
   ShowReadingTime = true
-  ShowSearch = true
+  ShowSearch = false
 
   
   # Both "Lab" and "Journal" appear on the homepage feed
