@@ -22,7 +22,7 @@ theme = 'PaperMod'
   # --- SOCIAL ICONS (Fixed Structure) ---
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://linkedin.com/in/your-profile-here" # Dummy link to satisfy SEO
+    url = "https://linkedin.com/in/manujgupta"
 
   [[params.socialIcons]]
     name = "github"
@@ -30,7 +30,7 @@ theme = 'PaperMod'
 
   [[params.socialIcons]]
     name = "email"
-    url = "mailto:contact@manujg.com"
+    url = "/contact/"
 
 # --- NAVIGATION MENU ---
 [[menu.main]]
