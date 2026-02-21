@@ -43,15 +43,15 @@ Things I have been through or am still figuring out.
 
 ---
 
-## Patents
-* **[Patent Name or Number]**: [Short 1-sentence description of what it does].
+## Patent Submissions
+* **[UK GB2443965, International WO 2008/059283]**: [Apparatus and method for monitoring tyre wear].
 
 ## Education & Certifications
-* **[Executive General Management Program, 2018 – 2019]**, [Indian Institute of Management (IIM), Bangalore].
-* **[M.Sc. (Telecom), 2003 – 2004]**, [Lancaster University, UK].
-* **[B. Tech.(E.C.E.), 1998 – 2002]**, [Punjab Technical University].
+* **Executive General Management Program, 2018 – 2019 : ** Indian Institute of Management (IIM), Bangalore.
+* **M.Sc. (Telecom), 2003 – 2004 : ** Lancaster University, UK.
+* **B. Tech.(E.C.E.), 1998 – 2002 : ** Punjab Technical University.
 
-* **[Project Management Professional (PMP), 2016-2022]**, [Project Management Institute PMI].
-* **[Certified Scrum Master (CSM), 2011]**, [Scrum Alliance].
-* **[Generative AI Leader Specialisation (Google Cloud), 2026]**, [Coursera].
+* Project Management Professional (PMP), 2016-2022 : Project Management Institute PMI.
+* Certified Scrum Master (CSM), 2011 : Scrum Alliance.
+* Generative AI Leader Specialisation (Google Cloud), 2026 : Coursera.
 
