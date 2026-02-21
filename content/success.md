@@ -1,6 +1,8 @@
 ---
 title: "Message Sent"
 summary: "Thank you for reaching out."
+draft: false
+comments: false
 ---
 
 Thanks for the message. 
