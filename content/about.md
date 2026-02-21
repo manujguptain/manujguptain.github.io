@@ -1,7 +1,9 @@
 ---
 title: "About Me"
 summary: "Engineering Leader. 20+ years leading engineering programs. | Automotive, Telecom, Research"
+draft: false
 showToc: false
+ShowShareButtons: false
 ---
 
 ## Work
