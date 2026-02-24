@@ -47,11 +47,11 @@ theme = 'PaperMod'
   weight = 20
 
 
-[[menu.main]]
-  identifier = "consulting"
-  name = "Advisory"
-  url = "/consulting/"
-  weight = 40
+# [[menu.main]]
+#   identifier = "consulting"
+#   name = "Advisory"
+#   url = "/consulting/"
+#   weight = 40
 
 [[menu.main]]
   identifier = "journal"
