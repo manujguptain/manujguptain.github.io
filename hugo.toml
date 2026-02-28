@@ -54,8 +54,8 @@ theme = 'PaperMod'
 #   weight = 40
 
 [[menu.main]]
-  identifier = "journal"
-  name = "Journal"
+  identifier = "Notes"
+  name = "Notes"
   url = "/posts/"
   weight = 50
 
