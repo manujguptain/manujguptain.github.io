@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on Manuj Gupta</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Manuj Gupta</description>
+    <image>
+      <title>Manuj Gupta</title>
+      <url>/images/social-cover.png</url>
+      <link>/images/social-cover.png</link>
+    </image>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>/tags/ai/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>/tags/automation/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Career</title>
+      <link>/tags/career/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/career/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Engineering</title>
+      <link>/tags/engineering/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/engineering/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Labview</title>
+      <link>/tags/labview/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/labview/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tools</title>
+      <link>/tags/tools/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/tools/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gemini-Ai</title>
+      <link>/tags/gemini-ai/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/gemini-ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Google-Apps-Script</title>
+      <link>/tags/google-apps-script/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/google-apps-script/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Google-Tasks</title>
+      <link>/tags/google-tasks/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/google-tasks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Power-Automate</title>
+      <link>/tags/power-automate/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/power-automate/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Productivity</title>
+      <link>/tags/productivity/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/productivity/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
