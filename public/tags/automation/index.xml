@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Automation on Manuj Gupta</title>
+    <link>/tags/automation/</link>
+    <description>Recent content in Automation on Manuj Gupta</description>
+    <image>
+      <title>Manuj Gupta</title>
+      <url>/images/social-cover.png</url>
+      <link>/images/social-cover.png</link>
+    </image>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/automation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What LabVIEW Taught Me in 2005 That Made AI Feel Familiar</title>
+      <link>/posts/what-labview-taught-me/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/posts/what-labview-taught-me/</guid>
+      <description>&lt;p&gt;When people talk about AI feeling like a revolution, I get it. The speed, the way you just describe what you want and something working comes out the other end — it really is impressive.&lt;/p&gt;
+&lt;p&gt;But honestly, for me it also feels like something I have seen before. And I think I know why.&lt;/p&gt;
+&lt;h3 id=&#34;2005-a-turbine-monitoring-system-and-one-integration-block&#34;&gt;2005, a Turbine Monitoring System, and One Integration Block&lt;/h3&gt;
+&lt;p&gt;Early in my career I spent a lot of time with MATLAB, Simulink, and LabVIEW. LabVIEW was the one that stuck — mostly because I figured it out myself on a live project, which I think is why it left such a strong impression.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>I Built My Own Google Tasks Notification System Using AI</title>
+      <link>/lab/google-apps-script-automation/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/lab/google-apps-script-automation/</guid>
+      <description>&lt;p&gt;Push notifications just don&amp;rsquo;t work for important tasks. If you are driving, running errands, or simply focused on something else, it is way too easy to swipe an alert away and completely forget about it. That might be fine for a casual reminder to water the plants, but for things with hard deadlines—like paying a utility bill or making a time-sensitive phone call—missing a notification is a real problem.&lt;/p&gt;
+&lt;p&gt;Google Tasks is my go-to tool for managing personal to-dos. It is fast and syncs everywhere. But its native notification system relies entirely on those easy-to-miss push alerts. Miss the ping, and you are on your own.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

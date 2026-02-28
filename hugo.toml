@@ -18,7 +18,11 @@ theme = 'PaperMod'
   # --- HOMEPAGE HERO SECTION ---
   [params.homeInfoParams]
     Title = "Hi, I'm Manuj 👋"
-    Content = "R&D Leader and Program Manager. I focus on the discipline of delivery—taking complex engineering programs and making them ship. Welcome to my digital garden."
+    Content = '''
+<img src="/images/profile/MG_2.jpg" width="180" style="border-radius: 8px; margin-bottom: 1rem;">
+
+R&D Leader and Program Manager. I focus on the discipline of delivery—taking complex engineering programs and making them ship. Welcome to my digital garden.
+'''
 
   # --- SOCIAL ICONS (Fixed Structure) ---
   [[params.socialIcons]]

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Manuj Gupta</title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on Manuj Gupta</description>
+    <image>
+      <title>Manuj Gupta</title>
+      <url>/images/social-cover.png</url>
+      <link>/images/social-cover.png</link>
+    </image>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What LabVIEW Taught Me in 2005 That Made AI Feel Familiar</title>
+      <link>/posts/what-labview-taught-me/</link>
+      <pubDate>Fri, 27 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>/posts/what-labview-taught-me/</guid>
+      <description>&lt;p&gt;When people talk about AI feeling like a revolution, I get it. The speed, the way you just describe what you want and something working comes out the other end — it really is impressive.&lt;/p&gt;
+&lt;p&gt;But honestly, for me it also feels like something I have seen before. And I think I know why.&lt;/p&gt;
+&lt;h3 id=&#34;2005-a-turbine-monitoring-system-and-one-integration-block&#34;&gt;2005, a Turbine Monitoring System, and One Integration Block&lt;/h3&gt;
+&lt;p&gt;Early in my career I spent a lot of time with MATLAB, Simulink, and LabVIEW. LabVIEW was the one that stuck — mostly because I figured it out myself on a live project, which I think is why it left such a strong impression.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

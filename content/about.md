@@ -6,6 +6,8 @@ showToc: false
 ShowShareButtons: false
 ---
 
+<img src="/images/profile/MG_1.jpg" width="250" style="border-radius: 8px; margin-bottom: 1.5rem;">
+
 **Work**
 Twenty years in engineering and R&D — spanning research consultancy, telecom, automotive, and smart metering. I've worked across teams ranging from a handful of people to 80 or 100, covering everything from embedded systems and integration to full-scale delivery. Most recently, that has involved building scalable firmware platforms, establishing CI/CD pipelines, and driving hardware and firmware test automations alongside digital twin initiatives.
 
@@ -19,7 +21,10 @@ Lately I've been spending a lot of time with AI tools — building small automat
 It's also part of thinking through what comes next — both professionally and otherwise. I find that building things, even small ones, is still the best way I know to learn something properly.
 
 **Life**
-I live in Bengaluru with my two kids. I write here occasionally — about delivery, teams, decisions, and the odd thing I'm still figuring out.
+
+<img src="/images/profile/MG_3.jpg" width="250" style="border-radius: 8px; margin-bottom: 1rem; margin-top: 0.5rem;">
+
+I live in Bengaluru with my two kids. Outside of work, I volunteer my time pro bono to facilitate peer support groups and assist with various other community causes. I write here occasionally — about delivery, teams, decisions, and the odd thing I’m still figuring out.
 
 **Patent Applications**
 Two patent applications filed during my time in research — one UK, one international — covering a method for monitoring tyre wear (GB2443965 / WO 2008/059283). 
