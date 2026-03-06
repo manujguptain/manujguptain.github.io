@@ -69,5 +69,7 @@
     <loc>/frameworks/</loc>
   </url><url>
     <loc>/success/</loc>
+  </url><url>
+    <loc>/lab/tools/</loc>
   </url>
 </urlset>
