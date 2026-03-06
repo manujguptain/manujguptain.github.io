@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SysCanvas™ — Adaptive AUTOSAR Architecture Tools</title>
+<title>SysCanvas — Adaptive AUTOSAR Architecture Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="sys-config.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -22,7 +23,6 @@ a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
 
 .hero{text-align:center;margin-bottom:44px}
 .hero h1{font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:4px;color:var(--acc)}
-.hero .tm{font-size:10px;vertical-align:super;color:var(--t3)}
 .hero .sub{font-size:14px;color:var(--t3);margin-bottom:20px}
 .badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
 .badge{padding:4px 10px;border-radius:16px;font-size:9px;font-weight:600;font-family:'Space Mono',monospace}
@@ -75,7 +75,7 @@ a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>SysCanvas<span class="tm">™</span></h1>
+    <h1>SysCanvas</h1>
     <div class="sub">Visual-First Architecture Tools for Adaptive AUTOSAR®</div>
     <div class="badges">
       <span class="badge badge-a">Concept MVP</span>
@@ -84,7 +84,7 @@ a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
   </div>
 
   <div class="mvp-notice">
-    <strong>MVP Disclaimer:</strong> This is a concept MVP to showcase the SysCanvas™ approach to visual AUTOSAR architecture development.
+    <strong>MVP Disclaimer:</strong> This is a concept MVP to showcase the SysCanvas approach to visual AUTOSAR architecture development.
     It demonstrates core concepts but does not yet support the full ARXML specification.
     Depending on interest and demand, the tooling can be expanded — contributions and feedback welcome.
   </div>
@@ -154,27 +154,27 @@ a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
     </div>
   </div>
 
-<div class="fs">
+  <div class="fs">
     <h3>🔒 Privacy</h3>
-    <p>All SysCanvas™ tools run entirely in your browser. No ARXML files, architecture data, or user content
+    <p>All SysCanvas tools run entirely in your browser. No ARXML files, architecture data, or user content
     is uploaded to or stored on any server. Your intellectual property stays on your machine.</p>
   </div>
 
   <div class="fs">
     <h3>⚖️ Licensing</h3>
-    <p>SysCanvas™ is proprietary software. All rights reserved. The SysCanvas name, concept, architecture,
+    <p>SysCanvas is proprietary software. All rights reserved. The SysCanvas name, concept, architecture,
     and implementation are the intellectual property of the author. D3.js (BSD-3-Clause License by Mike Bostock)
     is used for graph rendering under its permissive license terms.</p>
   </div>
 
   <div class="tm-foot">
-    SysCanvas™ is a trademark. All rights reserved. © 2026.<br>
+    © 2026. All rights reserved.<br>
     AUTOSAR® is a registered trademark of AUTOSAR GbR. SysCanvas is not affiliated with or endorsed by AUTOSAR GbR.<br>
     Concept &amp; development by Manuj · <a href="https://manujg.com">manujg.com</a>
   </div>
 </div>
 <script>
-var BRAND={name:'SysCanvas',tm:'™',version:'1.0.0'};
+var BRAND = window.SYSCANVAS_CONFIG || {name:'SysCanvas',tm:'',version:'1.0.0'};
 var VERSIONS={'1.0.0':{explorer:'v1.0.0/explorer.html',editor:'v1.0.0/editor.html'}};
 function selVer(v){var d=VERSIONS[v];if(!d)return;var ls=document.querySelectorAll('.tc-link.pri');if(ls[0])ls[0].href=d.explorer;if(ls[1])ls[1].href=d.editor}
 </script>

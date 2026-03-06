@@ -77,9 +77,9 @@
     </item>
     <item>
       <title>Tools &amp; Applications</title>
-      <link>/lab/tools/</link>
+      <link>/tools/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/lab/tools/</guid>
+      <guid>/tools/</guid>
       <description>Interactive web applications and engineering tools.</description>
     </item>
   </channel>
