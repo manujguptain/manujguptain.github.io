@@ -1,7 +1,7 @@
 ---
 title: "Tools & Applications"
 summary: "Interactive web applications and engineering tools."
-url: "/lab/tools/"
+url: "/tools/"
 ---
 
 Here is a collection of standalone interactive tools, utilities, and applications I have built. 

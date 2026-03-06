@@ -6,7 +6,7 @@ url: "/lab/"
 ---
 
 <div style="text-align: right; margin-bottom: 2rem; font-size: 0.9em;">
-  <a href="/lab/tools/" style="text-decoration: none; border-bottom: 1px solid currentColor; opacity: 0.8; transition: opacity 0.2s;">View Tools & Applications &rarr;</a>
+  <a href="/tools/" style="text-decoration: none; border-bottom: 1px solid currentColor; opacity: 0.8; transition: opacity 0.2s;">View Tools & Applications &rarr;</a>
 </div>
 
 I have always liked to build things.
