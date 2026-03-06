@@ -8,7 +8,7 @@ Here is a collection of standalone interactive tools, utilities, and application
 
 ---
 
-### [SysCanvas™ Architecture Explorer](/tools/syscanvas/)
+### [SysCanvas Architecture Explorer](/tools/syscanvas/)
 **Type:** Web Application | **Status:** MVP
 
 A 100% client-side visualization tool for Adaptive AUTOSAR architectures. It is designed to make complex vehicle domains easy to read and navigate.
