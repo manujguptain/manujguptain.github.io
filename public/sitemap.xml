@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/tags/adc/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tools/stm32h7-adc-simulator/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/digital-twin/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/embedded/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/embedded-systems/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/iec-62053/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/metrology/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/lab/stm32h7-adc-digital-twin/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/simulation/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/stm32h7/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/lab/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tools/</loc>
+    <lastmod>2026-03-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/tags/ai/</loc>
     <lastmod>2026-02-27T00:00:00+00:00</lastmod>
   </url><url>
@@ -17,13 +62,7 @@
     <loc>/tags/labview/</loc>
     <lastmod>2026-02-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/</loc>
-    <lastmod>2026-02-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/posts/</loc>
-    <lastmod>2026-02-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2026-02-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/tools/</loc>
@@ -53,23 +92,16 @@
     <loc>/tags/productivity/</loc>
     <lastmod>2026-02-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/lab/</loc>
-    <lastmod>2026-02-20T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/about/</loc>
   </url><url>
     <loc>/consulting/</loc>
   </url><url>
     <loc>/archives/</loc>
   </url><url>
-    <loc>/categories/</loc>
-  </url><url>
     <loc>/contact/</loc>
   </url><url>
     <loc>/frameworks/</loc>
   </url><url>
     <loc>/success/</loc>
-  </url><url>
-    <loc>/tools/</loc>
   </url>
 </urlset>

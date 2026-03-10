@@ -11,8 +11,22 @@
     </image>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ADC Digital Twin &amp; Metering Lab</title>
+      <link>/tools/stm32h7-adc-simulator/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tools/stm32h7-adc-simulator/</guid>
+      <description>High-precision STM32H7 ADC simulator with harmonic distortion and CSV export.</description>
+    </item>
+    <item>
+      <title>Precision Modeling: A Digital Twin for STM32H7 ADC Metrology</title>
+      <link>/lab/stm32h7-adc-digital-twin/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/lab/stm32h7-adc-digital-twin/</guid>
+      <description>Modeling 16-bit SAR ADC behavior to achieve Class 0.2/0.5 metering accuracy before hardware implementation.</description>
+    </item>
     <item>
       <title>What LabVIEW Taught Me in 2005 That Made AI Feel Familiar</title>
       <link>/posts/what-labview-taught-me/</link>
@@ -74,13 +88,6 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>/success/</guid>
       <description>Thank you for reaching out.</description>
-    </item>
-    <item>
-      <title>Tools &amp; Applications</title>
-      <link>/tools/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/tools/</guid>
-      <description>Interactive web applications and engineering tools.</description>
     </item>
   </channel>
 </rss>

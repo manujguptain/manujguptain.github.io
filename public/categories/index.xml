@@ -11,6 +11,21 @@
     </image>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
+    <lastBuildDate>Tue, 10 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Embedded Systems</title>
+      <link>/categories/embedded-systems/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/categories/embedded-systems/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Metrology</title>
+      <link>/categories/metrology/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/categories/metrology/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
