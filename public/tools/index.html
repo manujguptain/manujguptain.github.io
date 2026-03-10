@@ -18,6 +18,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="/tools/index.xml" title="rss">
 <link rel="alternate" hreflang="en" href="/tools/">
 <noscript>
     <style>
@@ -76,7 +77,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="alternate icon" href="/favicon.ico">
 </head>
-<body id="top">
+<body class="list" id="top">
     <header class="header">
     <nav class="nav">
         <div class="logo">
@@ -128,52 +129,39 @@
         </ul>
     </nav>
 </header>
-<main class="main">
-
-<article class="post-single">
-  <header class="post-header">
-    
-    <h1 class="post-title entry-hint-parent">
-      Tools &amp; Applications
-    </h1>
-    <div class="post-meta"><span>1 min</span>
-
-</div>
-  </header> 
-  <div class="post-content"><p>Here is a collection of standalone interactive tools, utilities, and applications I have built.</p>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Tools &amp; Applications
+  </h1>
+</header>
+<div class="post-content"><p>Here is a collection of standalone interactive tools, utilities, and applications I have built.</p>
+<hr>
+<h3 id="adc-digital-twin-simulator"><a href="/tools/stm32h7-adc-simulator/">ADC Digital Twin Simulator</a><a hidden class="anchor" aria-hidden="true" href="#adc-digital-twin-simulator">#</a></h3>
+<p><strong>Type:</strong> Engineering Tool | <strong>Status:</strong> New</p>
+<p>An interactive simulator for STM32H7 ADC behavior, featuring harmonic distortion modeling and CSV data export for metrology testing.</p>
+<p><a href="/tools/stm32h7-adc-simulator/">Launch ADC Twin →</a></p>
 <hr>
 <h3 id="syscanvas-architecture-explorer"><a href="/tools/syscanvas/">SysCanvas Architecture Explorer</a><a hidden class="anchor" aria-hidden="true" href="#syscanvas-architecture-explorer">#</a></h3>
 <p><strong>Type:</strong> Web Application | <strong>Status:</strong> MVP</p>
-<p>A 100% client-side visualization tool for Adaptive AUTOSAR architectures. It is designed to make complex vehicle domains easy to read and navigate.</p>
-<ul>
-<li><strong>Instant Visualization:</strong> Upload <code>.arxml</code> files to instantly map domain relationships and network connections.</li>
-<li><strong>Privacy-First:</strong> All processing happens locally. Your architecture files never leave your browser.</li>
-<li><strong>Interactive Canvas:</strong> Powered by D3.js for smooth, drag-and-drop exploration.</li>
-</ul>
+<p>A 100% client-side visualization tool for Adaptive AUTOSAR architectures.</p>
 <p><a href="/tools/syscanvas/">Launch SysCanvas™ →</a></p>
-<hr>
 
 
+</div>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">ADC Digital Twin &amp; Metering Lab
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This tool models the behavior of a 16-bit SAR ADC integrated with a DMA controller. It is designed to help engineers validate metrology algorithms (like RMS or FFT) against quantization noise and harmonic interference.
+Key Features: Harmonic Distortor: Inject 3rd and 5th harmonics to test THD resilience. Accuracy Class Check: Real-time compliance monitoring for Class 0.2, 0.5, and 1.0. Data Export: Generate synthetic 16-bit datasets for offline C/Python analysis. STM32H7 Metrology Lab: FFT &amp; Delta Error Target Accuracy Class Class 0.2 (Utility) Class 0.5 (Industrial) Class 1.0 (Residential) Sample Rate: 4000 Hz ⚠️ METROLOGICAL GUARDRAIL: Below 10x oversampling. THD: 5% Export CSV DMA: READY WAVEFORM (1024-SAMPLE DMA) SPECTRUM (256-BIN WINDOW) TRUE RMS ERROR 0.00% DELTA ERROR (V) 0.000V INIT Looking for the technical deep-dive? Read the full analysis in the ADC Digital Twin Lab Post.
+</p>
   </div>
-
-  <footer class="post-footer">
-    <ul class="post-tags">
-    </ul>
-  </footer><script src="https://giscus.app/client.js"
-        data-repo="manujguptain/manujguptain.github.io"
-        data-repo-id="R_kgDORSG4FQ"
-        data-category="Announcements"
-        data-category-id="DIC_kwDORSG4Fc4C23VS"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-</script>
+  <footer class="entry-footer"><span title='2026-03-10 00:00:00 +0000 UTC'>March 10, 2026</span>&nbsp;·&nbsp;<span>1 min</span></footer>
+  <a class="entry-link" aria-label="post link to ADC Digital Twin & Metering Lab" href="/tools/stm32h7-adc-simulator/"></a>
 </article>
     </main>
     

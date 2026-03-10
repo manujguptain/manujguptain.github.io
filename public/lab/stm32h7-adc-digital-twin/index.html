@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Precision Modeling: A Digital Twin for STM32H7 ADC Metrology | Manuj Gupta</title>
+<meta name="keywords" content="STM32H7, ADC, Digital Twin, IEC-62053, embedded, simulation">
+<meta name="description" content="Modeling 16-bit SAR ADC behavior to achieve Class 0.2/0.5 metering accuracy before hardware implementation.">
+<meta name="author" content="">
+<link rel="canonical" href="/lab/stm32h7-adc-digital-twin/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.da3211e5ef867bf2b75fd5a6515cfed7195c011e8ab735694e203810a827097b.css" integrity="sha256-2jIR5e&#43;Ge/K3X9WmUVz&#43;1xlcAR6KtzVpTiA4EKgnCXs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/lab/stm32h7-adc-digital-twin/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://giscus.app; style-src 'self' 'unsafe-inline' https://giscus.app https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.googletagmanager.com; connect-src 'self' https://region1.google-analytics.com https://www.google-analytics.com https://syscanvas-engine.manujg.workers.dev; frame-src https://giscus.app; form-action 'self' https://formspree.io;">
+
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" href="/favicon.ico">
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Manuj Gupta (Alt + H)">Manuj Gupta</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="/lab/" title="Lab">
+                    <span>Lab</span>
+                </a>
+            </li>
+            <li>
+                <a href="/posts/" title="Notes">
+                    <span>Notes</span>
+                </a>
+            </li>
+            <li>
+                <a href="/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Precision Modeling: A Digital Twin for STM32H7 ADC Metrology
+    </h1>
+    <div class="post-meta"><span title='2026-03-10 00:00:00 +0000 UTC'>March 10, 2026</span>&nbsp;·&nbsp;<span>6 min</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Before you spin a PCB or write a line of firmware, you should know whether your hardware choices will meet your accuracy targets. For industrial metering this is not a nice-to-have — it is the difference between a design that passes certification and one that doesn&rsquo;t.</p>
+<p>This is what the digital twin is for.</p>
+<hr>
+<h3 id="what-we-are-building">What we are building<a hidden class="anchor" aria-hidden="true" href="#what-we-are-building">#</a></h3>
+<p>This is a browser-based simulation of the STM32H7&rsquo;s internal 16-bit SAR (Successive Approximation Register) ADC, built specifically for metering and metrology applications.</p>
+<p>The key word is <em>twin</em> — not just a clean mathematical model. The simulator replicates the hardware-level constraints that actually matter in a real design: Gaussian thermal noise, INL non-linearity, harmonic aliasing, and the DMA buffer transfer cycle. The goal is to give you a realistic picture of what the silicon will do with your signal before committing to any hardware decisions.</p>
+<hr>
+<h3 id="the-architecture">The architecture<a hidden class="anchor" aria-hidden="true" href="#the-architecture">#</a></h3>
+<p>Here is how the simulation pipeline is structured, mirroring the actual data path inside the MCU:</p>
+<pre tabindex="0"><code>┌─────────────────────────────────────────────────────────────────┐
+│                    SIGNAL GENERATION ENGINE                      │
+│                                                                  │
+│   50Hz Fundamental                                               │
+│   + 3rd Harmonic (150Hz) ──► Composite Analog Signal            │
+│   + 5th Harmonic (250Hz)     (Ground Truth)                      │
+└───────────────────────────────────┬─────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    SILICON TWIN (ADC MODEL)                      │
+│                                                                  │
+│   Aliasing (fold-back above Nyquist)                             │
+│   + Gaussian Thermal Noise (σ = 0.8mV) ──► Pre-Quant Voltage    │
+│   + INL Error (2.5 LSB, voltage domain)                          │
+│   + 16-bit Quantization (65535 levels)  ──► ADC Code            │
+└───────────────────────────────────┬─────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    TRANSPORT LAYER (DMA MODEL)                   │
+│                                                                  │
+│   Circular Buffer (1024 samples)                                 │
+│   Half-Transfer → Full-Transfer cycle ──► Sample Buffer          │
+└──────────────────────┬────────────────────────┬─────────────────┘
+                       │                        │
+                       ▼                        ▼
+┌──────────────────────────────┐  ┌─────────────────────────────┐
+│       METROLOGY ENGINE       │  │      SPECTRUM ENGINE        │
+│                              │  │                             │
+│  True RMS  = √(Σ(ideal²)/N) │  │  DFT on 256-sample window   │
+│  Meas RMS  = √(Σ(digi²) /N) │  │  Frequency bins 1–64        │
+│  → Error % → PASS / FAIL     │  │  → Harmonic peak display    │
+└──────────────────────────────┘  └─────────────────────────────┘
+</code></pre><p>Each stage maps to something real in the hardware. The signal generation engine is your sensor input. The silicon twin is the ADC peripheral with its physical non-idealities. The transport layer is your DMA configuration. The metrology engine is your firmware RMS calculation. Change any parameter and you see the effect on final error immediately.</p>
+<hr>
+<h3 id="why-this-matters-before-you-build-anything">Why this matters before you build anything<a hidden class="anchor" aria-hidden="true" href="#why-this-matters-before-you-build-anything">#</a></h3>
+<p>In IEC 62053 metering, accuracy class defines the maximum allowable RMS error:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Accuracy Class</th>
+          <th style="text-align: left">Max Allowable Error</th>
+          <th style="text-align: left">Typical Use</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Class 0.2</td>
+          <td style="text-align: left">±0.2%</td>
+          <td style="text-align: left">Utility / revenue metering</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Class 0.5</td>
+          <td style="text-align: left">±0.5%</td>
+          <td style="text-align: left">Industrial metering</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Class 1.0</td>
+          <td style="text-align: left">±1.0%</td>
+          <td style="text-align: left">Residential / general purpose</td>
+      </tr>
+  </tbody>
+</table>
+<p>Hitting these targets depends on how your sampling rate interacts with the harmonics present in the signal. Real-world grid signals are not clean sine waves — they contain 3rd and 5th harmonic distortion from non-linear loads like inverters and motor drives.</p>
+<p>If your sampling rate drops below twice the frequency of a harmonic, that harmonic aliases — it folds back into the measurement bandwidth at a mirrored frequency. At critical sampling rates, a 250Hz 5th harmonic can alias directly onto the 50Hz fundamental, adding spurious energy to your RMS calculation and pushing you out of your target accuracy class.</p>
+<p><strong>The metrological guardrail:</strong> In this simulator, a warning triggers when sampling rate drops below 10x the highest harmonic frequency (2500Hz for a 250Hz 5th harmonic). This is the engineering safety factor required for stable RMS integration in certified metering designs.</p>
+<hr>
+<h3 id="reading-the-simulator">Reading the simulator<a hidden class="anchor" aria-hidden="true" href="#reading-the-simulator">#</a></h3>
+<p>The simulator has two panels and three metric displays.</p>
+<p><strong>Waveform panel (left)</strong> shows 100 samples from the full 1024-sample DMA buffer. Two signals are overlaid:</p>
+<ul>
+<li><strong>Blue line</strong> — the digitised signal as it would appear in the DMA buffer, including aliasing, thermal noise, and INL distortion</li>
+<li><strong>Grey dashed line</strong> — the ideal analog ground truth</li>
+</ul>
+<p>At high sampling rates the two lines sit on top of each other. As you drag the sampling rate below the metrological guardrail, watch the blue line begin to warp and develop phase shifts relative to the grey line. That visual separation is harmonic energy folding back into the measurement bandwidth. The divergence happens abruptly at specific critical sampling rates — not gradually.</p>
+<p><strong>Spectrum panel (right)</strong> shows the frequency content of the digitised signal using a DFT computed on a 256-sample window. At a default sampling rate of 4kHz you can see all three harmonics as distinct peaks — the 50Hz fundamental, 150Hz 3rd harmonic, and 250Hz 5th harmonic. This is what a clean, well-sampled metrology signal looks like in the frequency domain.</p>
+<p>Note that the FFT panel is most informative at higher sampling rates. At very low rates (below ~400Hz), the harmonic peaks alias to low frequencies and fall outside the visible bin range, so the spectrum appears empty even as the waveform panel clearly shows distortion. Use the waveform panel to observe aliasing behaviour; use the spectrum panel to verify clean harmonic separation at your target operating point.</p>
+<p><strong>Three metric displays</strong> sit below the panels:</p>
+<ul>
+<li><strong>True RMS Error (%)</strong> — percentage difference between the ideal signal RMS and the digitised signal RMS, computed across the full 1024-sample buffer</li>
+<li><strong>Delta Error (V)</strong> — the same difference expressed in absolute volts — this is the raw measurement error your firmware would report to the application layer</li>
+<li><strong>PASS / FAIL</strong> — whether the current error is within the selected IEC 62053 accuracy class</li>
+</ul>
+<hr>
+<h3 id="answering-real-design-questions">Answering real design questions<a hidden class="anchor" aria-hidden="true" href="#answering-real-design-questions">#</a></h3>
+<p>Some questions you can answer before touching hardware:</p>
+<p><em>&ldquo;My grid typically runs at 20% THD. If I sample at 4kHz with a 16-bit ADC, can I guarantee Class 0.5?&rdquo;</em></p>
+<p><em>&ldquo;At what sampling rate does aliasing actually start visibly distorting my waveform?&rdquo;</em></p>
+<p><em>&ldquo;My DMA buffer is constrained by available RAM. Does reducing to 512 samples affect my RMS stability?&rdquo;</em></p>
+<p>Run the scenarios in the simulator. The error percentage and PASS/FAIL status give you a defensible answer backed by the actual signal math — before a single line of C code is written or a PCB is ordered.</p>
+<hr>
+<h3 id="what-the-model-includes-and-what-it-doesnt">What the model includes and what it doesn&rsquo;t<a hidden class="anchor" aria-hidden="true" href="#what-the-model-includes-and-what-it-doesnt">#</a></h3>
+<p><strong>Included:</strong></p>
+<ul>
+<li>Correct harmonic aliasing via Nyquist fold-back</li>
+<li>Gaussian thermal noise (Box-Muller, σ = 0.8mV — realistic for STM32H7 noise floor)</li>
+<li>INL non-linearity (2.5 LSB amplitude, applied in voltage domain before quantization)</li>
+<li>16-bit quantization with correct VREF = 3.3V</li>
+<li>DMA half-transfer / full-transfer cycle visualisation</li>
+<li>Metrological oversampling guardrail (triggers below 2500Hz)</li>
+<li>DFT spectrum display on 256-sample window (harmonic peak visualisation)</li>
+<li>Delta Error (V) — absolute RMS difference alongside percentage error</li>
+</ul>
+<p><strong>Not included (future roadmap):</strong></p>
+<ul>
+<li>Higher order harmonics (7th, 9th) — significant in some industrial environments</li>
+<li>ADC conversion time model — clock-dependent sampling limits</li>
+<li>DNL (Differential Non-Linearity) — individual code width variation</li>
+<li>True ping-pong DMA buffer with concurrent CPU processing simulation</li>
+</ul>
+<hr>
+<h3 id="try-the-live-adc-simulator-"><a href="/tools/stm32h7-adc-simulator">Try the Live ADC Simulator →</a><a hidden class="anchor" aria-hidden="true" href="#try-the-live-adc-simulator-">#</a></h3>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/stm32h7/">STM32H7</a></li>
+      <li><a href="/tags/adc/">ADC</a></li>
+      <li><a href="/tags/digital-twin/">Digital Twin</a></li>
+      <li><a href="/tags/iec-62053/">IEC-62053</a></li>
+      <li><a href="/tags/embedded/">Embedded</a></li>
+      <li><a href="/tags/simulation/">Simulation</a></li>
+    </ul>
+  </footer><script src="https://giscus.app/client.js"
+        data-repo="manujguptain/manujguptain.github.io"
+        data-repo-id="R_kgDORSG4FQ"
+        data-category="Announcements"
+        data-category-id="DIC_kwDORSG4Fc4C23VS"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="/">Manuj Gupta</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><span style="display: inline-block; margin-top: 10px;"><a href="/privacy/" style="color: var(--secondary);">Privacy Policy</a></span>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

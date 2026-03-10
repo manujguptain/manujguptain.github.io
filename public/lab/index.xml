@@ -11,8 +11,15 @@
     </image>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/lab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Precision Modeling: A Digital Twin for STM32H7 ADC Metrology</title>
+      <link>/lab/stm32h7-adc-digital-twin/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/lab/stm32h7-adc-digital-twin/</guid>
+      <description>Modeling 16-bit SAR ADC behavior to achieve Class 0.2/0.5 metering accuracy before hardware implementation.</description>
+    </item>
     <item>
       <title>I Built My Own Google Tasks Notification System Using AI</title>
       <link>/lab/google-apps-script-automation/</link>
@@ -20,13 +27,6 @@
       <guid>/lab/google-apps-script-automation/</guid>
       <description>&lt;p&gt;Push notifications just don&amp;rsquo;t work for important tasks. If you are driving, running errands, or simply focused on something else, it is way too easy to swipe an alert away and completely forget about it. That might be fine for a casual reminder to water the plants, but for things with hard deadlines—like paying a utility bill or making a time-sensitive phone call—missing a notification is a real problem.&lt;/p&gt;
 &lt;p&gt;Google Tasks is my go-to tool for managing personal to-dos. It is fast and syncs everywhere. But its native notification system relies entirely on those easy-to-miss push alerts. Miss the ping, and you are on your own.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Tools &amp; Applications</title>
-      <link>/tools/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/tools/</guid>
-      <description>Interactive web applications and engineering tools.</description>
     </item>
   </channel>
 </rss>

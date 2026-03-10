@@ -11,8 +11,50 @@
     </image>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ADC</title>
+      <link>/tags/adc/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/adc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Digital Twin</title>
+      <link>/tags/digital-twin/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/digital-twin/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Embedded</title>
+      <link>/tags/embedded/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/embedded/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>IEC-62053</title>
+      <link>/tags/iec-62053/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/iec-62053/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Simulation</title>
+      <link>/tags/simulation/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/simulation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>STM32H7</title>
+      <link>/tags/stm32h7/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>/tags/stm32h7/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Ai</title>
       <link>/tags/ai/</link>
