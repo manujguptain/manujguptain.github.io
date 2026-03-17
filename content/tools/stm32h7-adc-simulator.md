@@ -15,4 +15,4 @@ This tool models the behavior of a 16-bit SAR ADC integrated with a DMA controll
 {{< stm32h7_adc_sim >}}
 
 ---
-**Looking for the technical deep-dive?** Read the full analysis in the [ADC Digital Twin Lab Post](/labs/stm32h7-adc-digital-twin).
+**Looking for the technical deep-dive?** Read the full analysis in the [ADC Digital Twin Lab Post](/lab/stm32h7-adc-digital-twin).
