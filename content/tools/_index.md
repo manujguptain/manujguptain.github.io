@@ -8,6 +8,15 @@ Here is a collection of standalone interactive tools, utilities, and application
 
 ---
 
+### [Passport Photo Editor](/tools/passport-photo-editor/)
+**Type:** Utility | **Status:** New
+
+Free, browser-based passport photo editor. Crop to any international format (US, UK, India, Schengen & more), arrange print sheets, and download — all 100% privately in your browser.
+
+[Launch Editor &rarr;](/tools/passport-photo-editor/)
+
+---
+
 ### [ADC Digital Twin Simulator](/tools/stm32h7-adc-simulator/)
 **Type:** Engineering Tool | **Status:** New
 
