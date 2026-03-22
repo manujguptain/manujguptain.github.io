@@ -20,10 +20,10 @@ Everything runs locally in your browser. No photo ever leaves your device. No ac
 * **Download options** — single photo or full print-ready sheet. Choose JPEG (recommended for passport submissions) or your original format.
 * **100% private** — all processing happens in your browser. Nothing is uploaded anywhere.
 
-> **Disclaimer:** This tool does not guarantee compliance with any specific regional authority's photo requirements. Always verify the current specifications directly with the issuing authority before submitting.
-
-{{< passport_photo_editor >}}
+> **[→ Launch the Passport Photo Editor](https://manujg.com/tools/passport-photo/passport-photo-editor.html)**
 
 ---
+
+> **Disclaimer:** This tool does not guarantee compliance with any specific regional authority's photo requirements. Always verify the current specifications directly with the issuing authority before submitting.
 
 **Built with plain HTML, CSS, and JavaScript.** No frameworks, no dependencies, no nonsense.
