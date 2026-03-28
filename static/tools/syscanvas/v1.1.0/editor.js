@@ -121,25 +121,113 @@ function downloadARXML(){if(allComps().length){var e=new Blob([generateARXML()],
   domains={};connections=[];idC=1;
   addDomain("Powertrain");addDomain("Chassis");addDomain("Body");addDomain("ADAS");addDomain("Infotainment");addDomain("Connectivity");
 
-  var vehicleMotion=addComponent("Chassis","VehicleMotionProvider",[{name:"dyn_out",iface:"VehicleDynamicsBus"}],[]);
-  var powerCoord=addComponent("Powertrain","PowertrainCoordinator",[{name:"pt_ctrl",iface:"PowertrainCoordination"},{name:"diag_out",iface:"DiagEventService"}],[{name:"dyn_in",iface:"VehicleDynamicsBus"}]);
-  var inverter=addComponent("Powertrain","InverterControl",[],[{name:"pt_req",iface:"PowertrainCoordination"}]);
+  var centralCompute=addComponent("Connectivity","CentralComputePlatform",[
+    {name:"vehicle_state_srv",iface:"SomeIpVehicleStateService"},
+    {name:"energy_opt_srv",iface:"SomeIpEnergyOptimizerService"},
+    {name:"thermal_sup_srv",iface:"SomeIpThermalSupervisorService"},
+    {name:"cyber_policy_srv",iface:"SomeIpCyberPolicyService"},
+    {name:"zonal_body_cmd",iface:"ZonalActuationCommandInterface"}
+  ],[
+    {name:"adas_objects_in",iface:"AdasObjectSignalSet"},
+    {name:"vehicle_dyn_in",iface:"VehicleDynamicsSignalSet"},
+    {name:"battery_state_in",iface:"BatteryStateSignalSet"}
+  ]);
+  var gateway=addComponent("Connectivity","GatewayController",[{name:"backbone_status",iface:"BackboneHealthSignal"}],[{name:"diag_rw_in",iface:"DiagReadWriteInterface"},{name:"ota_control_in",iface:"OtaCampaignControlInterface"},{name:"cyber_event_in",iface:"CyberEventChannel"},{name:"ota_event_in",iface:"OtaEventChannel"}]);
+  var diagnosticsMgr=addComponent("Connectivity","DiagnosticsManager",[{name:"diag_rw_srv",iface:"DiagReadWriteInterface"},{name:"diag_cloud_out",iface:"DiagCloudSyncService"}],[{name:"diag_evt_in",iface:"DiagEventChannel"}]);
+  var otaMgr=addComponent("Connectivity","OtaCampaignManager",[{name:"ota_control_srv",iface:"OtaCampaignControlInterface"},{name:"ota_event_out",iface:"OtaEventChannel"}],[{name:"diag_rw_in",iface:"DiagReadWriteInterface"}]);
+  var cyberMgr=addComponent("Connectivity","CybersecurityManager",[{name:"cyber_event_out",iface:"CyberEventChannel"}],[{name:"cyber_policy_in",iface:"SomeIpCyberPolicyService"}]);
+  var telematics=addComponent("Connectivity","TelematicsUnit",[{name:"diag_cloud_srv",iface:"DiagCloudSyncService"},{name:"fleet_data_out",iface:"FleetTelemetrySignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
 
-  var radar=addComponent("ADAS","RadarPerception",[{name:"objects_out",iface:"PerceptionObjectList"}],[]);
-  var adas=addComponent("ADAS","AdasDecision",[],[{name:"objects_in",iface:"PerceptionObjectList"},{name:"dyn_in",iface:"VehicleDynamicsBus"}]);
+  var zonalFL=addComponent("Body","ZonalControllerFrontLeft",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var zonalFR=addComponent("Body","ZonalControllerFrontRight",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var zonalRL=addComponent("Body","ZonalControllerRearLeft",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var zonalRR=addComponent("Body","ZonalControllerRearRight",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
 
-  var climate=addComponent("Body","ClimateController",[{name:"climate_out",iface:"CabinClimateState"}],[]);
-  var cluster=addComponent("Infotainment","ClusterHmi",[{name:"hmi_state",iface:"HmiVehicleState"}],[{name:"climate_in",iface:"CabinClimateState"}]);
-  var tcu=addComponent("Connectivity","TelematicsGateway",[{name:"cloud_status",iface:"CloudConnectivityStatus"}],[{name:"diag_in",iface:"DiagEventService"},{name:"hmi_in",iface:"HmiVehicleState"}]);
+  var bms=addComponent("Powertrain","BatteryManagementSystem",[{name:"battery_state_out",iface:"BatteryStateSignalSet"},{name:"battery_diag_out",iface:"DiagEventChannel"}],[{name:"energy_plan_in",iface:"SomeIpEnergyOptimizerService"}]);
+  var inverterFront=addComponent("Powertrain","InverterFrontAxle",[{name:"pt_state_out",iface:"PowertrainStateSignalSet"}],[{name:"torque_cmd_in",iface:"PowertrainTorqueCommandInterface"}]);
+  var inverterRear=addComponent("Powertrain","InverterRearAxle",[{name:"pt_state_out",iface:"PowertrainStateSignalSet"}],[{name:"torque_cmd_in",iface:"PowertrainTorqueCommandInterface"}]);
+  var onboardCharger=addComponent("Powertrain","OnboardCharger",[{name:"charge_state_out",iface:"ChargeStateSignal"}],[{name:"energy_plan_in",iface:"SomeIpEnergyOptimizerService"}]);
+  var dcDc=addComponent("Powertrain","DcDcConverter",[{name:"lv_state_out",iface:"LowVoltageStateSignal"}],[{name:"energy_plan_in",iface:"SomeIpEnergyOptimizerService"}]);
+  var energySupervisor=addComponent("Powertrain","EnergySupervisor",[{name:"torque_cmd_out",iface:"PowertrainTorqueCommandInterface"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"battery_state_in",iface:"BatteryStateSignalSet"}]);
+  var thermalSupervisor=addComponent("Powertrain","ThermalSupervisor",[{name:"thermal_plan_out",iface:"SomeIpThermalSupervisorService"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"battery_state_in",iface:"BatteryStateSignalSet"}]);
+
+  var brakeByWire=addComponent("Chassis","BrakeByWireController",[{name:"brake_state_out",iface:"BrakeStateSignal"},{name:"dyn_out",iface:"VehicleDynamicsSignalSet"}],[{name:"brake_req_in",iface:"BrakeTorqueRequestInterface"},{name:"diag_rw_in",iface:"DiagReadWriteInterface"}]);
+  var steerByWire=addComponent("Chassis","SteerByWireController",[{name:"steer_state_out",iface:"SteeringStateSignal"}],[{name:"steer_cmd_in",iface:"SteerByWireCommandInterface"},{name:"diag_rw_in",iface:"DiagReadWriteInterface"}]);
+  var suspension=addComponent("Chassis","SuspensionDomainController",[{name:"chassis_state_out",iface:"ChassisStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
+  var vehicleMotion=addComponent("Chassis","VehicleMotionProvider",[{name:"dyn_out",iface:"VehicleDynamicsSignalSet"}],[]);
+  var chassisCoordinator=addComponent("Chassis","ChassisCoordinator",[{name:"brake_req_out",iface:"BrakeTorqueRequestInterface"},{name:"steer_cmd_out",iface:"SteerByWireCommandInterface"}],[{name:"vehicle_dyn_in",iface:"VehicleDynamicsSignalSet"},{name:"adas_obj_in",iface:"AdasObjectSignalSet"}]);
+
+  var radarFusion=addComponent("ADAS","RadarFusion",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[]);
+  var cameraFusion=addComponent("ADAS","CameraFusion",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[]);
+  var lidarFusion=addComponent("ADAS","LidarFusion",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[]);
+  var perception=addComponent("ADAS","PerceptionManager",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[{name:"radar_obj_in",iface:"AdasObjectSignalSet"},{name:"camera_obj_in",iface:"AdasObjectSignalSet"},{name:"lidar_obj_in",iface:"AdasObjectSignalSet"}]);
+  var planning=addComponent("ADAS","MotionPlanning",[{name:"traj_out",iface:"TrajectorySignal"}],[{name:"objects_in",iface:"AdasObjectSignalSet"},{name:"dyn_in",iface:"VehicleDynamicsSignalSet"}]);
+  var adasSupervisor=addComponent("ADAS","AdasSupervisor",[{name:"brake_req_out",iface:"BrakeTorqueRequestInterface"},{name:"steer_cmd_out",iface:"SteerByWireCommandInterface"}],[{name:"traj_in",iface:"TrajectorySignal"},{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
+
+  var cockpit=addComponent("Infotainment","CockpitHmi",[{name:"hmi_state_out",iface:"HmiStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"route_energy_in",iface:"SomeIpRouteEnergyService"}]);
+  var ivi=addComponent("Infotainment","IviHeadUnit",[{name:"media_state_out",iface:"MediaStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"diag_evt_in",iface:"DiagEventChannel"}]);
+  var navigation=addComponent("Infotainment","NavigationDomain",[{name:"route_energy_out",iface:"SomeIpRouteEnergyService"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
+  var voice=addComponent("Infotainment","VoiceAssistant",[{name:"voice_status_out",iface:"VoiceStatusSignal"}],[{name:"hmi_state_in",iface:"HmiStateSignal"}]);
+  var appPlatform=addComponent("Infotainment","AppPlatformGateway",[{name:"app_state_out",iface:"AppStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"cyber_event_in",iface:"CyberEventChannel"}]);
+
+  var hvac=addComponent("Body","HvacController",[{name:"cabin_state_out",iface:"CabinClimateSignal"}],[{name:"thermal_plan_in",iface:"SomeIpThermalSupervisorService"}]);
+  var doorModule=addComponent("Body","DoorModuleController",[{name:"door_state_out",iface:"DoorStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var seatModule=addComponent("Body","SeatComfortController",[{name:"seat_state_out",iface:"SeatStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var lighting=addComponent("Body","LightingController",[{name:"lighting_state_out",iface:"LightingStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var bodyCoordinator=addComponent("Body","BodyDomainCoordinator",[{name:"body_cmd_out",iface:"ZonalActuationCommandInterface"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"zone_state_in",iface:"ZoneBodyStateSignal"}]);
 
   connections=[
-    {from:vehicleMotion,to:powerCoord,label:"VehicleDynamicsBus",type:"event"},
-    {from:powerCoord,to:inverter,label:"PowertrainCoordination",type:"method"},
-    {from:powerCoord,to:tcu,label:"DiagEventService",type:"event"},
-    {from:radar,to:adas,label:"PerceptionObjectList",type:"event"},
-    {from:vehicleMotion,to:adas,label:"VehicleDynamicsBus",type:"event"},
-    {from:climate,to:cluster,label:"CabinClimateState",type:"field"},
-    {from:cluster,to:tcu,label:"HmiVehicleState",type:"field"}
+    {from:vehicleMotion,to:centralCompute,label:"VehicleDynamicsSignalSet",type:"event"},
+    {from:bms,to:centralCompute,label:"BatteryStateSignalSet",type:"event"},
+    {from:radarFusion,to:perception,label:"AdasObjectSignalSet",type:"event"},
+    {from:cameraFusion,to:perception,label:"AdasObjectSignalSet",type:"event"},
+    {from:lidarFusion,to:perception,label:"AdasObjectSignalSet",type:"event"},
+    {from:perception,to:planning,label:"AdasObjectSignalSet",type:"event"},
+    {from:planning,to:adasSupervisor,label:"TrajectorySignal",type:"event"},
+    {from:perception,to:chassisCoordinator,label:"AdasObjectSignalSet",type:"event"},
+    {from:vehicleMotion,to:chassisCoordinator,label:"VehicleDynamicsSignalSet",type:"event"},
+    {from:chassisCoordinator,to:brakeByWire,label:"BrakeTorqueRequestInterface",type:"method"},
+    {from:chassisCoordinator,to:steerByWire,label:"SteerByWireCommandInterface",type:"method"},
+    {from:adasSupervisor,to:brakeByWire,label:"BrakeTorqueRequestInterface",type:"method"},
+    {from:adasSupervisor,to:steerByWire,label:"SteerByWireCommandInterface",type:"method"},
+    {from:energySupervisor,to:inverterFront,label:"PowertrainTorqueCommandInterface",type:"method"},
+    {from:energySupervisor,to:inverterRear,label:"PowertrainTorqueCommandInterface",type:"method"},
+    {from:centralCompute,to:energySupervisor,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:thermalSupervisor,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:cockpit,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:ivi,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:navigation,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:appPlatform,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:bodyCoordinator,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:bms,label:"SomeIpEnergyOptimizerService",type:"field"},
+    {from:centralCompute,to:onboardCharger,label:"SomeIpEnergyOptimizerService",type:"field"},
+    {from:centralCompute,to:dcDc,label:"SomeIpEnergyOptimizerService",type:"field"},
+    {from:thermalSupervisor,to:hvac,label:"SomeIpThermalSupervisorService",type:"field"},
+    {from:navigation,to:cockpit,label:"SomeIpRouteEnergyService",type:"method"},
+    {from:bodyCoordinator,to:zonalFL,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:bodyCoordinator,to:zonalFR,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:bodyCoordinator,to:zonalRL,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:bodyCoordinator,to:zonalRR,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:zonalFL,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:zonalFR,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:zonalRL,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:zonalRR,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:bms,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:diagnosticsMgr,to:gateway,label:"DiagReadWriteInterface",type:"method"},
+    {from:diagnosticsMgr,to:otaMgr,label:"DiagReadWriteInterface",type:"method"},
+    {from:otaMgr,to:gateway,label:"OtaCampaignControlInterface",type:"method"},
+    {from:otaMgr,to:gateway,label:"OtaEventChannel",type:"event"},
+    {from:centralCompute,to:cyberMgr,label:"SomeIpCyberPolicyService",type:"field"},
+    {from:cyberMgr,to:gateway,label:"CyberEventChannel",type:"event"},
+    {from:cyberMgr,to:appPlatform,label:"CyberEventChannel",type:"event"},
+    {from:diagnosticsMgr,to:telematics,label:"DiagCloudSyncService",type:"method"},
+    {from:telematics,to:centralCompute,label:"FleetTelemetrySignal",type:"event"},
+    {from:centralCompute,to:telematics,label:"SomeIpVehicleStateService",type:"field"},
+    {from:cockpit,to:voice,label:"HmiStateSignal",type:"field"},
+    {from:zonalFL,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"},
+    {from:zonalFR,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"},
+    {from:zonalRL,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"},
+    {from:zonalRR,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"}
   ];
   selId=null;nav("vehicle");
 }
