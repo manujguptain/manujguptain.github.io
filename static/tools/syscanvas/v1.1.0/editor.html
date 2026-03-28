@@ -31,9 +31,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);overf
 .cr{color:var(--t3);cursor:pointer;font-weight:500;transition:color .15s;white-space:nowrap}.cr:hover{color:var(--acc)}.cr.act{color:var(--t1);cursor:default}
 .cs{color:var(--t4);font-size:9px}
 .ta{display:flex;gap:5px;align-items:center;flex-shrink:0;flex-wrap:wrap}
-.tool-select{padding:6px 8px;border-radius:7px;border:1px solid var(--brd);background:var(--bg);font-size:10px;color:var(--t2);font-family:inherit;max-width:180px}
-.warn-pill{display:none;padding:6px 8px;border-radius:7px;border:1px solid rgba(192,57,43,.25);background:rgba(192,57,43,.07);font-size:9px;font-weight:700;color:var(--coral);cursor:pointer}
-.warn-pill.show{display:inline-block}
 .btn{padding:6px 12px;border-radius:7px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;border:1px solid var(--brd);white-space:nowrap}
 .btn-g{background:0;color:var(--t2)}.btn-g:hover{border-color:var(--acc);color:var(--acc)}
 .btn-a{background:var(--acc);color:#0A0C12;border-color:var(--acc)}.btn-a:hover{filter:brightness(1.1)}
@@ -140,13 +137,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);overf
     <div class="brand"><span class="bm">SysCanvas</span><span class="bt">Editor v1.1.0</span></div>
     <nav class="bc" id="bc"><span class="cr act">Vehicle</span></nav>
     <div class="ta">
-      <select class="tool-select" id="exportProfile" onchange="setExportProfile(this.value)">
-        <option value="demo">Export: Demo</option>
-        <option value="toolchain">Export: Toolchain-friendly</option>
-        <option value="adaptive">Export: Adaptive-focused</option>
-      </select>
-      <button class="warn-pill" id="exportWarnBtn" onclick="showExportWarnings()">⚠ 0 export warnings</button>
       <button class="btn btn-g" onclick="loadStarter()">Load Starter</button>
+      <button class="btn btn-g" onclick="startGuidedDemo()">Guided Demo</button>
       <button class="btn btn-t" id="connBtn" onclick="toggleConn()">⟿ Connect</button>
       <button class="btn btn-a" onclick="downloadARXML()">⬇ ARXML</button>
     </div>
