@@ -121,137 +121,114 @@ function downloadARXML(){if(allComps().length){var e=new Blob([generateARXML()],
   domains={};connections=[];idC=1;
   addDomain("Powertrain");addDomain("Chassis");addDomain("Body");addDomain("ADAS");addDomain("Infotainment");addDomain("Connectivity");
 
-  var vehicleMotion=addComponent("Chassis","VehicleMotionProvider",[{name:"dyn_out",iface:"VehicleDynamicsBus"}],[]);
-  var powerCoord=addComponent("Powertrain","PowertrainCoordinator",[{name:"pt_ctrl",iface:"PowertrainCoordination"},{name:"diag_out",iface:"DiagEventService"}],[{name:"dyn_in",iface:"VehicleDynamicsBus"}]);
-  var inverter=addComponent("Powertrain","InverterControl",[],[{name:"pt_req",iface:"PowertrainCoordination"}]);
+  var centralCompute=addComponent("Connectivity","CentralComputePlatform",[
+    {name:"vehicle_state_srv",iface:"SomeIpVehicleStateService"},
+    {name:"energy_opt_srv",iface:"SomeIpEnergyOptimizerService"},
+    {name:"thermal_sup_srv",iface:"SomeIpThermalSupervisorService"},
+    {name:"cyber_policy_srv",iface:"SomeIpCyberPolicyService"},
+    {name:"zonal_body_cmd",iface:"ZonalActuationCommandInterface"}
+  ],[
+    {name:"adas_objects_in",iface:"AdasObjectSignalSet"},
+    {name:"vehicle_dyn_in",iface:"VehicleDynamicsSignalSet"},
+    {name:"battery_state_in",iface:"BatteryStateSignalSet"}
+  ]);
+  var gateway=addComponent("Connectivity","GatewayController",[{name:"backbone_status",iface:"BackboneHealthSignal"}],[{name:"diag_rw_in",iface:"DiagReadWriteInterface"},{name:"ota_control_in",iface:"OtaCampaignControlInterface"},{name:"cyber_event_in",iface:"CyberEventChannel"},{name:"ota_event_in",iface:"OtaEventChannel"}]);
+  var diagnosticsMgr=addComponent("Connectivity","DiagnosticsManager",[{name:"diag_rw_srv",iface:"DiagReadWriteInterface"},{name:"diag_cloud_out",iface:"DiagCloudSyncService"}],[{name:"diag_evt_in",iface:"DiagEventChannel"}]);
+  var otaMgr=addComponent("Connectivity","OtaCampaignManager",[{name:"ota_control_srv",iface:"OtaCampaignControlInterface"},{name:"ota_event_out",iface:"OtaEventChannel"}],[{name:"diag_rw_in",iface:"DiagReadWriteInterface"}]);
+  var cyberMgr=addComponent("Connectivity","CybersecurityManager",[{name:"cyber_event_out",iface:"CyberEventChannel"}],[{name:"cyber_policy_in",iface:"SomeIpCyberPolicyService"}]);
+  var telematics=addComponent("Connectivity","TelematicsUnit",[{name:"diag_cloud_srv",iface:"DiagCloudSyncService"},{name:"fleet_data_out",iface:"FleetTelemetrySignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
 
-  var radar=addComponent("ADAS","RadarPerception",[{name:"objects_out",iface:"PerceptionObjectList"}],[]);
-  var adas=addComponent("ADAS","AdasDecision",[],[{name:"objects_in",iface:"PerceptionObjectList"},{name:"dyn_in",iface:"VehicleDynamicsBus"}]);
+  var zonalFL=addComponent("Body","ZonalControllerFrontLeft",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var zonalFR=addComponent("Body","ZonalControllerFrontRight",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var zonalRL=addComponent("Body","ZonalControllerRearLeft",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var zonalRR=addComponent("Body","ZonalControllerRearRight",[{name:"diag_evt_out",iface:"DiagEventChannel"},{name:"body_state_out",iface:"ZoneBodyStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
 
-  var climate=addComponent("Body","ClimateController",[{name:"climate_out",iface:"CabinClimateState"}],[]);
-  var cluster=addComponent("Infotainment","ClusterHmi",[{name:"hmi_state",iface:"HmiVehicleState"}],[{name:"climate_in",iface:"CabinClimateState"}]);
-  var tcu=addComponent("Connectivity","TelematicsGateway",[{name:"cloud_status",iface:"CloudConnectivityStatus"}],[{name:"diag_in",iface:"DiagEventService"},{name:"hmi_in",iface:"HmiVehicleState"}]);
+  var bms=addComponent("Powertrain","BatteryManagementSystem",[{name:"battery_state_out",iface:"BatteryStateSignalSet"},{name:"battery_diag_out",iface:"DiagEventChannel"}],[{name:"energy_plan_in",iface:"SomeIpEnergyOptimizerService"}]);
+  var inverterFront=addComponent("Powertrain","InverterFrontAxle",[{name:"pt_state_out",iface:"PowertrainStateSignalSet"}],[{name:"torque_cmd_in",iface:"PowertrainTorqueCommandInterface"}]);
+  var inverterRear=addComponent("Powertrain","InverterRearAxle",[{name:"pt_state_out",iface:"PowertrainStateSignalSet"}],[{name:"torque_cmd_in",iface:"PowertrainTorqueCommandInterface"}]);
+  var onboardCharger=addComponent("Powertrain","OnboardCharger",[{name:"charge_state_out",iface:"ChargeStateSignal"}],[{name:"energy_plan_in",iface:"SomeIpEnergyOptimizerService"}]);
+  var dcDc=addComponent("Powertrain","DcDcConverter",[{name:"lv_state_out",iface:"LowVoltageStateSignal"}],[{name:"energy_plan_in",iface:"SomeIpEnergyOptimizerService"}]);
+  var energySupervisor=addComponent("Powertrain","EnergySupervisor",[{name:"torque_cmd_out",iface:"PowertrainTorqueCommandInterface"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"battery_state_in",iface:"BatteryStateSignalSet"}]);
+  var thermalSupervisor=addComponent("Powertrain","ThermalSupervisor",[{name:"thermal_plan_out",iface:"SomeIpThermalSupervisorService"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"battery_state_in",iface:"BatteryStateSignalSet"}]);
+
+  var brakeByWire=addComponent("Chassis","BrakeByWireController",[{name:"brake_state_out",iface:"BrakeStateSignal"},{name:"dyn_out",iface:"VehicleDynamicsSignalSet"}],[{name:"brake_req_in",iface:"BrakeTorqueRequestInterface"},{name:"diag_rw_in",iface:"DiagReadWriteInterface"}]);
+  var steerByWire=addComponent("Chassis","SteerByWireController",[{name:"steer_state_out",iface:"SteeringStateSignal"}],[{name:"steer_cmd_in",iface:"SteerByWireCommandInterface"},{name:"diag_rw_in",iface:"DiagReadWriteInterface"}]);
+  var suspension=addComponent("Chassis","SuspensionDomainController",[{name:"chassis_state_out",iface:"ChassisStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
+  var vehicleMotion=addComponent("Chassis","VehicleMotionProvider",[{name:"dyn_out",iface:"VehicleDynamicsSignalSet"}],[]);
+  var chassisCoordinator=addComponent("Chassis","ChassisCoordinator",[{name:"brake_req_out",iface:"BrakeTorqueRequestInterface"},{name:"steer_cmd_out",iface:"SteerByWireCommandInterface"}],[{name:"vehicle_dyn_in",iface:"VehicleDynamicsSignalSet"},{name:"adas_obj_in",iface:"AdasObjectSignalSet"}]);
+
+  var radarFusion=addComponent("ADAS","RadarFusion",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[]);
+  var cameraFusion=addComponent("ADAS","CameraFusion",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[]);
+  var lidarFusion=addComponent("ADAS","LidarFusion",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[]);
+  var perception=addComponent("ADAS","PerceptionManager",[{name:"objects_out",iface:"AdasObjectSignalSet"}],[{name:"radar_obj_in",iface:"AdasObjectSignalSet"},{name:"camera_obj_in",iface:"AdasObjectSignalSet"},{name:"lidar_obj_in",iface:"AdasObjectSignalSet"}]);
+  var planning=addComponent("ADAS","MotionPlanning",[{name:"traj_out",iface:"TrajectorySignal"}],[{name:"objects_in",iface:"AdasObjectSignalSet"},{name:"dyn_in",iface:"VehicleDynamicsSignalSet"}]);
+  var adasSupervisor=addComponent("ADAS","AdasSupervisor",[{name:"brake_req_out",iface:"BrakeTorqueRequestInterface"},{name:"steer_cmd_out",iface:"SteerByWireCommandInterface"}],[{name:"traj_in",iface:"TrajectorySignal"},{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
+
+  var cockpit=addComponent("Infotainment","CockpitHmi",[{name:"hmi_state_out",iface:"HmiStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"route_energy_in",iface:"SomeIpRouteEnergyService"}]);
+  var ivi=addComponent("Infotainment","IviHeadUnit",[{name:"media_state_out",iface:"MediaStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"diag_evt_in",iface:"DiagEventChannel"}]);
+  var navigation=addComponent("Infotainment","NavigationDomain",[{name:"route_energy_out",iface:"SomeIpRouteEnergyService"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"}]);
+  var voice=addComponent("Infotainment","VoiceAssistant",[{name:"voice_status_out",iface:"VoiceStatusSignal"}],[{name:"hmi_state_in",iface:"HmiStateSignal"}]);
+  var appPlatform=addComponent("Infotainment","AppPlatformGateway",[{name:"app_state_out",iface:"AppStateSignal"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"cyber_event_in",iface:"CyberEventChannel"}]);
+
+  var hvac=addComponent("Body","HvacController",[{name:"cabin_state_out",iface:"CabinClimateSignal"}],[{name:"thermal_plan_in",iface:"SomeIpThermalSupervisorService"}]);
+  var doorModule=addComponent("Body","DoorModuleController",[{name:"door_state_out",iface:"DoorStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var seatModule=addComponent("Body","SeatComfortController",[{name:"seat_state_out",iface:"SeatStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var lighting=addComponent("Body","LightingController",[{name:"lighting_state_out",iface:"LightingStateSignal"}],[{name:"body_cmd_in",iface:"ZonalActuationCommandInterface"}]);
+  var bodyCoordinator=addComponent("Body","BodyDomainCoordinator",[{name:"body_cmd_out",iface:"ZonalActuationCommandInterface"}],[{name:"vehicle_state_in",iface:"SomeIpVehicleStateService"},{name:"zone_state_in",iface:"ZoneBodyStateSignal"}]);
 
   connections=[
-    {from:vehicleMotion,to:powerCoord,label:"VehicleDynamicsBus",type:"event"},
-    {from:powerCoord,to:inverter,label:"PowertrainCoordination",type:"method"},
-    {from:powerCoord,to:tcu,label:"DiagEventService",type:"event"},
-    {from:radar,to:adas,label:"PerceptionObjectList",type:"event"},
-    {from:vehicleMotion,to:adas,label:"VehicleDynamicsBus",type:"event"},
-    {from:climate,to:cluster,label:"CabinClimateState",type:"field"},
-    {from:cluster,to:tcu,label:"HmiVehicleState",type:"field"}
+    {from:vehicleMotion,to:centralCompute,label:"VehicleDynamicsSignalSet",type:"event"},
+    {from:bms,to:centralCompute,label:"BatteryStateSignalSet",type:"event"},
+    {from:radarFusion,to:perception,label:"AdasObjectSignalSet",type:"event"},
+    {from:cameraFusion,to:perception,label:"AdasObjectSignalSet",type:"event"},
+    {from:lidarFusion,to:perception,label:"AdasObjectSignalSet",type:"event"},
+    {from:perception,to:planning,label:"AdasObjectSignalSet",type:"event"},
+    {from:planning,to:adasSupervisor,label:"TrajectorySignal",type:"event"},
+    {from:perception,to:chassisCoordinator,label:"AdasObjectSignalSet",type:"event"},
+    {from:vehicleMotion,to:chassisCoordinator,label:"VehicleDynamicsSignalSet",type:"event"},
+    {from:chassisCoordinator,to:brakeByWire,label:"BrakeTorqueRequestInterface",type:"method"},
+    {from:chassisCoordinator,to:steerByWire,label:"SteerByWireCommandInterface",type:"method"},
+    {from:adasSupervisor,to:brakeByWire,label:"BrakeTorqueRequestInterface",type:"method"},
+    {from:adasSupervisor,to:steerByWire,label:"SteerByWireCommandInterface",type:"method"},
+    {from:energySupervisor,to:inverterFront,label:"PowertrainTorqueCommandInterface",type:"method"},
+    {from:energySupervisor,to:inverterRear,label:"PowertrainTorqueCommandInterface",type:"method"},
+    {from:centralCompute,to:energySupervisor,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:thermalSupervisor,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:cockpit,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:ivi,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:navigation,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:appPlatform,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:bodyCoordinator,label:"SomeIpVehicleStateService",type:"field"},
+    {from:centralCompute,to:bms,label:"SomeIpEnergyOptimizerService",type:"field"},
+    {from:centralCompute,to:onboardCharger,label:"SomeIpEnergyOptimizerService",type:"field"},
+    {from:centralCompute,to:dcDc,label:"SomeIpEnergyOptimizerService",type:"field"},
+    {from:thermalSupervisor,to:hvac,label:"SomeIpThermalSupervisorService",type:"field"},
+    {from:navigation,to:cockpit,label:"SomeIpRouteEnergyService",type:"method"},
+    {from:bodyCoordinator,to:zonalFL,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:bodyCoordinator,to:zonalFR,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:bodyCoordinator,to:zonalRL,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:bodyCoordinator,to:zonalRR,label:"ZonalActuationCommandInterface",type:"method"},
+    {from:zonalFL,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:zonalFR,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:zonalRL,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:zonalRR,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:bms,to:diagnosticsMgr,label:"DiagEventChannel",type:"event"},
+    {from:diagnosticsMgr,to:gateway,label:"DiagReadWriteInterface",type:"method"},
+    {from:diagnosticsMgr,to:otaMgr,label:"DiagReadWriteInterface",type:"method"},
+    {from:otaMgr,to:gateway,label:"OtaCampaignControlInterface",type:"method"},
+    {from:otaMgr,to:gateway,label:"OtaEventChannel",type:"event"},
+    {from:centralCompute,to:cyberMgr,label:"SomeIpCyberPolicyService",type:"field"},
+    {from:cyberMgr,to:gateway,label:"CyberEventChannel",type:"event"},
+    {from:cyberMgr,to:appPlatform,label:"CyberEventChannel",type:"event"},
+    {from:diagnosticsMgr,to:telematics,label:"DiagCloudSyncService",type:"method"},
+    {from:telematics,to:centralCompute,label:"FleetTelemetrySignal",type:"event"},
+    {from:centralCompute,to:telematics,label:"SomeIpVehicleStateService",type:"field"},
+    {from:cockpit,to:voice,label:"HmiStateSignal",type:"field"},
+    {from:zonalFL,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"},
+    {from:zonalFR,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"},
+    {from:zonalRL,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"},
+    {from:zonalRR,to:bodyCoordinator,label:"ZoneBodyStateSignal",type:"event"}
   ];
   selId=null;nav("vehicle");
 }
 "undefined"==typeof d3&&(document.getElementById("rpBody").innerHTML='<div style="padding:30px 14px;text-align:center;color:var(--coral);font-size:11px">Failed to load D3.js. Check internet connection.</div>'),renderVehicle(),renderPanel(),updStatus();
-/* Guided demo overlay + impact summary (client-side only) */
-(function(){
-  let demo={active:false,step:0,steps:[],impact:null};
-  function ensureStyles(){
-    if(document.getElementById('editor-guided-style')) return;
-    const st=document.createElement('style'); st.id='editor-guided-style';
-    st.textContent='.guided-demo{position:absolute;z-index:45;max-width:320px;background:#fff;border:1px solid #DDD6C8;border-radius:12px;padding:12px 13px;box-shadow:0 14px 40px rgba(0,0,0,.20)}.guided-demo h4{font-size:12px;margin-bottom:4px}.guided-demo p{font-size:11px;line-height:1.45;color:#4A4540}.guided-demo .meta{font-family:"Space Mono",monospace;font-size:9px;color:#7A7468;margin-bottom:6px}.guided-demo .row{display:flex;gap:6px;justify-content:flex-end;margin-top:9px}.guided-demo button{padding:4px 8px;border:1px solid #DDD6C8;background:#fff;border-radius:6px;font-size:10px;cursor:pointer}.guided-demo button.primary{background:#C45A20;border-color:#C45A20;color:#111}.demo-anchor{position:absolute;z-index:41;padding:3px 7px;background:rgba(26,138,106,.93);color:#fff;border-radius:999px;font-size:9px;font-family:"Space Mono",monospace;pointer-events:none}.impact-box{margin:10px 14px;padding:10px;border:1px solid rgba(26,138,106,.22);background:rgba(26,138,106,.06);border-radius:8px}.impact-box h5{font-size:10px;color:#1A8A6A;margin-bottom:5px}.impact-box .line{font-size:10px;line-height:1.5;color:#4A4540}';
-    document.head.appendChild(st);
-  }
-  function findNodePos(name){
-    const svg=document.getElementById('svg'); if(!svg) return null;
-    const texts=[...svg.querySelectorAll('text')];
-    const t=texts.find(x=>x.textContent===name)||texts.find(x=>name.startsWith((x.textContent||'').replace('…','')));
-    if(!t) return null;
-    const r=t.getBoundingClientRect(),c=document.getElementById('cvs').getBoundingClientRect();
-    return {x:r.left-c.left+r.width/2,y:r.top-c.top+r.height/2};
-  }
-  function focusByName(name){
-    const c=allComps().find(x=>x.name===name); if(!c) return;
-    selId=c.id; const dom=Object.keys(domains).find(d=>(domains[d]||[]).some(k=>k.id===c.id));
-    if(dom){curDom=dom;level='domain';}
-    tab='edit';
-    document.querySelectorAll('.rtb').forEach(b=>b.classList.toggle('act',b.dataset.t==='edit'));
-    renderVehicle(); renderPanel(); updBC && updBC();
-  }
-  function renderImpactBox(){
-    const host=document.getElementById('rpBody');
-    host.querySelectorAll('.impact-box').forEach(n=>n.remove());
-    if(!demo.impact) return;
-    const div=document.createElement('div'); div.className='impact-box';
-    div.innerHTML=`<h5>Before / After Change Impact</h5>
-      <div class="line"><strong>Before:</strong> ${demo.impact.before} connected ${demo.impact.beforeLinks} link(s).</div>
-      <div class="line"><strong>After:</strong> ${demo.impact.after} connected ${demo.impact.afterLinks} link(s).</div>
-      <div class="line"><strong>Affected components:</strong> ${demo.impact.affected.join(', ')}</div>`;
-    host.prepend(div);
-  }
-  function renameInterfaceWithImpact(compName,oldIface,newIface){
-    const beforeLinks=connections.filter(c=>c.label===oldIface).length;
-    const affectedSet=new Set();
-    allComps().forEach(c=>{
-      c.provided.forEach(p=>{if(p.iface===oldIface){p.iface=newIface;affectedSet.add(c.name);}});
-      c.required.forEach(p=>{if(p.iface===oldIface){p.iface=newIface;affectedSet.add(c.name);}});
-    });
-    connections.forEach(c=>{if(c.label===oldIface)c.label=newIface;});
-    demo.impact={before:oldIface,after:newIface,beforeLinks:beforeLinks,afterLinks:connections.filter(c=>c.label===newIface).length,affected:[...affectedSet]};
-    const focus=allComps().find(c=>c.name===compName); if(focus) selId=focus.id;
-    renderVehicle(); renderPanel(); renderImpactBox();
-  }
-  function clearOverlay(){document.querySelectorAll('.guided-demo,.demo-anchor').forEach(n=>n.remove())}
-  function showStep(){
-    clearOverlay();
-    const s=demo.steps[demo.step];
-    if(!s) return endGuidedDemo();
-    if(s.focus) focusByName(s.focus);
-    if(typeof s.run==='function') s.run();
-    const card=document.createElement('div'); card.className='guided-demo';
-    card.style.right='12px'; card.style.top='12px';
-    card.innerHTML=`<div class="meta">Guided Demo • Step ${demo.step+1}/${demo.steps.length}</div><h4>${s.title}</h4><p>${s.body}</p><div class="row"><button onclick="guidedDemoPrev()">Back</button><button onclick="guidedDemoNext()" class="primary">${demo.step===demo.steps.length-1?'Finish':'Next'}</button></div>`;
-    document.getElementById('cvs').appendChild(card);
-    if(s.focus){
-      const pos=findNodePos(s.focus);
-      if(pos){
-        const chip=document.createElement('div'); chip.className='demo-anchor';
-        chip.style.left=(pos.x+8)+'px'; chip.style.top=(pos.y-10)+'px';
-        chip.textContent='Focus: '+s.focus;
-        document.getElementById('cvs').appendChild(chip);
-      }
-    }
-    if(demo.impact) renderImpactBox();
-  }
-
-  window.guidedDemoNext=function(){demo.step++;showStep()};
-  window.guidedDemoPrev=function(){demo.step=Math.max(0,demo.step-1);showStep()};
-  window.endGuidedDemo=function(){demo.active=false;clearOverlay();document.getElementById('stL').textContent='Guided demo complete';};
-
-  window.loadComplexScenario=function(){
-    loadStarter();
-    const adasHub=addComponent('ADAS','AdasFusionHub',[{name:'fusion_out',iface:'AdasFusionControl'}],[{name:'objects_in',iface:'PerceptionObjectList'},{name:'dyn_in',iface:'VehicleDynamicsBus'}]);
-    const cloudBridge=addComponent('Connectivity','CloudBridge',[{name:'fleet_feed',iface:'FleetAnalyticsFeed'}],[{name:'upload_in',iface:'CloudDtcUpload'}]);
-    const predMaint=addComponent('Connectivity','PredictiveMaintenance',[],[{name:'fleet_in',iface:'FleetAnalyticsFeed'}]);
-    const tcu=allComps().find(c=>c.name==='TelematicsGateway');
-    const pwr=allComps().find(c=>c.name==='PowertrainCoordinator');
-    const radar=allComps().find(c=>c.name==='RadarPerception');
-    if(tcu && !tcu.provided.find(p=>p.iface==='CloudDtcUpload')) tcu.provided.push({name:'upload_out',iface:'CloudDtcUpload'});
-    if(pwr && !pwr.provided.find(p=>p.iface==='DtcBurstEvent')) pwr.provided.push({name:'dtc_burst',iface:'DtcBurstEvent'});
-    if(radar && !radar.provided.find(p=>p.iface==='PerceptionObjectList')) radar.provided.push({name:'objects_out',iface:'PerceptionObjectList'});
-    addConnection(pwr.id,tcu.id,'DiagEventService','event');
-    addConnection(tcu.id,cloudBridge,'CloudDtcUpload','event');
-    addConnection(cloudBridge,predMaint,'FleetAnalyticsFeed','field');
-    addConnection(radar.id,adasHub,'PerceptionObjectList','event');
-    const motion=allComps().find(c=>c.name==='VehicleMotionProvider');
-    if(motion) addConnection(motion.id,adasHub,'VehicleDynamicsBus','event');
-    selId=null; nav('vehicle');
-  };
-
-  window.startGuidedDemo=function(){
-    ensureStyles(); demo.impact=null; loadComplexScenario();
-    demo={active:true,step:0,impact:null,steps:[
-      {title:'Load complex cross-domain scenario',body:'The guided demo starts from starter data and extends it with cloud bridge + predictive maintenance to show end-to-end dependency reasoning.',focus:'PowertrainCoordinator'},
-      {title:'Trace DTC event path',body:'Inspect how DiagEventService leaves powertrain, arrives at TelematicsGateway, and continues through CloudDtcUpload to CloudBridge.',focus:'TelematicsGateway'},
-      {title:'Review ADAS dependency chain',body:'AdasFusionHub requires both PerceptionObjectList and VehicleDynamicsBus. This demonstrates how sensor and motion data converge.',focus:'AdasFusionHub'},
-      {title:'Inline details callout',body:'Use the Edit panel to inspect provided/required ports for the focused node. Tooltips stay anchored to the current canvas node while details update.',focus:'CloudBridge'},
-      {title:'Modify interface and watch links update',body:'We now rename DiagEventService → DtcBurstEvent to demonstrate change propagation across ports and connectors.',focus:'PowertrainCoordinator',run:()=>renameInterfaceWithImpact('PowertrainCoordinator','DiagEventService','DtcBurstEvent')},
-      {title:'Before/After impact summary',body:'The side panel now shows impacted links and components after rename, demonstrating editor power while staying fully local and private.',focus:'TelematicsGateway'}
-    ]};
-    showStep();
-  };
-
-  const originalRenderPanel=renderPanel;
-  renderPanel=function(){ originalRenderPanel(); if(demo.active && demo.impact) renderImpactBox(); };
-})();
