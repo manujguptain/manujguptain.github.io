@@ -1,304 +1,198 @@
-
 // Brand configuration — change BRAND.name here to rename across the app
 const BRAND = window.SYSCANVAS_CONFIG;
-const DMETA={Powertrain:{icon:"⚡",color:"#D4864A",c:"copper"},Chassis:{icon:"🛞",color:"#4A90D9",c:"blue"},Body:{icon:"💡",color:"#2DD4A8",c:"teal"},ADAS:{icon:"📡",color:"#E8655A",c:"coral"},Infotainment:{icon:"🖥️",color:"#9B8FD4",c:"lav"},Connectivity:{icon:"🌐",color:"#5CB8E4",c:"sky"}},DKEYS=["battery","motor","inverter","charge","thermal","power","torque","engine","transmission","generator","temp_sensor","brake","steer","suspension","stability","traction","abs","esp","eps","wheel","speed_sensor","light","hvac","door","window","wiper","seat","climate","cabin","radar","camera","lidar","fusion","planning","emergency","lane","object","parking","cruise","autopilot","dashboard","hmi","display","media","audio","navigation","voice","screen","v2x","telematic","diagnostic","diag","ota","update","cloud","gateway"];function classifyDom(e){const t=e.toLowerCase();for(const[e,E]of Object.entries(DMETA))if(({Powertrain:["battery","motor","inverter","charge","thermal","power","torque","engine","temp"],Chassis:["brake","steer","suspension","stability","speed","wheel","abs","esp"],Body:["light","hvac","door","window","wiper","seat","climate","cabin"],ADAS:["radar","camera","lidar","fusion","planning","emergency","lane","object","parking"],Infotainment:["dashboard","hmi","display","media","audio","navigation","voice","screen"],Connectivity:["v2x","telematic","diagnostic","diag","ota","update","gateway","cloud"]}[e]||[]).some(e=>t.includes(e)))return e;return"Connectivity"}function guessType(e){const t=e.toLowerCase();return/event|notify|status|reading|report|fault|state|frame|detected|change|warning|active/.test(t)?"event":/field|value|data|config|level|temp|speed|angle|rate/.test(t)?"field":"method"}let model={components:[],interfaces:[],connections:[],domains:{}},level="vehicle",curDom=null,selComp=null,tab="detail";function legalSafeName(name){return String(name||"").replace(/\b(electrobit|vector|dspace|bosch|continental|aptiv|zf|magna|valeo|hyundai|toyota|vw|volkswagen|mercedes|bmw|audi|ford|gm|stellantis|tesla)\b/gi,"vendor")}
+
+const DMETA = {
+  Powertrain:{icon:"⚡",color:"#D4864A",c:"copper"},
+  Chassis:{icon:"🛞",color:"#4A90D9",c:"blue"},
+  Body:{icon:"💡",color:"#2DD4A8",c:"teal"},
+  ADAS:{icon:"📡",color:"#E8655A",c:"coral"},
+  Infotainment:{icon:"🖥️",color:"#9B8FD4",c:"lav"},
+  Connectivity:{icon:"🌐",color:"#5CB8E4",c:"sky"}
+};
+
+const REALISTIC_OEM_SCENARIO = {
+  id: "premium_evm_zonal_program_v1",
+  name: "Premium EV Zonal E/EA",
+  note: "Non-proprietary but structurally realistic OEM zonal architecture.",
+  interfaces: [
+    { id: "if_vehicle_state", name: "SomeIpVehicleStateService", kind: "field" },
+    { id: "if_energy_opt", name: "SomeIpEnergyOptimizerService", kind: "method" },
+    { id: "if_thermal", name: "SomeIpThermalSupervisorService", kind: "method" },
+    { id: "if_route", name: "SomeIpRouteEnergyService", kind: "method" },
+    { id: "if_body_cmd", name: "ZonalActuationCommandInterface", kind: "method" },
+    { id: "if_diag_rw", name: "DiagReadWriteInterface", kind: "method" },
+    { id: "if_ota", name: "OtaCampaignControlInterface", kind: "method" },
+    { id: "if_adas_obj", name: "AdasObjectSignalSet", kind: "event" },
+    { id: "if_dyn", name: "VehicleDynamicsSignalSet", kind: "event" },
+    { id: "if_batt", name: "BatteryStateSignalSet", kind: "event" },
+    { id: "if_diag_evt", name: "DiagEventChannel", kind: "event" },
+    { id: "if_ota_evt", name: "OtaEventChannel", kind: "event" },
+    { id: "if_cyber_evt", name: "CyberEventChannel", kind: "event" }
+  ],
+  components: [
+    {id:"c_ccu", name:"CentralComputePlatform", domain:"Connectivity", ecu:"CCU-A", partition:"AP-Core", role:"Central service orchestration", safety:["QM"], security:["SecOC","Policy"], kind:"instance", typeName:"CentralComputePlatformType", provided:["if_vehicle_state","if_energy_opt","if_thermal","if_route","if_body_cmd"], required:["if_adas_obj","if_dyn","if_batt"]},
+    {id:"c_diag", name:"DiagnosticsManager", domain:"Connectivity", ecu:"Gateway-1", partition:"Diag", role:"UDS diagnostics service", safety:["QM"], security:["TLS"], kind:"instance", typeName:"DiagnosticsManagerType", provided:["if_diag_rw"], required:["if_diag_evt"]},
+    {id:"c_ota", name:"OtaManager", domain:"Connectivity", ecu:"Gateway-1", partition:"OTA", role:"Campaign manager", safety:["QM"], security:["TLS","SecureBoot"], kind:"instance", typeName:"OtaManagerType", provided:["if_ota","if_ota_evt"], required:["if_diag_rw"]},
+    {id:"c_cyber", name:"CybersecurityManager", domain:"Connectivity", ecu:"Gateway-1", partition:"Cyber", role:"Security events + policy", safety:["QM"], security:["IDS","Firewall"], kind:"instance", typeName:"CybersecurityManagerType", provided:["if_cyber_evt"], required:[]},
+    {id:"c_zfl", name:"ZonalFrontLeft", domain:"Body", ecu:"Zone-FL", partition:"BodyAct", role:"Front-left zonal control", safety:["ASIL-B"], security:["SecOC"], kind:"instance", typeName:"ZonalControllerType", provided:["if_diag_evt"], required:["if_body_cmd"]},
+    {id:"c_zfr", name:"ZonalFrontRight", domain:"Body", ecu:"Zone-FR", partition:"BodyAct", role:"Front-right zonal control", safety:["ASIL-B"], security:["SecOC"], kind:"instance", typeName:"ZonalControllerType", provided:["if_diag_evt"], required:["if_body_cmd"]},
+    {id:"c_zrl", name:"ZonalRearLeft", domain:"Body", ecu:"Zone-RL", partition:"BodyAct", role:"Rear-left zonal control", safety:["ASIL-B"], security:["SecOC"], kind:"instance", typeName:"ZonalControllerType", provided:["if_diag_evt"], required:["if_body_cmd"]},
+    {id:"c_zrr", name:"ZonalRearRight", domain:"Body", ecu:"Zone-RR", partition:"BodyAct", role:"Rear-right zonal control", safety:["ASIL-B"], security:["SecOC"], kind:"instance", typeName:"ZonalControllerType", provided:["if_diag_evt"], required:["if_body_cmd"]},
+    {id:"c_bms", name:"BatteryManagementPrimary", domain:"Powertrain", ecu:"PT-1", partition:"Energy", role:"Battery state estimation", safety:["ASIL-C"], security:["SecOC"], kind:"instance", typeName:"BatteryManagementType", provided:["if_batt","if_diag_evt"], required:["if_energy_opt"]},
+    {id:"c_vmotion", name:"VehicleMotionProvider", domain:"Chassis", ecu:"CH-1", partition:"Motion", role:"Vehicle dynamics publisher", safety:["ASIL-D"], security:["SecOC"], kind:"instance", typeName:"VehicleMotionProviderType", provided:["if_dyn"], required:[]},
+    {id:"c_adas", name:"AdasPerceptionStack", domain:"ADAS", ecu:"ADAS-HPC", partition:"Perception", role:"Perception fusion", safety:["ASIL-B"], security:["SecureBoot"], kind:"instance", typeName:"AdasPerceptionStackType", provided:["if_adas_obj"], required:[]},
+    {id:"c_hmi", name:"CockpitHmi", domain:"Infotainment", ecu:"IVI-1", partition:"HMI", role:"Driver interface", safety:["QM"], security:["Sandbox"], kind:"instance", typeName:"CockpitHmiType", provided:[], required:["if_vehicle_state","if_route"]}
+  ],
+  connectors: [
+    {id:"k1",from:"c_vmotion",to:"c_ccu",iface:"if_dyn",providerPort:"dyn_out",requesterPort:"vehicle_dyn_in"},
+    {id:"k2",from:"c_bms",to:"c_ccu",iface:"if_batt",providerPort:"battery_state_out",requesterPort:"battery_state_in"},
+    {id:"k3",from:"c_adas",to:"c_ccu",iface:"if_adas_obj",providerPort:"objects_out",requesterPort:"adas_objects_in"},
+    {id:"k4",from:"c_ccu",to:"c_bms",iface:"if_energy_opt",providerPort:"energy_opt_srv",requesterPort:"energy_plan_in"},
+    {id:"k5",from:"c_ccu",to:"c_hmi",iface:"if_vehicle_state",providerPort:"vehicle_state_srv",requesterPort:"vehicle_state_in"},
+    {id:"k6",from:"c_ccu",to:"c_hmi",iface:"if_route",providerPort:"route_energy_srv",requesterPort:"route_energy_in"},
+    {id:"k7",from:"c_ccu",to:"c_zfl",iface:"if_body_cmd",providerPort:"zonal_body_cmd",requesterPort:"body_cmd_in"},
+    {id:"k8",from:"c_ccu",to:"c_zfr",iface:"if_body_cmd",providerPort:"zonal_body_cmd",requesterPort:"body_cmd_in"},
+    {id:"k9",from:"c_ccu",to:"c_zrl",iface:"if_body_cmd",providerPort:"zonal_body_cmd",requesterPort:"body_cmd_in"},
+    {id:"k10",from:"c_ccu",to:"c_zrr",iface:"if_body_cmd",providerPort:"zonal_body_cmd",requesterPort:"body_cmd_in"},
+    {id:"k11",from:"c_zfl",to:"c_diag",iface:"if_diag_evt",providerPort:"diag_evt_out",requesterPort:"diag_evt_in"},
+    {id:"k12",from:"c_zfr",to:"c_diag",iface:"if_diag_evt",providerPort:"diag_evt_out",requesterPort:"diag_evt_in"},
+    {id:"k13",from:"c_zrl",to:"c_diag",iface:"if_diag_evt",providerPort:"diag_evt_out",requesterPort:"diag_evt_in"},
+    {id:"k14",from:"c_zrr",to:"c_diag",iface:"if_diag_evt",providerPort:"diag_evt_out",requesterPort:"diag_evt_in"},
+    {id:"k15",from:"c_diag",to:"c_ota",iface:"if_diag_rw",providerPort:"diag_rw_srv",requesterPort:"diag_rw_in"}
+  ]
+};
+
+function scenarioModel() {
+  const iMap = new Map(REALISTIC_OEM_SCENARIO.interfaces.map(i => [i.id, i]));
+  const components = REALISTIC_OEM_SCENARIO.components.map(c => ({
+    id: c.id,
+    name: c.name,
+    type: `${c.typeName} (instance)`,
+    domain: c.domain,
+    provided: c.provided.map((iid, ix) => ({ name: `${c.name.toLowerCase()}_p${ix+1}`, iface: iMap.get(iid).name })),
+    required: c.required.map((iid, ix) => ({ name: `${c.name.toLowerCase()}_r${ix+1}`, iface: iMap.get(iid).name })),
+    metadata: { ...c, placement: `${c.ecu}/${c.partition}`, source: "scenario" }
+  }));
+  const byId = new Map(components.map(c => [c.id, c]));
+  const interfaces = REALISTIC_OEM_SCENARIO.interfaces.map(i => ({ name: i.name, methods: i.kind === "method" ? ["Invoke"] : [], events: i.kind === "event" ? ["Signal"] : [], fields: i.kind === "field" ? ["Value"] : [] }));
+  const connections = REALISTIC_OEM_SCENARIO.connectors.map(k => ({
+    from: byId.get(k.from).name,
+    to: byId.get(k.to).name,
+    label: iMap.get(k.iface).name,
+    type: iMap.get(k.iface).kind,
+    inferred: false,
+    context: { kind: "scenario", providerPortRef: k.providerPort, requesterPortRef: k.requesterPort, connectorId: k.id }
+  }));
+  return { components, interfaces, connections, sourceType: "scenario" };
+}
+
+function legalSafeName(name){return String(name||"").replace(/\b(electrobit|vector|dspace|bosch|continental|aptiv|zf|magna|valeo|hyundai|toyota|vw|volkswagen|mercedes|bmw|audi|ford|gm|stellantis|tesla)\b/gi,"vendor")}
+function guessType(x){const t=(x||"").toLowerCase();return /event|signal|status|state|channel/.test(t)?"event":/field|value|service/.test(t)?"field":"method";}
+
+let model={components:[],interfaces:[],connections:[],domains:{}},level="vehicle",curDom=null,selComp=null,tab="detail";
+
 function parseARXML(xmlText){
   const doc=(new DOMParser).parseFromString(xmlText,"text/xml");
-  if(doc.querySelector("parsererror"))return{components:[],interfaces:[],connections:[]};
+  if(doc.querySelector("parsererror"))return{components:[],interfaces:[],connections:[],sourceType:"import"};
+  const arr=x=>Array.from(x||[]), q=(n,s)=>arr(n.querySelectorAll(s));
+  const short=n=>{if(!n)return"";const s=q(n,":scope > SHORT-NAME")[0]||q(n,"SHORT-NAME")[0];return legalSafeName((s?.textContent||"").trim())};
+  const tail=t=>legalSafeName((t||"").trim().split('/').filter(Boolean).pop()||"");
+  const pkgPath=n=>{const names=[];let p=n.parentElement;while(p){if(p.localName==="AR-PACKAGE") names.unshift(short(p));p=p.parentElement;}return names.filter(Boolean)};
 
-  const components=[];
-  const interfaces=[];
-  const componentByName=new Map();
-  const interfaceNames=new Set();
+  const interfaces=[];const ifSeen=new Set();
+  ["SERVICE-INTERFACE","CLIENT-SERVER-INTERFACE","SENDER-RECEIVER-INTERFACE"].forEach(tag=>q(doc,tag).forEach(node=>{
+    const name=short(node); if(!name||ifSeen.has(name)) return; ifSeen.add(name);
+    interfaces.push({name,methods:q(node,"OPERATION-PROTOTYPE").map(short).filter(Boolean),events:q(node,"EVENT,DATA-ELEMENT-PROTOTYPE").map(short).filter(Boolean),fields:q(node,"FIELD").map(short).filter(Boolean),interfaceKind:tag,pkgPath:pkgPath(node)});
+  }));
 
-  const toArray=(list)=>Array.from(list||[]);
-  const qAll=(scope,selectors)=>{
-    const result=[];
-    selectors.forEach(sel=>result.push(...toArray(scope.querySelectorAll(sel))));
-    return result;
-  };
-  const shortName=(node)=>{
-    if(!node)return null;
-    for(const ch of toArray(node.children))if(ch.localName==="SHORT-NAME")return legalSafeName(ch.textContent.trim());
-    return null;
-  };
-  const refTail=(text)=> legalSafeName((text||"").trim().split('/').filter(Boolean).pop()||"");
-  const ifaceFromPort=(portNode)=>{
-    const tref=qAll(portNode,["[DEST='SERVICE-INTERFACE']","[DEST='CLIENT-SERVER-INTERFACE']","[DEST='SENDER-RECEIVER-INTERFACE']","[DEST='MODE-SWITCH-INTERFACE']","[DEST='NV-DATA-INTERFACE']"])[0];
-    return refTail(tref?.textContent||"");
-  };
+  const typesByName=new Map();
+  ["ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE","APPLICATION-SW-COMPONENT-TYPE","SERVICE-SW-COMPONENT-TYPE","COMPOSITION-SW-COMPONENT-TYPE"].forEach(tag=>q(doc,tag).forEach(node=>{
+    const name=short(node); if(!name||typesByName.has(name)) return;
+    const provided=q(node,"P-PORT-PROTOTYPE,PROVIDED-PORT-PROTOTYPE").map(p=>({name:short(p),iface:tail((q(p,"PROVIDED-INTERFACE-TREF,REQUIRED-INTERFACE-TREF")[0]?.textContent)||"")}));
+    const required=q(node,"R-PORT-PROTOTYPE,REQUIRED-PORT-PROTOTYPE").map(p=>({name:short(p),iface:tail((q(p,"REQUIRED-INTERFACE-TREF,PROVIDED-INTERFACE-TREF")[0]?.textContent)||"")}));
+    typesByName.set(name,{typeTag:tag,name,provided,required,pkgPath:pkgPath(node),arxml:(new XMLSerializer).serializeToString(node)});
+  }));
 
-  const ifaceTags=["SERVICE-INTERFACE","CLIENT-SERVER-INTERFACE","SENDER-RECEIVER-INTERFACE","MODE-SWITCH-INTERFACE","NV-DATA-INTERFACE"];
-  ifaceTags.forEach(tag=>{
-    qAll(doc,[tag]).forEach(node=>{
-      const name=shortName(node);
-      if(!name||interfaceNames.has(name))return;
-      interfaceNames.add(name);
-      const entry={name,methods:[],events:[],fields:[]};
-      qAll(node,["CLIENT-SERVER-OPERATION","OPERATION-PROTOTYPE"]).forEach(op=>{const n=shortName(op);if(n)entry.methods.push(n)});
-      qAll(node,["EVENT","VARIABLE-DATA-PROTOTYPE"]).forEach(ev=>{const n=shortName(ev);if(n)entry.events.push(n)});
-      qAll(node,["FIELD","DATA-ELEMENT-PROTOTYPE","MODE-GROUP"]).forEach(f=>{const n=shortName(f);if(n)entry.fields.push(n)});
-      interfaces.push(entry);
-    });
+  const components=[]; const compByName=new Map();
+  q(doc,"SW-COMPONENT-PROTOTYPE").forEach(p=>{
+    const n=short(p); const typeName=tail(q(p,"TYPE-TREF,COMPONENT-TREF")[0]?.textContent||""); const t=typesByName.get(typeName); if(!n||!t)return;
+    const comp={name:n,type:`${t.typeTag} (instance of ${typeName})`,provided:t.provided.map(x=>({...x})),required:t.required.map(x=>({...x})),arxml:t.arxml,context:{compositionPath:pkgPath(p),instanceName:n,typeName,pkgPath:t.pkgPath}};
+    components.push(comp); compByName.set(n,comp);
   });
+  if(!components.length){ typesByName.forEach(t=>{components.push({name:t.name,type:t.typeTag,provided:t.provided,required:t.required,arxml:t.arxml,context:{pkgPath:t.pkgPath,instanceName:t.name,typeName:t.name}}); compByName.set(t.name,components[components.length-1]);}); }
 
-  const componentTags=["ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE","APPLICATION-SW-COMPONENT-TYPE","COMPOSITION-SW-COMPONENT-TYPE","SERVICE-SW-COMPONENT-TYPE","SENSOR-ACTUATOR-SW-COMPONENT-TYPE","COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE","ECU-ABSTRACTION-SW-COMPONENT-TYPE"];
-  componentTags.forEach(tag=>{
-    qAll(doc,[tag]).forEach(node=>{
-      const name=shortName(node);
-      if(!name||componentByName.has(name))return;
-      const comp={name,type:tag,provided:[],required:[],arxml:(new XMLSerializer).serializeToString(node)};
-      qAll(node,["P-PORT-PROTOTYPE","PROVIDED-PORT-PROTOTYPE"]).forEach(port=>{
-        const pn=shortName(port)||"port";
-        const iface=ifaceFromPort(port);
-        comp.provided.push({name:pn,iface});
-      });
-      qAll(node,["R-PORT-PROTOTYPE","REQUIRED-PORT-PROTOTYPE"]).forEach(port=>{
-        const pn=shortName(port)||"port";
-        const iface=ifaceFromPort(port);
-        comp.required.push({name:pn,iface});
-      });
-      qAll(node,["PR-PORT-PROTOTYPE"]).forEach(port=>{
-        const pn=shortName(port)||"port";
-        const iface=ifaceFromPort(port);
-        comp.provided.push({name:pn,iface});
-        comp.required.push({name:pn,iface});
-      });
-      components.push(comp);
-      componentByName.set(name,comp);
-    });
-  });
-
-  const compositionInstances=[];
-  qAll(doc,["SW-COMPONENT-PROTOTYPE"]).forEach(proto=>{
-    const instName=shortName(proto);
-    const tref=qAll(proto,["TYPE-TREF","COMPONENT-TREF"])[0];
-    const typeName=refTail(tref?.textContent||"");
-    if(!instName||!typeName)return;
-    const base=componentByName.get(typeName);
-    if(!base)return;
-    compositionInstances.push({instName,typeName,base});
-  });
-
-  if(compositionInstances.length){
-    const scoped=[];
-    compositionInstances.forEach(({instName,typeName,base})=>{
-      const mapped={
-        name:instName,
-        type:`${base.type} (instance of ${typeName})`,
-        provided:base.provided.map(p=>({name:`${instName}.${p.name}`,iface:p.iface})),
-        required:base.required.map(p=>({name:`${instName}.${p.name}`,iface:p.iface})),
-        arxml:base.arxml
-      };
-      scoped.push(mapped);
-    });
-    if(scoped.length) {
-      components.length=0;
-      components.push(...scoped);
-      componentByName.clear();
-      scoped.forEach(c=>componentByName.set(c.name,c));
-    }
-  }
-
-  const connections=[];
-  const dedupe=new Set();
-  const pushConnection=(from,to,label,typeHint)=>{
-    if(!from||!to||from===to)return;
-    const key=`${from}>${to}:${label}`;
-    if(dedupe.has(key))return;
-    dedupe.add(key);
-    connections.push({from,to,label:label||"interface",type:guessType(typeHint||label||"")});
-  };
-
-  qAll(doc,["ASSEMBLY-SW-CONNECTOR","ASSEMBLY-CONNECTOR-PROTOTYPE"]).forEach(conn=>{
-    const pi=qAll(conn,["PROVIDER-IREF"])[0];
-    const ri=qAll(conn,["REQUESTER-IREF"])[0];
-    const pc=refTail(qAll(pi||conn,["CONTEXT-COMPONENT-REF"])[0]?.textContent||"");
-    const rc=refTail(qAll(ri||conn,["CONTEXT-COMPONENT-REF"])[0]?.textContent||"");
-    const pp=refTail(qAll(pi||conn,["TARGET-P-PORT-REF","PORT-PROTOTYPE-REF"])[0]?.textContent||"");
-    const rp=refTail(qAll(ri||conn,["TARGET-R-PORT-REF","PORT-PROTOTYPE-REF"])[0]?.textContent||"");
-    const provider=componentByName.get(pc);
-    const label=(provider?.provided.find(p=>p.name.endsWith(pp))?.iface)||(componentByName.get(rc)?.required.find(r=>r.name.endsWith(rp))?.iface)||pp||rp||"assemblyLink";
-    pushConnection(pc,rc,label,label);
+  const connections=[]; const dedupe=new Set();
+  q(doc,"ASSEMBLY-SW-CONNECTOR,ASSEMBLY-CONNECTOR-PROTOTYPE").forEach(conn=>{
+    const pi=q(conn,"PROVIDER-IREF")[0], ri=q(conn,"REQUESTER-IREF")[0];
+    const from=tail(q(pi||conn,"CONTEXT-COMPONENT-REF")[0]?.textContent||"");
+    const to=tail(q(ri||conn,"CONTEXT-COMPONENT-REF")[0]?.textContent||"");
+    const pPort=tail(q(pi||conn,"TARGET-P-PORT-REF,PORT-PROTOTYPE-REF")[0]?.textContent||"");
+    const rPort=tail(q(ri||conn,"TARGET-R-PORT-REF,PORT-PROTOTYPE-REF")[0]?.textContent||"");
+    const src=compByName.get(from), dst=compByName.get(to);
+    const lbl=(src?.provided.find(p=>p.name===pPort)?.iface)||(dst?.required.find(r=>r.name===rPort)?.iface)||pPort||rPort||"assemblyLink";
+    const k=`${from}>${to}:${lbl}`; if(!from||!to||from===to||dedupe.has(k)) return; dedupe.add(k);
+    connections.push({from,to,label:lbl,type:guessType(lbl),inferred:false,context:{kind:"arxml",connectorName:short(conn),providerRef:pPort,requesterRef:rPort,providerRole:"provider",requesterRole:"requester"}});
   });
 
   if(!connections.length){
-    components.forEach(src=>src.provided.forEach(p=>{
-      components.forEach(dst=>{
-        if(src===dst)return;
-        dst.required.forEach(r=>{if(p.iface&&r.iface&&p.iface===r.iface)pushConnection(src.name,dst.name,p.iface,p.iface)});
-      });
-    }));
+    components.forEach(a=>a.provided.forEach(p=>components.forEach(b=>{if(a===b)return;b.required.forEach(r=>{if(p.iface&&p.iface===r.iface){const k=`${a.name}>${b.name}:${p.iface}`; if(dedupe.has(k))return; dedupe.add(k); connections.push({from:a.name,to:b.name,label:p.iface,type:guessType(p.iface),inferred:true,context:{kind:"inferred"}});}})})));
   }
 
-  return{components,interfaces,connections};
+  return {components,interfaces,connections,sourceType:"import"};
 }
-function buildModel(e){const t=new Set;model.components=e.components.filter(e=>!t.has(e.name)&&(t.add(e.name),!0)),model.interfaces=e.interfaces;const E=new Set;model.connections=e.connections.filter(e=>{const t=`${e.from}>${e.to}:${e.label}`;return!E.has(t)&&(E.add(t),!0)});const n=new Set(model.components.map(e=>e.name));model.connections=model.connections.filter(e=>n.has(e.from)&&n.has(e.to)),model.domains={},model.components.forEach(e=>{e.domain=classifyDom(e.name),model.domains[e.domain]||(model.domains[e.domain]=[]),model.domains[e.domain].push(e)})}function handleFiles(e){if(!e||!e.length)return;const t={components:[],interfaces:[],connections:[]};let E=0;Array.from(e).forEach(n=>{const T=new FileReader;T.onload=n=>{const T=parseARXML(n.target.result);if(t.components.push(...T.components),t.interfaces.push(...T.interfaces),t.connections.push(...T.connections),++E===e.length){if(buildModel(t),!model.components.length)return void alert("No AUTOSAR components found.");hideDrop(),nav("vehicle")}},T.readAsText(n)})}function nav(e,t){level=e,"vehicle"===e?(curDom=null,selComp=null,renderVehicle()):"domain"===e&&(curDom=t,selComp=null,renderDomain(t)),document.getElementById("btnBack").style.display="vehicle"===e?"none":"inline-block",updBC(),updStatus(),renderSide()}function goBack(){"domain"===level&&nav("vehicle")}function updBC(){const e=document.getElementById("bc");let t=`<span class="cr${"vehicle"===level?" act":""}" onclick="nav('vehicle')">Vehicle</span>`;curDom&&(t+=`<span class="cs">›</span><span class="cr${"domain"===level?" act":""}">${curDom}</span>`),e.innerHTML=t}function updStatus(){document.getElementById("stL").textContent=`${model.components.length} components · ${model.connections.length} connections · ${model.interfaces.length} interfaces · ${Object.keys(model.domains).length} domains`}function hideDrop(){document.getElementById("dropZ").classList.add("hid"),document.getElementById("view").style.display="block",document.getElementById("legend").style.display="flex"}function showDrop(){document.getElementById("dropZ").classList.remove("hid"),document.getElementById("view").style.display="none",document.getElementById("legend").style.display="none"}function renderVehicle(){document.getElementById("legend").style.display="none";const e=document.getElementById("view");e.style.display="block";const t=["Powertrain","Chassis","Body","ADAS","Infotainment","Connectivity"].filter(e=>model.domains[e]&&model.domains[e].length);e.innerHTML=`<div class="vview"><div class="ani" style="text-align:center"><div class="vt">Vehicle Architecture</div><div class="vs">${model.components.length} components across ${t.length} domains</div></div>\n    <div class="dgrid">${t.map((e,t)=>{const E=DMETA[e],n=model.domains[e],T=model.connections.filter(t=>{const E=model.components.find(e=>e.name===t.from)?.domain,n=model.components.find(e=>e.name===t.to)?.domain;return E===e&&n!==e||n===e&&E!==e});return`<div class="dcard ani d${t+1}" data-c="${E.c}" onclick="nav('domain','${e}')"><span class="dico">${E.icon}</span><div class="dname">${e}</div><div class="dcnt">${n.length} component${1!==n.length?"s":""}${T.length?` · ${T.length} cross-domain link${1!==T.length?"s":""}`:""}</div><div>${n.map(e=>`<span class="dtag">${e.name}</span>`).join("")}</div></div>`}).join("")}</div></div>`}function renderDomain(e){document.getElementById("legend").style.display="flex";const t=document.getElementById("view");t.style.display="block",t.innerHTML='<svg id="dsvg" width="100%" height="100%"></svg>';const E=model.domains[e]||[];if(!E.length)return;const n=DMETA[e]||{icon:"?",color:"#A8A4A0"},T=n.color,a=new Set(E.map(e=>e.name)),o=model.connections.filter(e=>a.has(e.from)&&a.has(e.to)),R=model.connections.filter(e=>a.has(e.from)&&!a.has(e.to)||!a.has(e.from)&&a.has(e.to)),r=new Set;R.forEach(e=>{a.has(e.from)||r.add(e.from),a.has(e.to)||r.add(e.to)});const i=[...E.map(e=>({...e,ghost:!1})),...Array.from(r).map(e=>{const t=model.components.find(t=>t.name===e);return{name:e,domain:t?.domain||"?",provided:t?.provided||[],required:t?.required||[],ghost:!0}})],s=[...o,...R].filter(e=>i.find(t=>t.name===e.from)&&i.find(t=>t.name===e.to)),O={},c={},l={};i.forEach(e=>{O[e.name]=0,c[e.name]=[],l[e.name]=[]}),s.forEach(e=>{O[e.to]=(O[e.to]||0)+1,(c[e.from]=c[e.from]||[]).push(e.to),(l[e.to]=l[e.to]||[]).push(e.from)});const d=[],A=new Set;let P=i.filter(e=>!l[e.name]||0===l[e.name].length).map(e=>e.name);for(0===P.length&&(P=[i[0].name]);P.length>0&&d.length<10;){d.push(P),P.forEach(e=>A.add(e));const e=new Set;P.forEach(t=>{(c[t]||[]).forEach(t=>{A.has(t)||(l[t]||[]).every(e=>A.has(e))&&e.add(t)})}),P=Array.from(e)}const S=i.filter(e=>!A.has(e.name));S.length&&d.push(S.map(e=>e.name));const N=new Map;i.forEach(e=>{const t=Math.max(e.provided.length,e.required.length,1);e._height=Math.max(70,32+16*t+8),N.set(e.name,e)});let I=60;d.forEach(e=>{let t=-(e.reduce((e,t)=>{const E=N.get(t);return e+(E?E._height:70)},0)+30*(e.length-1))/2;e.forEach(e=>{const E=N.get(e);E&&(E._x=I,E._y=t,E._w=180,t+=E._height+30)}),I+=280});const m=i.map(e=>e._y||0),C=Math.min(...m),p=(Math.max(...m.map((e,t)=>e+(i[t]._height||70))),document.getElementById("cvs")),h=p.clientWidth,f=p.clientHeight,M=d3.select("#dsvg");M.selectAll("*").remove();const D=M.append("defs");D.append("pattern").attr("id","fg").attr("width",32).attr("height",32).attr("patternUnits","userSpaceOnUse").append("circle").attr("cx",16).attr("cy",16).attr("r",.5).attr("fill","#C8BFB0").attr("opacity",.5),M.append("rect").attr("width","100%").attr("height","100%").attr("fill","url(#fg)");const F={event:"#4A90D9",method:"#1A1A1A",field:"#9B8FD4"};["event","method","field"].forEach(e=>{D.append("marker").attr("id","ar-"+e).attr("viewBox","0 0 8 6").attr("refX",8).attr("refY",3).attr("markerWidth",7).attr("markerHeight",5).attr("orient","auto").append("path").attr("d","M0,0L8,3L0,6Z").attr("fill",F[e])});const u=M.append("g");M.call(d3.zoom().scaleExtent([.2,3]).on("zoom",e=>u.attr("transform",e.transform))),u.append("text").attr("x",20).attr("y",C-24).attr("font-size",15).attr("font-weight",700).attr("fill",T).attr("font-family","'DM Sans',sans-serif").text(`${n.icon} ${e}`),s.forEach(e=>{const t=N.get(e.from),E=N.get(e.to);if(!t||!E||void 0===t._x||void 0===E._x)return;const n=t.provided.findIndex(t=>t.iface===e.label),T=E.required.findIndex(t=>t.iface===e.label),a=32+16*Math.max(0,n)+8,o=32+16*Math.max(0,T)+8,R=t._x+180,r=t._y+a,i=E._x,s=E._y+o,O=(R+i)/2,c=F[e.type]||F.method,l="event"===e.type?"5 3":"field"===e.type?"2 2":"none";u.append("path").attr("d",`M${R},${r} C${O},${r} ${O},${s} ${i},${s}`).attr("fill","none").attr("stroke",c).attr("stroke-width",1.3).attr("stroke-dasharray",l).attr("opacity",.55).attr("marker-end",`url(#ar-${e.type})`);const d=O,A=(r+s)/2,P=e.label.length>22?e.label.slice(0,20)+"…":e.label,S=5.8*P.length+14;u.append("rect").attr("x",d-S/2).attr("y",A-9).attr("width",S).attr("height",17).attr("rx",4).attr("fill","#FFFFFF").attr("stroke","#1C2030").attr("stroke-width",.6),u.append("text").attr("x",d).attr("y",A+3).attr("text-anchor","middle").attr("font-size",8.5).attr("fill",c).attr("font-family","'Space Mono',monospace").text(P)}),i.forEach(e=>{if(void 0===e._x)return;const t=e._x,E=e._y,n=e._height,a=e.ghost,o=a?(DMETA[e.domain]||{color:"#7A7468"}).color:T,R=u.append("g").attr("transform",`translate(${t},${E})`).attr("cursor","pointer").on("click",()=>{selComp=model.components.find(t=>t.name===e.name)||e,renderSide()});R.append("rect").attr("width",180).attr("height",n).attr("rx",10).attr("fill",a?"#F9F6F0":"#FFFFFF").attr("stroke",selComp&&selComp.name===e.name?"#D4864A":o+(a?"44":"55")).attr("stroke-width",selComp&&selComp.name===e.name?2.5:1.2).attr("stroke-dasharray",a?"4 3":"none"),R.append("rect").attr("width",180).attr("height",3).attr("rx",1.5).attr("fill",o+(a?"66":"")),a&&R.append("text").attr("x",90).attr("y",14).attr("text-anchor","middle").attr("font-size",8).attr("fill","#A8A098").attr("font-family","'Space Mono',monospace").text(e.domain),R.append("text").attr("x",90).attr("y",a?28:20).attr("text-anchor","middle").attr("font-size",11).attr("font-weight",700).attr("fill",a?"#7A7468":"#1A1A1A").attr("font-family","'DM Sans',sans-serif").text(e.name.length>20?e.name.slice(0,18)+"…":e.name),e.provided.forEach((e,t)=>{const E=32+16*t;R.append("circle").attr("cx",180).attr("cy",E+8).attr("r",3.5).attr("fill","#2DD4A8").attr("stroke","#F5F0E8").attr("stroke-width",1),R.append("text").attr("x",172).attr("y",E+8+3).attr("text-anchor","end").attr("font-size",8).attr("fill","#2DD4A8").attr("font-family","'Space Mono',monospace").attr("opacity",.8).text(e.name.length>16?e.name.slice(0,14)+"…":e.name)}),e.required.forEach((e,t)=>{const E=32+16*t;R.append("circle").attr("cx",0).attr("cy",E+8).attr("r",3.5).attr("fill","#4A90D9").attr("stroke","#F5F0E8").attr("stroke-width",1),R.append("text").attr("x",8).attr("y",E+8+3).attr("text-anchor","start").attr("font-size",8).attr("fill","#4A90D9").attr("font-family","'Space Mono',monospace").attr("opacity",.8).text(e.name.length>16?e.name.slice(0,14)+"…":e.name)})}),setTimeout(()=>{const e=u.node().getBBox();if(!e.width)return;const t=Math.min(1,Math.min((h-120)/e.width,(f-120)/e.height)),E=h/2-t*(e.x+e.width/2),n=f/2-t*(e.y+e.height/2);M.transition().duration(500).call(d3.zoom().scaleExtent([.2,3]).on("zoom",e=>u.attr("transform",e.transform)).transform,d3.zoomIdentity.translate(E,n).scale(t))},100)}function setTab(e){tab=e,document.querySelectorAll(".stab").forEach(t=>t.classList.toggle("act",t.dataset.t===e)),renderSide()}function renderSide(){const e=document.getElementById("sb");if("tree"===tab){const t=[...new Set([...["Powertrain","Chassis","Body","ADAS","Infotainment","Connectivity"].filter(e=>model.domains[e]),...Object.keys(model.domains)])];return void(e.innerHTML=`<div class="sec"><div class="sth" style="color:var(--t3)">Architecture Tree</div>${t.map(e=>{const t=DMETA[e]||{icon:"📦"},E=model.domains[e]||[];return E.length?`<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:700;cursor:pointer;padding:5px 0;color:var(--t2)" onclick="nav('domain','${e}')">${t.icon} ${e} <span style="font-size:9px;color:var(--t4)">(${E.length})</span></div>${E.map(e=>`<div class="tree-item" style="padding-left:14px;margin-left:8px;border-left:1px solid var(--brd)" onclick="selComp=model.components.find(x=>x.name==='${e.name}');setTab('detail')">${e.name} <span style="font-size:9px;color:var(--t4)">↑${e.provided.length}↓${e.required.length}</span></div>`).join("")}</div>`:""}).join("")}</div>`)}if("arxml"===tab)return selComp&&selComp.arxml?void(e.innerHTML=`<div class="ax-bar"><span>${selComp.name}</span></div><pre class="ax-code">${escH(fmtXml(selComp.arxml))}</pre>`):void(e.innerHTML='<div style="padding:40px 18px;text-align:center;color:var(--t4);font-size:12px">Select a component to view ARXML</div>');if(!selComp){if(curDom){const t=model.domains[curDom]||[],E=DMETA[curDom]||{icon:"?"};e.innerHTML=`<div class="dh"><div class="dn">${E.icon} ${curDom}</div><div class="dt">${t.length} components</div></div><div class="sec"><div class="sth" style="color:var(--t3)">Components</div>${t.map(e=>`<div class="conn-chip" style="cursor:pointer" onclick="selComp=model.components.find(x=>x.name==='${e.name}');renderSide()">${e.name} <span style="float:right;font-size:9px;color:var(--t4)">↑${e.provided.length} ↓${e.required.length}</span></div>`).join("")}</div>`}else e.innerHTML='<div style="padding:40px 18px;text-align:center;color:var(--t4);font-size:12px">Click a component to see details</div>';return}const t=selComp,E=DMETA[t.domain]||{icon:"?",color:"#A8A4A0"},n=model.connections.filter(e=>e.from===t.name),T=model.connections.filter(e=>e.to===t.name);e.innerHTML=`<div class="dh"><div class="dn">${t.name}</div><div class="dt">${t.type||"ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE"}</div><div class="dd" style="background:${E.color}18;color:${E.color};border:1px solid ${E.color}33">${E.icon} ${t.domain}</div></div>\n    ${t.provided.length?`<div class="sec"><div class="sth" style="color:var(--teal)">Provided Ports (${t.provided.length})</div>${t.provided.map(e=>`<div class="port-chip prov"><span>● ${e.name}</span><span class="port-if">${e.iface}</span></div>`).join("")}</div>`:""}\n    ${t.required.length?`<div class="sec"><div class="sth" style="color:var(--blue)">Required Ports (${t.required.length})</div>${t.required.map(e=>`<div class="port-chip req"><span>○ ${e.name}</span><span class="port-if">${e.iface}</span></div>`).join("")}</div>`:""}\n    ${n.length?`<div class="sec"><div class="sth" style="color:var(--lav)">Sends to (${n.length})</div>${n.map(e=>`<div class="conn-chip">→ ${e.to} <span style="opacity:.5;font-size:10px">${e.label} (${e.type})</span></div>`).join("")}</div>`:""}\n    ${T.length?`<div class="sec"><div class="sth" style="color:var(--lav)">Receives from (${T.length})</div>${T.map(e=>`<div class="conn-chip">← ${e.from} <span style="opacity:.5;font-size:10px">${e.label} (${e.type})</span></div>`).join("")}</div>`:""}`}function escH(e){const t=document.createElement("div");return t.textContent=e,t.innerHTML}function fmtXml(e){let t="",E=0;return e.replace(/></g,">\n<").split("\n").forEach(e=>{(e=e.trim())&&(e.startsWith("</")&&(E=Math.max(0,E-1)),t+="  ".repeat(E)+e+"\n",!e.startsWith("<")||e.startsWith("</")||e.endsWith("/>")||e.includes("</")||E++)}),t}function loadSample(){
-  const sample=`<?xml version="1.0" encoding="UTF-8"?>
-<!-- Synthetic premium EV platform demo ARXML for SysCanvas v1.1.0. -->
-<AUTOSAR xmlns="http://autosar.org/schema/r4.0">
-  <AR-PACKAGES>
-    <AR-PACKAGE>
-      <SHORT-NAME>PremiumEvPlatform</SHORT-NAME>
-      <AR-PACKAGES>
-        <AR-PACKAGE>
-          <SHORT-NAME>ServiceContracts</SHORT-NAME>
-          <AR-PACKAGES>
-            <AR-PACKAGE>
-              <SHORT-NAME>ComputeServices</SHORT-NAME>
-              <ELEMENTS>
-                <SERVICE-INTERFACE><SHORT-NAME>SomeIpVehicleStateService</SHORT-NAME><FIELDS><FIELD><SHORT-NAME>VehicleStateSnapshot</SHORT-NAME></FIELD></FIELDS></SERVICE-INTERFACE>
-                <SERVICE-INTERFACE><SHORT-NAME>SomeIpEnergyOptimizerService</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>PlanPowerBudget</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></SERVICE-INTERFACE>
-                <SERVICE-INTERFACE><SHORT-NAME>SomeIpThermalSupervisorService</SHORT-NAME><FIELDS><FIELD><SHORT-NAME>ThermalBudget</SHORT-NAME></FIELD></FIELDS></SERVICE-INTERFACE>
-                <SERVICE-INTERFACE><SHORT-NAME>SomeIpRouteEnergyService</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>EstimateArrivalSoc</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></SERVICE-INTERFACE>
-                <SERVICE-INTERFACE><SHORT-NAME>SomeIpCyberPolicyService</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>ApplyPolicyDelta</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></SERVICE-INTERFACE>
-              </ELEMENTS>
-            </AR-PACKAGE>
-            <AR-PACKAGE>
-              <SHORT-NAME>ControlInterfaces</SHORT-NAME>
-              <ELEMENTS>
-                <CLIENT-SERVER-INTERFACE><SHORT-NAME>BrakeTorqueRequestInterface</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>RequestBrakeTorque</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
-                <CLIENT-SERVER-INTERFACE><SHORT-NAME>SteerByWireCommandInterface</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>RequestSteerAngle</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
-                <CLIENT-SERVER-INTERFACE><SHORT-NAME>PowertrainTorqueCommandInterface</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>RequestDriveTorque</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
-                <CLIENT-SERVER-INTERFACE><SHORT-NAME>ZonalActuationCommandInterface</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>ExecuteBodyCommand</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
-                <CLIENT-SERVER-INTERFACE><SHORT-NAME>DiagReadWriteInterface</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>ReadDid</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
-                <CLIENT-SERVER-INTERFACE><SHORT-NAME>OtaCampaignControlInterface</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>StartCampaign</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
-              </ELEMENTS>
-            </AR-PACKAGE>
-            <AR-PACKAGE>
-              <SHORT-NAME>SignalAndEventInterfaces</SHORT-NAME>
-              <ELEMENTS>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>VehicleDynamicsSignalSet</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>VehicleSpeed</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>AdasObjectSignalSet</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>TrackedObjects</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>PowertrainStateSignalSet</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>PowertrainState</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>BatteryStateSignalSet</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>BatterySoc</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>DiagEventChannel</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>DtcEvent</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>CyberEventChannel</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>SecurityIncident</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-                <SENDER-RECEIVER-INTERFACE><SHORT-NAME>OtaEventChannel</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>CampaignProgress</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
-              </ELEMENTS>
-            </AR-PACKAGE>
-          </AR-PACKAGES>
-        </AR-PACKAGE>
-        <AR-PACKAGE>
-          <SHORT-NAME>ComponentTypes</SHORT-NAME>
-          <ELEMENTS>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>CentralComputePlatformType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>vehicle_state_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/PremiumEvPlatform/ServiceContracts/ComputeServices/SomeIpVehicleStateService</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>energy_optimizer_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/PremiumEvPlatform/ServiceContracts/ComputeServices/SomeIpEnergyOptimizerService</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>thermal_supervisor_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/PremiumEvPlatform/ServiceContracts/ComputeServices/SomeIpThermalSupervisorService</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>route_energy_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/PremiumEvPlatform/ServiceContracts/ComputeServices/SomeIpRouteEnergyService</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>cyber_policy_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/PremiumEvPlatform/ServiceContracts/ComputeServices/SomeIpCyberPolicyService</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>zonal_body_cmd</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/ZonalActuationCommandInterface</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>adas_objects_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/AdasObjectSignalSet</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>vehicle_dynamics_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/VehicleDynamicsSignalSet</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>battery_state_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/BatteryStateSignalSet</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>ZonalControllerType</SHORT-NAME><PORTS>
-              <R-PORT-PROTOTYPE><SHORT-NAME>body_cmd_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/ZonalActuationCommandInterface</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>diag_events_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/DiagEventChannel</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>PowertrainControlType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>powertrain_state_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/PowertrainStateSignalSet</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>torque_cmd_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/PowertrainTorqueCommandInterface</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>DiagnosticsManagerType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>diag_rw_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/DiagReadWriteInterface</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>diag_events_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/DiagEventChannel</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>OtaManagerType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>ota_control_srv</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/OtaCampaignControlInterface</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <P-PORT-PROTOTYPE><SHORT-NAME>ota_event_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/OtaEventChannel</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>CybersecurityManagerType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>cyber_event_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/CyberEventChannel</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>policy_srv_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/PremiumEvPlatform/ServiceContracts/ComputeServices/SomeIpCyberPolicyService</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>GatewayControllerType</SHORT-NAME><PORTS>
-              <R-PORT-PROTOTYPE><SHORT-NAME>diag_rw_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/DiagReadWriteInterface</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-              <R-PORT-PROTOTYPE><SHORT-NAME>ota_control_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/ControlInterfaces/OtaCampaignControlInterface</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>AdasPerceptionStackType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>objects_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/AdasObjectSignalSet</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>VehicleMotionProviderType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>dynamics_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/VehicleDynamicsSignalSet</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-            <ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>BatteryManagementType</SHORT-NAME><PORTS>
-              <P-PORT-PROTOTYPE><SHORT-NAME>battery_state_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PremiumEvPlatform/ServiceContracts/SignalAndEventInterfaces/BatteryStateSignalSet</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE>
-            </PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
-          </ELEMENTS>
-        </AR-PACKAGE>
-        <AR-PACKAGE>
-          <SHORT-NAME>VehicleArchitecture</SHORT-NAME>
-          <AR-PACKAGES>
-            <AR-PACKAGE><SHORT-NAME>VehicleLevel</SHORT-NAME><ELEMENTS>
-              <COMPOSITION-SW-COMPONENT-TYPE><SHORT-NAME>PremiumEvVehicleComposition</SHORT-NAME><COMPONENTS>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>CentralComputePlatform</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>GatewayController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/GatewayControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>DiagnosticsManager</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/DiagnosticsManagerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>OtaManager</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/OtaManagerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>CybersecurityManager</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CybersecurityManagerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ConnectivityServiceOrchestrator</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ZonalFrontLeft</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ZonalFrontRight</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ZonalRearLeft</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ZonalRearRight</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BodyZonalLightingNode</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BodyZonalDoorNode</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BodyZonalSeatNode</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>PowertrainControlMain</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/PowertrainControlType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>PowertrainControlRedundant</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/PowertrainControlType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>PowertrainEnergyCoordinator</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/PowertrainControlType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>AdasPerceptionStack</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/AdasPerceptionStackType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>AdasPerceptionRedundant</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/AdasPerceptionStackType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>AdasPlanningCoordinator</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/AdasPerceptionStackType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>VehicleMotionProvider</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/VehicleMotionProviderType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ChassisMotionSafetyMonitor</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/VehicleMotionProviderType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ChassisControlArbiter</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/VehicleMotionProviderType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BatteryManagementPrimary</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/BatteryManagementType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BatteryManagementSecondary</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/BatteryManagementType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BatteryThermalBalancer</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/BatteryManagementType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>InfotainmentClusterController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>InfotainmentMediaController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>InfotainmentNavigationController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BodyClimateController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>BodyOccupantComfortController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ConnectivityTelematicsGateway</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/GatewayControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-              </COMPONENTS><CONNECTORS>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>ObjToCentral</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/AdasPerceptionStack</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/AdasPerceptionStackType/objects_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/CentralComputePlatform</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType/adas_objects_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>DynToCentral</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/VehicleMotionProvider</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/VehicleMotionProviderType/dynamics_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/CentralComputePlatform</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType/vehicle_dynamics_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>BatteryToCentral</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/BatteryManagement</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/BatteryManagementType/battery_state_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/CentralComputePlatform</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType/battery_state_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>CentralToZoneFL</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/CentralComputePlatform</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType/zonal_body_cmd</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/ZonalFrontLeft</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType/body_cmd_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>ZoneFLToDiag</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/ZonalFrontLeft</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType/diag_events_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/DiagnosticsManager</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/DiagnosticsManagerType/diag_events_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>DiagToGateway</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/DiagnosticsManager</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/DiagnosticsManagerType/diag_rw_srv</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/GatewayController</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/GatewayControllerType/diag_rw_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>OtaToGateway</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/OtaManager</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/OtaManagerType/ota_control_srv</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/GatewayController</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/GatewayControllerType/ota_control_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-                <ASSEMBLY-SW-CONNECTOR><SHORT-NAME>PolicyToCyber</SHORT-NAME><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/CentralComputePlatform</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType/cyber_policy_srv</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/PremiumEvPlatform/VehicleArchitecture/VehicleLevel/PremiumEvVehicleComposition/CybersecurityManager</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/PremiumEvPlatform/ComponentTypes/CybersecurityManagerType/policy_srv_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
-              </CONNECTORS></COMPOSITION-SW-COMPONENT-TYPE>
-            </ELEMENTS></AR-PACKAGE>
-            <AR-PACKAGE><SHORT-NAME>ZonalPartitions</SHORT-NAME><ELEMENTS>
-              <COMPOSITION-SW-COMPONENT-TYPE><SHORT-NAME>FrontZoneComposition</SHORT-NAME><COMPONENTS>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>FrontZoneController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>FrontThermalNode</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-              </COMPONENTS></COMPOSITION-SW-COMPONENT-TYPE>
-              <COMPOSITION-SW-COMPONENT-TYPE><SHORT-NAME>RearZoneComposition</SHORT-NAME><COMPONENTS>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>RearZoneController</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>RearComfortNode</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/ZonalControllerType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-              </COMPONENTS></COMPOSITION-SW-COMPONENT-TYPE>
-            </ELEMENTS></AR-PACKAGE>
-            <AR-PACKAGE><SHORT-NAME>FunctionalDomains</SHORT-NAME><ELEMENTS>
-              <COMPOSITION-SW-COMPONENT-TYPE><SHORT-NAME>EnergyAndThermalComposition</SHORT-NAME><COMPONENTS>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>EnergySupervisor</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-                <SW-COMPONENT-PROTOTYPE><SHORT-NAME>ThermalSupervisor</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/PremiumEvPlatform/ComponentTypes/CentralComputePlatformType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
-              </COMPONENTS></COMPOSITION-SW-COMPONENT-TYPE>
-            </ELEMENTS></AR-PACKAGE>
-          </AR-PACKAGES>
-        </AR-PACKAGE>
-      </AR-PACKAGES>
-    </AR-PACKAGE>
-  </AR-PACKAGES>
-</AUTOSAR>`;
-  buildModel(parseARXML(sample));
-  hideDrop();
-  nav("vehicle");
+
+function inferDomain(name){const t=(name||"").toLowerCase();const map={Powertrain:["battery","power","inverter","charge","thermal"],Chassis:["brake","steer","motion","chassis"],Body:["zonal","body","door","seat","hvac"],ADAS:["adas","camera","radar","perception"],Infotainment:["hmi","cockpit","ivi","media"],Connectivity:["gateway","diag","ota","cyber","compute"]};for(const d of Object.keys(map))if(map[d].some(k=>t.includes(k)))return d;return"Connectivity"}
+function buildModel(input){
+  const seen=new Set();
+  model.components=input.components.filter(c=>!seen.has(c.name)&&(seen.add(c.name),true));
+  model.interfaces=input.interfaces||[];
+  model.connections=(input.connections||[]).filter(c=>c.from&&c.to&&c.label);
+  model.domains={};
+  model.components.forEach(c=>{
+    const mapped=(c.metadata&&c.metadata.domain)|| (c.context?.pkgPath||[]).find(p=>DMETA[p]) || null;
+    const inferred=!mapped;
+    c.domain=mapped||inferDomain(c.name);
+    c.domainSource=inferred?"inferred":"explicit";
+    (model.domains[c.domain]||(model.domains[c.domain]=[])).push(c);
+  });
 }
-document.getElementById("cvs").addEventListener("dragover",e=>e.preventDefault()),document.getElementById("cvs").addEventListener("drop",e=>{e.preventDefault(),handleFiles(e.dataTransfer.files)}),"undefined"==typeof d3&&(document.getElementById("dropZ").innerHTML='<div style="text-align:center;padding:60px"><h3 style="color:#E8655A;font-size:18px">Failed to load D3.js</h3><p style="color:#5E5C6A;margin-top:8px;font-size:13px">Please check your internet connection and reload the page.</p></div>');
+
+function handleFiles(files){if(!files||!files.length)return;const agg={components:[],interfaces:[],connections:[]};let done=0;Array.from(files).forEach(f=>{const r=new FileReader;r.onload=e=>{const p=parseARXML(e.target.result);agg.components.push(...p.components);agg.interfaces.push(...p.interfaces);agg.connections.push(...p.connections);if(++done===files.length){buildModel(agg);if(!model.components.length)return alert("No AUTOSAR components found.");hideDrop();nav("vehicle");}};r.readAsText(f);});}
+function nav(l,d){level=l;if(l==="vehicle"){curDom=null;selComp=null;renderVehicle();}else{curDom=d;selComp=null;renderDomain(d);}document.getElementById("btnBack").style.display=l==="vehicle"?"none":"inline-block";updBC();updStatus();renderSide();}
+function goBack(){if(level==="domain")nav("vehicle");}
+function updBC(){const bc=document.getElementById("bc");bc.innerHTML=`<span class="cr ${level==='vehicle'?'act':''}" onclick="nav('vehicle')">Vehicle</span>${curDom?`<span class="cs">›</span><span class="cr ${level==='domain'?'act':''}">${curDom}</span>`:''}`;}
+function updStatus(){document.getElementById("stL").textContent=`${model.components.length} components · ${model.connections.length} connections · ${model.interfaces.length} interfaces · ${Object.keys(model.domains).length} domains`;}
+function hideDrop(){document.getElementById("dropZ").classList.add("hid");document.getElementById("view").style.display="block";document.getElementById("legend").style.display="flex";}
+function showDrop(){document.getElementById("dropZ").classList.remove("hid");document.getElementById("view").style.display="none";document.getElementById("legend").style.display="none";}
+
+function renderVehicle(){document.getElementById("legend").style.display="none";const v=document.getElementById("view");const keys=Object.keys(DMETA).filter(d=>model.domains[d]?.length);v.innerHTML=`<div class="vview"><div class="ani" style="text-align:center"><div class="vt">Vehicle Architecture</div><div class="vs">${model.components.length} components across ${keys.length} domains</div></div><div class="dgrid">${keys.map((d,ix)=>{const meta=DMETA[d],arr=model.domains[d],cross=model.connections.filter(c=>{const fd=model.components.find(x=>x.name===c.from)?.domain;const td=model.components.find(x=>x.name===c.to)?.domain;return (fd===d&&td!==d)||(td===d&&fd!==d);});return `<div class="dcard ani d${ix+1}" data-c="${meta.c}" onclick="nav('domain','${d}')"><span class="dico">${meta.icon}</span><div class="dname">${d}</div><div class="dcnt">${arr.length} components · ${cross.length} cross-domain links</div><div>${arr.map(c=>`<span class='dtag'>${c.name}</span>`).join('')}</div></div>`;}).join('')}</div></div>`;}
+
+function renderDomain(domain){
+  document.getElementById("legend").style.display="flex";const t=document.getElementById("view");t.innerHTML='<svg id="dsvg" width="100%" height="100%"></svg>';
+  const local=model.domains[domain]||[]; if(!local.length) return;
+  const names=new Set(local.map(c=>c.name)); const ex=model.connections.filter(c=>names.has(c.from)||names.has(c.to));
+  const allNames=new Set(); ex.forEach(c=>{allNames.add(c.from);allNames.add(c.to)});
+  const nodes=[...Array.from(allNames).map(n=>{const c=model.components.find(x=>x.name===n);return {...c,ghost:!names.has(n)};})];
+  const svg=d3.select("#dsvg"); svg.selectAll("*").remove(); const g=svg.append("g");
+  svg.call(d3.zoom().on("zoom",e=>g.attr("transform",e.transform)));
+  const nx=new Map(); nodes.forEach((n,i)=>{n._x=120+240*(i%4); n._y=80+160*Math.floor(i/4); nx.set(n.name,n);});
+  ex.forEach(c=>{const s=nx.get(c.from),d=nx.get(c.to); if(!s||!d)return; g.append("line").attr("x1",s._x).attr("y1",s._y).attr("x2",d._x).attr("y2",d._y).attr("stroke",c.type==='event'?'#4A90D9':c.type==='field'?'#9B8FD4':'#1A1A1A').attr("stroke-dasharray",c.type==='event'?'4 3':c.type==='field'?'2 2':'none').attr("opacity",0.5); g.append("text").attr("x",(s._x+d._x)/2).attr("y",(s._y+d._y)/2-4).attr("font-size",8).text(c.label+(c.inferred?'*':''));});
+  nodes.forEach(n=>{const card=g.append("g").attr("transform",`translate(${n._x-90},${n._y-36})`).on("click",()=>{selComp=model.components.find(c=>c.name===n.name);renderSide();}); card.append("rect").attr("width",180).attr("height",72).attr("rx",8).attr("fill",n.ghost?'#F9F6F0':'#fff').attr("stroke",(DMETA[n.domain]||{color:'#aaa'}).color); card.append("text").attr("x",90).attr("y",20).attr("text-anchor","middle").attr("font-size",11).text(n.name); card.append("text").attr("x",90).attr("y",36).attr("text-anchor","middle").attr("font-size",8).attr("fill","#7A7468").text(`${n.domain}${n.domainSource==='inferred'?' (inferred)':''}`);});
+}
+
+function setTab(t){tab=t;document.querySelectorAll('.stab').forEach(b=>b.classList.toggle('act',b.dataset.t===t));renderSide();}
+function renderSide(){
+  const sb=document.getElementById('sb');
+  if(tab==='tree'){ sb.innerHTML=`<div class='sec'><div class='sth'>Architecture Tree</div>${Object.keys(model.domains).map(d=>`<div style='margin-bottom:8px'><div style='font-weight:700;cursor:pointer' onclick="nav('domain','${d}')">${(DMETA[d]||{icon:'📦'}).icon} ${d}</div>${(model.domains[d]||[]).map(c=>`<div class='tree-item' onclick="selComp=model.components.find(x=>x.name==='${c.name}');setTab('detail')">${c.name}</div>`).join('')}</div>`).join('')}</div>`; return; }
+  if(tab==='arxml'){ sb.innerHTML=selComp?.arxml?`<div class='ax-bar'><span>${selComp.name}</span></div><pre class='ax-code'>${escH(fmtXml(selComp.arxml))}</pre>`:`<div style='padding:24px'>Select a component to view ARXML</div>`; return; }
+  if(!selComp){ sb.innerHTML=`<div style='padding:24px'>Click a component to see details.</div>`; return; }
+  const out=model.connections.filter(c=>c.from===selComp.name),inc=model.connections.filter(c=>c.to===selComp.name);
+  sb.innerHTML=`<div class='dh'><div class='dn'>${selComp.name}</div><div class='dt'>${selComp.type||''}</div><div class='dd' style='background:${(DMETA[selComp.domain]||{color:'#aaa'}).color}18'>${(DMETA[selComp.domain]||{icon:'📦'}).icon} ${selComp.domain}${selComp.domainSource==='inferred'?' (inferred)':''}</div></div>
+  <div class='sec'><div class='sth'>Metadata</div><div class='conn-chip'>Role: ${selComp.metadata?.role||'—'}</div><div class='conn-chip'>Placement: ${selComp.metadata?.placement||`${selComp.metadata?.ecu||'—'}/${selComp.metadata?.partition||'—'}`}</div><div class='conn-chip'>Safety: ${(selComp.metadata?.safety||[]).join(', ')||'—'} · Security: ${(selComp.metadata?.security||[]).join(', ')||'—'}</div></div>
+  <div class='sec'><div class='sth'>Connections</div>${out.map(c=>`<div class='conn-chip'>→ ${c.to} (${c.label}${c.inferred?'*':''})</div>`).join('')}${inc.map(c=>`<div class='conn-chip'>← ${c.from} (${c.label}${c.inferred?'*':''})</div>`).join('')}</div>`;
+}
+function escH(x){const d=document.createElement('div');d.textContent=x;return d.innerHTML;}
+function fmtXml(xml){let out='',pad=0;xml.replace(/></g,'>\n<').split('\n').forEach(l=>{l=l.trim();if(!l)return;if(l.startsWith('</'))pad=Math.max(0,pad-1);out+='  '.repeat(pad)+l+'\n';if(l.startsWith('<')&&!l.startsWith('</')&&!l.endsWith('/>')&&!l.includes('</'))pad++;});return out;}
+function loadSample(){buildModel(scenarioModel());hideDrop();nav('vehicle');}
+
+const fIn=document.getElementById('fIn'); if(fIn) fIn.addEventListener('change',()=>handleFiles(fIn.files));
