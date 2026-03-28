@@ -195,3 +195,107 @@ function buildModel(e){const t=new Set;model.components=e.components.filter(e=>!
   nav("vehicle");
 }
 document.getElementById("cvs").addEventListener("dragover",e=>e.preventDefault()),document.getElementById("cvs").addEventListener("drop",e=>{e.preventDefault(),handleFiles(e.dataTransfer.files)}),"undefined"==typeof d3&&(document.getElementById("dropZ").innerHTML='<div style="text-align:center;padding:60px"><h3 style="color:#E8655A;font-size:18px">Failed to load D3.js</h3><p style="color:#5E5C6A;margin-top:8px;font-size:13px">Please check your internet connection and reload the page.</p></div>');
+
+/* Guided demo overlay (client-side only) */
+(function(){
+  const COMPLEX_DEMO_SAMPLE=`<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0"><AR-PACKAGES><AR-PACKAGE><SHORT-NAME>VehicleSystem</SHORT-NAME><AR-PACKAGES>
+<AR-PACKAGE><SHORT-NAME>Interfaces</SHORT-NAME><ELEMENTS>
+<SERVICE-INTERFACE><SHORT-NAME>DiagEventService</SHORT-NAME><EVENTS><EVENT><SHORT-NAME>OnDtcUpdate</SHORT-NAME></EVENT></EVENTS></SERVICE-INTERFACE>
+<SENDER-RECEIVER-INTERFACE><SHORT-NAME>VehicleDynamicsBus</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>VehicleSpeedKph</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
+<SENDER-RECEIVER-INTERFACE><SHORT-NAME>PerceptionObjectList</SHORT-NAME><DATA-ELEMENTS><DATA-ELEMENT-PROTOTYPE><SHORT-NAME>TrackedObjects</SHORT-NAME></DATA-ELEMENT-PROTOTYPE></DATA-ELEMENTS></SENDER-RECEIVER-INTERFACE>
+<CLIENT-SERVER-INTERFACE><SHORT-NAME>AdasFusionControl</SHORT-NAME><OPERATIONS><OPERATION-PROTOTYPE><SHORT-NAME>RequestTrajectory</SHORT-NAME></OPERATION-PROTOTYPE></OPERATIONS></CLIENT-SERVER-INTERFACE>
+<SERVICE-INTERFACE><SHORT-NAME>CloudDtcUpload</SHORT-NAME><EVENTS><EVENT><SHORT-NAME>OnCloudUploadReady</SHORT-NAME></EVENT></EVENTS></SERVICE-INTERFACE>
+<SERVICE-INTERFACE><SHORT-NAME>FleetAnalyticsFeed</SHORT-NAME><FIELDS><FIELD><SHORT-NAME>AnomalyScore</SHORT-NAME></FIELD></FIELDS></SERVICE-INTERFACE>
+</ELEMENTS></AR-PACKAGE>
+<AR-PACKAGE><SHORT-NAME>Components</SHORT-NAME><ELEMENTS>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>VehicleMotionProviderType</SHORT-NAME><PORTS><P-PORT-PROTOTYPE><SHORT-NAME>dyn_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/VehicleSystem/Interfaces/VehicleDynamicsBus</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>PowertrainCoordinatorType</SHORT-NAME><PORTS><R-PORT-PROTOTYPE><SHORT-NAME>dyn_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/VehicleSystem/Interfaces/VehicleDynamicsBus</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE><P-PORT-PROTOTYPE><SHORT-NAME>diag_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/VehicleSystem/Interfaces/DiagEventService</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>RadarPerceptionType</SHORT-NAME><PORTS><P-PORT-PROTOTYPE><SHORT-NAME>objects_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/VehicleSystem/Interfaces/PerceptionObjectList</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>AdasDecisionType</SHORT-NAME><PORTS><R-PORT-PROTOTYPE><SHORT-NAME>objects_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/VehicleSystem/Interfaces/PerceptionObjectList</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE><R-PORT-PROTOTYPE><SHORT-NAME>dyn_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/VehicleSystem/Interfaces/VehicleDynamicsBus</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE><P-PORT-PROTOTYPE><SHORT-NAME>fusion_ctrl</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/VehicleSystem/Interfaces/AdasFusionControl</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>TelematicsGatewayType</SHORT-NAME><PORTS><R-PORT-PROTOTYPE><SHORT-NAME>diag_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/VehicleSystem/Interfaces/DiagEventService</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE><P-PORT-PROTOTYPE><SHORT-NAME>upload_out</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/VehicleSystem/Interfaces/CloudDtcUpload</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>CloudBridgeType</SHORT-NAME><PORTS><R-PORT-PROTOTYPE><SHORT-NAME>upload_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/VehicleSystem/Interfaces/CloudDtcUpload</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE><P-PORT-PROTOTYPE><SHORT-NAME>fleet_feed</SHORT-NAME><PROVIDED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/VehicleSystem/Interfaces/FleetAnalyticsFeed</PROVIDED-INTERFACE-TREF></P-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE><SHORT-NAME>PredictiveMaintenanceType</SHORT-NAME><PORTS><R-PORT-PROTOTYPE><SHORT-NAME>fleet_in</SHORT-NAME><REQUIRED-INTERFACE-TREF DEST="SERVICE-INTERFACE">/VehicleSystem/Interfaces/FleetAnalyticsFeed</REQUIRED-INTERFACE-TREF></R-PORT-PROTOTYPE></PORTS></ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE>
+<COMPOSITION-SW-COMPONENT-TYPE><SHORT-NAME>VehicleEeaComposition</SHORT-NAME><COMPONENTS>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>VehicleMotionProvider</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/VehicleMotionProviderType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>PowertrainCoordinator</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/PowertrainCoordinatorType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>RadarPerception</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/RadarPerceptionType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>AdasDecision</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/AdasDecisionType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>TelematicsGateway</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/TelematicsGatewayType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>CloudBridge</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/CloudBridgeType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+<SW-COMPONENT-PROTOTYPE><SHORT-NAME>PredictiveMaintenance</SHORT-NAME><TYPE-TREF DEST="ADAPTIVE-APPLICATION-SW-COMPONENT-TYPE">/VehicleSystem/Components/PredictiveMaintenanceType</TYPE-TREF></SW-COMPONENT-PROTOTYPE>
+</COMPONENTS><CONNECTORS>
+<ASSEMBLY-SW-CONNECTOR><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/VehicleMotionProvider</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/VehicleSystem/Components/VehicleMotionProviderType/dyn_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/PowertrainCoordinator</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/VehicleSystem/Components/PowertrainCoordinatorType/dyn_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
+<ASSEMBLY-SW-CONNECTOR><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/RadarPerception</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/VehicleSystem/Components/RadarPerceptionType/objects_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/AdasDecision</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/VehicleSystem/Components/AdasDecisionType/objects_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
+<ASSEMBLY-SW-CONNECTOR><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/VehicleMotionProvider</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/VehicleSystem/Components/VehicleMotionProviderType/dyn_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/AdasDecision</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/VehicleSystem/Components/AdasDecisionType/dyn_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
+<ASSEMBLY-SW-CONNECTOR><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/PowertrainCoordinator</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/VehicleSystem/Components/PowertrainCoordinatorType/diag_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/TelematicsGateway</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/VehicleSystem/Components/TelematicsGatewayType/diag_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
+<ASSEMBLY-SW-CONNECTOR><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/TelematicsGateway</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/VehicleSystem/Components/TelematicsGatewayType/upload_out</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/CloudBridge</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/VehicleSystem/Components/CloudBridgeType/upload_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
+<ASSEMBLY-SW-CONNECTOR><PROVIDER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/CloudBridge</CONTEXT-COMPONENT-REF><TARGET-P-PORT-REF DEST="P-PORT-PROTOTYPE">/VehicleSystem/Components/CloudBridgeType/fleet_feed</TARGET-P-PORT-REF></PROVIDER-IREF><REQUESTER-IREF><CONTEXT-COMPONENT-REF DEST="SW-COMPONENT-PROTOTYPE">/VehicleSystem/Components/VehicleEeaComposition/PredictiveMaintenance</CONTEXT-COMPONENT-REF><TARGET-R-PORT-REF DEST="R-PORT-PROTOTYPE">/VehicleSystem/Components/PredictiveMaintenanceType/fleet_in</TARGET-R-PORT-REF></REQUESTER-IREF></ASSEMBLY-SW-CONNECTOR>
+</CONNECTORS></COMPOSITION-SW-COMPONENT-TYPE></ELEMENTS></AR-PACKAGE>
+</AR-PACKAGES></AR-PACKAGE></AR-PACKAGES></AUTOSAR>`;
+
+  let demoState={active:false,step:0,steps:[]};
+  function ensureDemoStyles(){
+    if(document.getElementById('guided-demo-style')) return;
+    const st=document.createElement('style'); st.id='guided-demo-style';
+    st.textContent='.guided-demo{position:absolute;z-index:40;max-width:300px;background:#fff;border:1px solid #DDD6C8;border-radius:12px;padding:12px 13px;box-shadow:0 14px 40px rgba(0,0,0,.20)}.guided-demo h4{font-size:12px;margin-bottom:4px}.guided-demo p{font-size:11px;line-height:1.45;color:#4A4540}.guided-demo .meta{font-family:"Space Mono",monospace;font-size:9px;color:#7A7468;margin-bottom:6px}.guided-demo .row{display:flex;gap:6px;justify-content:flex-end;margin-top:9px}.guided-demo button{padding:4px 8px;border:1px solid #DDD6C8;background:#fff;border-radius:6px;font-size:10px;cursor:pointer}.guided-demo button.primary{background:#C45A20;border-color:#C45A20;color:#111}.demo-anchor{position:absolute;z-index:35;padding:3px 7px;background:rgba(196,90,32,.92);color:#fff;border-radius:999px;font-size:9px;font-family:"Space Mono",monospace;pointer-events:none}';
+    document.head.appendChild(st);
+  }
+  function findNodeAnchor(name){
+    const svg=document.querySelector('#view svg');
+    if(!svg) return null;
+    const texts=[...svg.querySelectorAll('text')];
+    const t=texts.find(x=>x.textContent===name)||texts.find(x=>name.startsWith((x.textContent||'').replace('…','')));
+    if(!t) return null;
+    const r=t.getBoundingClientRect();
+    const c=document.getElementById('cvs').getBoundingClientRect();
+    return {x:r.left-c.left+r.width/2,y:r.top-c.top+r.height/2};
+  }
+  function focusComponent(name){
+    const c=(model.components||[]).find(x=>x.name===name);
+    if(!c) return;
+    curDom=c.domain||curDom;
+    selComp=c;
+    if(typeof nav==='function') nav('domain',curDom);
+    setTab('detail');
+    renderSide();
+  }
+  function showStep(){
+    removeOverlay();
+    const step=demoState.steps[demoState.step];
+    if(!step) return endGuidedDemo();
+    if(step.focus) focusComponent(step.focus);
+    const cvs=document.getElementById('cvs');
+    const card=document.createElement('div'); card.className='guided-demo';
+    card.style.right='16px'; card.style.top='16px';
+    card.innerHTML=`<div class="meta">Guided Demo • Step ${demoState.step+1}/${demoState.steps.length}</div><h4>${step.title}</h4><p>${step.body}</p><div class="row"><button onclick="guidedDemoPrev()">Back</button><button onclick="guidedDemoNext()" class="primary">${demoState.step===demoState.steps.length-1?'Finish':'Next'}</button></div>`;
+    cvs.appendChild(card);
+    if(step.focus){
+      const pos=findNodeAnchor(step.focus);
+      if(pos){
+        const chip=document.createElement('div'); chip.className='demo-anchor';
+        chip.style.left=(pos.x+10)+'px'; chip.style.top=(pos.y-8)+'px';
+        chip.textContent='Focus: '+step.focus;
+        cvs.appendChild(chip);
+      }
+    }
+  }
+  function removeOverlay(){document.querySelectorAll('.guided-demo,.demo-anchor').forEach(n=>n.remove())}
+  window.guidedDemoNext=function(){demoState.step++;showStep()};
+  window.guidedDemoPrev=function(){demoState.step=Math.max(0,demoState.step-1);showStep()};
+  window.endGuidedDemo=function(){demoState.active=false;removeOverlay();document.getElementById('stL').textContent='Guided demo complete'};
+  window.loadComplexSample=function(){buildModel(parseARXML(COMPLEX_DEMO_SAMPLE));hideDrop();nav('vehicle')};
+  window.startGuidedDemo=function(){
+    ensureDemoStyles();
+    loadComplexSample();
+    demoState={active:true,step:0,steps:[
+      {title:'Orientation: multi-domain architecture',body:'This scenario adds cloud analytics and predictive maintenance on top of powertrain, ADAS, and telematics flows. Use it to inspect cross-domain dependencies.',focus:'PowertrainCoordinator'},
+      {title:'Trace DTC pipeline to cloud',body:'Follow DiagEventService from PowertrainCoordinator → TelematicsGateway and then CloudDtcUpload into CloudBridge. The side panel shows producers and consumers.',focus:'TelematicsGateway'},
+      {title:'Inspect ADAS dependency chain',body:'AdasDecision consumes both PerceptionObjectList and VehicleDynamicsBus. This highlights fusion dependencies that can affect lane/trajectory behavior.',focus:'AdasDecision'},
+      {title:'Check telematics cloud edge',body:'CloudBridge republishes FleetAnalyticsFeed for PredictiveMaintenance. Validate where edge gateway responsibilities end and cloud analytics begins.',focus:'CloudBridge'},
+      {title:'Inspect side-panel port details',body:'Review provided/required ports for the focused component in Details to confirm interface contracts and directionality.',focus:'PredictiveMaintenance'},
+      {title:'Impact mindset before editing',body:'In the editor demo you will rename an interface and immediately see impacted links and a before/after impact summary—fully client-side with no data upload.',focus:'PowertrainCoordinator'}
+    ]};
+    showStep();
+  };
+})();

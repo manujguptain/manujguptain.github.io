@@ -144,3 +144,114 @@ function downloadARXML(){if(allComps().length){var e=new Blob([generateARXML()],
   selId=null;nav("vehicle");
 }
 "undefined"==typeof d3&&(document.getElementById("rpBody").innerHTML='<div style="padding:30px 14px;text-align:center;color:var(--coral);font-size:11px">Failed to load D3.js. Check internet connection.</div>'),renderVehicle(),renderPanel(),updStatus();
+/* Guided demo overlay + impact summary (client-side only) */
+(function(){
+  let demo={active:false,step:0,steps:[],impact:null};
+  function ensureStyles(){
+    if(document.getElementById('editor-guided-style')) return;
+    const st=document.createElement('style'); st.id='editor-guided-style';
+    st.textContent='.guided-demo{position:absolute;z-index:45;max-width:320px;background:#fff;border:1px solid #DDD6C8;border-radius:12px;padding:12px 13px;box-shadow:0 14px 40px rgba(0,0,0,.20)}.guided-demo h4{font-size:12px;margin-bottom:4px}.guided-demo p{font-size:11px;line-height:1.45;color:#4A4540}.guided-demo .meta{font-family:"Space Mono",monospace;font-size:9px;color:#7A7468;margin-bottom:6px}.guided-demo .row{display:flex;gap:6px;justify-content:flex-end;margin-top:9px}.guided-demo button{padding:4px 8px;border:1px solid #DDD6C8;background:#fff;border-radius:6px;font-size:10px;cursor:pointer}.guided-demo button.primary{background:#C45A20;border-color:#C45A20;color:#111}.demo-anchor{position:absolute;z-index:41;padding:3px 7px;background:rgba(26,138,106,.93);color:#fff;border-radius:999px;font-size:9px;font-family:"Space Mono",monospace;pointer-events:none}.impact-box{margin:10px 14px;padding:10px;border:1px solid rgba(26,138,106,.22);background:rgba(26,138,106,.06);border-radius:8px}.impact-box h5{font-size:10px;color:#1A8A6A;margin-bottom:5px}.impact-box .line{font-size:10px;line-height:1.5;color:#4A4540}';
+    document.head.appendChild(st);
+  }
+  function findNodePos(name){
+    const svg=document.getElementById('svg'); if(!svg) return null;
+    const texts=[...svg.querySelectorAll('text')];
+    const t=texts.find(x=>x.textContent===name)||texts.find(x=>name.startsWith((x.textContent||'').replace('…','')));
+    if(!t) return null;
+    const r=t.getBoundingClientRect(),c=document.getElementById('cvs').getBoundingClientRect();
+    return {x:r.left-c.left+r.width/2,y:r.top-c.top+r.height/2};
+  }
+  function focusByName(name){
+    const c=allComps().find(x=>x.name===name); if(!c) return;
+    selId=c.id; const dom=Object.keys(domains).find(d=>(domains[d]||[]).some(k=>k.id===c.id));
+    if(dom){curDom=dom;level='domain';}
+    tab='edit';
+    document.querySelectorAll('.rtb').forEach(b=>b.classList.toggle('act',b.dataset.t==='edit'));
+    renderVehicle(); renderPanel(); updBC && updBC();
+  }
+  function renderImpactBox(){
+    const host=document.getElementById('rpBody');
+    host.querySelectorAll('.impact-box').forEach(n=>n.remove());
+    if(!demo.impact) return;
+    const div=document.createElement('div'); div.className='impact-box';
+    div.innerHTML=`<h5>Before / After Change Impact</h5>
+      <div class="line"><strong>Before:</strong> ${demo.impact.before} connected ${demo.impact.beforeLinks} link(s).</div>
+      <div class="line"><strong>After:</strong> ${demo.impact.after} connected ${demo.impact.afterLinks} link(s).</div>
+      <div class="line"><strong>Affected components:</strong> ${demo.impact.affected.join(', ')}</div>`;
+    host.prepend(div);
+  }
+  function renameInterfaceWithImpact(compName,oldIface,newIface){
+    const beforeLinks=connections.filter(c=>c.label===oldIface).length;
+    const affectedSet=new Set();
+    allComps().forEach(c=>{
+      c.provided.forEach(p=>{if(p.iface===oldIface){p.iface=newIface;affectedSet.add(c.name);}});
+      c.required.forEach(p=>{if(p.iface===oldIface){p.iface=newIface;affectedSet.add(c.name);}});
+    });
+    connections.forEach(c=>{if(c.label===oldIface)c.label=newIface;});
+    demo.impact={before:oldIface,after:newIface,beforeLinks:beforeLinks,afterLinks:connections.filter(c=>c.label===newIface).length,affected:[...affectedSet]};
+    const focus=allComps().find(c=>c.name===compName); if(focus) selId=focus.id;
+    renderVehicle(); renderPanel(); renderImpactBox();
+  }
+  function clearOverlay(){document.querySelectorAll('.guided-demo,.demo-anchor').forEach(n=>n.remove())}
+  function showStep(){
+    clearOverlay();
+    const s=demo.steps[demo.step];
+    if(!s) return endGuidedDemo();
+    if(s.focus) focusByName(s.focus);
+    if(typeof s.run==='function') s.run();
+    const card=document.createElement('div'); card.className='guided-demo';
+    card.style.right='12px'; card.style.top='12px';
+    card.innerHTML=`<div class="meta">Guided Demo • Step ${demo.step+1}/${demo.steps.length}</div><h4>${s.title}</h4><p>${s.body}</p><div class="row"><button onclick="guidedDemoPrev()">Back</button><button onclick="guidedDemoNext()" class="primary">${demo.step===demo.steps.length-1?'Finish':'Next'}</button></div>`;
+    document.getElementById('cvs').appendChild(card);
+    if(s.focus){
+      const pos=findNodePos(s.focus);
+      if(pos){
+        const chip=document.createElement('div'); chip.className='demo-anchor';
+        chip.style.left=(pos.x+8)+'px'; chip.style.top=(pos.y-10)+'px';
+        chip.textContent='Focus: '+s.focus;
+        document.getElementById('cvs').appendChild(chip);
+      }
+    }
+    if(demo.impact) renderImpactBox();
+  }
+
+  window.guidedDemoNext=function(){demo.step++;showStep()};
+  window.guidedDemoPrev=function(){demo.step=Math.max(0,demo.step-1);showStep()};
+  window.endGuidedDemo=function(){demo.active=false;clearOverlay();document.getElementById('stL').textContent='Guided demo complete';};
+
+  window.loadComplexScenario=function(){
+    loadStarter();
+    const adasHub=addComponent('ADAS','AdasFusionHub',[{name:'fusion_out',iface:'AdasFusionControl'}],[{name:'objects_in',iface:'PerceptionObjectList'},{name:'dyn_in',iface:'VehicleDynamicsBus'}]);
+    const cloudBridge=addComponent('Connectivity','CloudBridge',[{name:'fleet_feed',iface:'FleetAnalyticsFeed'}],[{name:'upload_in',iface:'CloudDtcUpload'}]);
+    const predMaint=addComponent('Connectivity','PredictiveMaintenance',[],[{name:'fleet_in',iface:'FleetAnalyticsFeed'}]);
+    const tcu=allComps().find(c=>c.name==='TelematicsGateway');
+    const pwr=allComps().find(c=>c.name==='PowertrainCoordinator');
+    const radar=allComps().find(c=>c.name==='RadarPerception');
+    if(tcu && !tcu.provided.find(p=>p.iface==='CloudDtcUpload')) tcu.provided.push({name:'upload_out',iface:'CloudDtcUpload'});
+    if(pwr && !pwr.provided.find(p=>p.iface==='DtcBurstEvent')) pwr.provided.push({name:'dtc_burst',iface:'DtcBurstEvent'});
+    if(radar && !radar.provided.find(p=>p.iface==='PerceptionObjectList')) radar.provided.push({name:'objects_out',iface:'PerceptionObjectList'});
+    addConnection(pwr.id,tcu.id,'DiagEventService','event');
+    addConnection(tcu.id,cloudBridge,'CloudDtcUpload','event');
+    addConnection(cloudBridge,predMaint,'FleetAnalyticsFeed','field');
+    addConnection(radar.id,adasHub,'PerceptionObjectList','event');
+    const motion=allComps().find(c=>c.name==='VehicleMotionProvider');
+    if(motion) addConnection(motion.id,adasHub,'VehicleDynamicsBus','event');
+    selId=null; nav('vehicle');
+  };
+
+  window.startGuidedDemo=function(){
+    ensureStyles(); demo.impact=null; loadComplexScenario();
+    demo={active:true,step:0,impact:null,steps:[
+      {title:'Load complex cross-domain scenario',body:'The guided demo starts from starter data and extends it with cloud bridge + predictive maintenance to show end-to-end dependency reasoning.',focus:'PowertrainCoordinator'},
+      {title:'Trace DTC event path',body:'Inspect how DiagEventService leaves powertrain, arrives at TelematicsGateway, and continues through CloudDtcUpload to CloudBridge.',focus:'TelematicsGateway'},
+      {title:'Review ADAS dependency chain',body:'AdasFusionHub requires both PerceptionObjectList and VehicleDynamicsBus. This demonstrates how sensor and motion data converge.',focus:'AdasFusionHub'},
+      {title:'Inline details callout',body:'Use the Edit panel to inspect provided/required ports for the focused node. Tooltips stay anchored to the current canvas node while details update.',focus:'CloudBridge'},
+      {title:'Modify interface and watch links update',body:'We now rename DiagEventService → DtcBurstEvent to demonstrate change propagation across ports and connectors.',focus:'PowertrainCoordinator',run:()=>renameInterfaceWithImpact('PowertrainCoordinator','DiagEventService','DtcBurstEvent')},
+      {title:'Before/After impact summary',body:'The side panel now shows impacted links and components after rename, demonstrating editor power while staying fully local and private.',focus:'TelematicsGateway'}
+    ]};
+    showStep();
+  };
+
+  const originalRenderPanel=renderPanel;
+  renderPanel=function(){ originalRenderPanel(); if(demo.active && demo.impact) renderImpactBox(); };
+})();
