@@ -144,12 +144,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);overf
         </div>
       </div>
       <input type="file" id="fIn" multiple accept=".arxml,.xml" style="display:none" onchange="handleFiles(this.files)">
-      <div class="ctrl-bar" id="analysisControls"></div>
       <div id="view" style="height:100%;display:none"></div>
       <div class="legend" id="legend">
         <span><svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="4 3"/></svg> event</span>
         <span><svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="#E8E4DE" stroke-width="1.5"/></svg> method</span>
         <span><svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke="#9B8FD4" stroke-width="1.5" stroke-dasharray="2 2"/></svg> field</span>
+        <span><span style="font-weight:700;color:#1A1A1A">label</span> explicit</span>
+        <span><span style="font-weight:700;color:#1A1A1A">label*</span> inferred</span>
         <span><span class="dot" style="background:var(--teal)"></span> provided</span>
         <span><span class="dot" style="background:var(--blue)"></span> required</span>
       </div>
