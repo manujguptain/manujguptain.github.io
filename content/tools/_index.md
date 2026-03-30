@@ -32,3 +32,14 @@ An interactive simulator for STM32H7 ADC behavior, featuring harmonic distortion
 A 100% client-side visualization tool for Adaptive AUTOSAR architectures. 
 
 [Launch SysCanvas™ &rarr;](/tools/syscanvas/)
+
+
+---
+### [Network Outage Monitor](https://github.com/manujguptain/NetworkOutageMonitor)
+**Type:** Utility | **Status:** New
+ 
+A local Python dashboard that pings three network hops simultaneously — Mesh Node, Router, and ISP — and logs which one is the culprit whenever a drop occurs. Built to catch micro-outages too short for a standard speed test to detect.
+ 
+[View on GitHub &rarr;](https://github.com/manujguptain/NetworkOutageMonitor)
+ 
+---
