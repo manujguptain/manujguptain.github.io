@@ -51,11 +51,11 @@ R&D Leader and Program Manager. I focus on the discipline of delivery—taking c
   weight = 20
 
 
-# [[menu.main]]
-#   identifier = "consulting"
-#   name = "Advisory"
-#   url = "/consulting/"
-#   weight = 40
+ [[menu.main]]
+   identifier = "consulting"
+   name = "Advisory"
+   url = "/consulting/"
+   weight = 40
 
 [[menu.main]]
   identifier = "Notes"
