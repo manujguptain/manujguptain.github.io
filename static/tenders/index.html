@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>India Technology Tender Intelligence</title>
+  <meta name="description" content="Find Indian public-sector technology tenders across software, AI, cybersecurity, cloud, electronics and digital transformation.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">ManujG AI Labs</p>
+      <h1>India Technology Tender Intelligence</h1>
+      <p class="lede">A source-linked starting point for technology opportunities in Indian public procurement.</p>
+    </header>
+    <section class="controls" aria-label="Tender filters">
+      <label>Search <input id="search" type="search" placeholder="software, AI, cybersecurity…"></label>
+      <label>Category <select id="category"><option value="">All categories</option></select></label>
+      <label>Status <select id="status"><option value="">All statuses</option><option value="active">Active</option></select></label>
+    </section>
+    <p id="state" class="state">Loading tender data…</p>
+    <section id="results" class="results" aria-live="polite"></section>
+    <footer>Always verify deadlines and requirements on the official source page.</footer>
+  </main>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

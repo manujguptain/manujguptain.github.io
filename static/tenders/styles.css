@@ -1,0 +1,17 @@
+:root { font-family: system-ui, sans-serif; color: #172033; background: #f6f7fb; }
+body { margin: 0; }
+.shell { max-width: 980px; margin: 0 auto; padding: 48px 20px; }
+.eyebrow { color: #5965d8; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+h1 { max-width: 720px; font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1.02; margin: 12px 0; }
+.lede { color: #5d6678; font-size: 1.15rem; max-width: 680px; }
+.controls { display: flex; flex-wrap: wrap; gap: 14px; background: white; padding: 18px; border: 1px solid #e3e6ef; border-radius: 14px; margin: 32px 0 18px; }
+label { display: grid; gap: 6px; font-weight: 700; font-size: .9rem; flex: 1 1 220px; }
+input, select { padding: 11px 12px; border: 1px solid #cdd3e0; border-radius: 8px; font: inherit; }
+.state { color: #697386; }
+.results { display: grid; gap: 14px; }
+.card { background: white; border: 1px solid #e3e6ef; border-radius: 14px; padding: 18px; }
+.card h2 { font-size: 1.1rem; margin: 0 0 12px; }
+.meta { color: #697386; font-size: .92rem; }
+.badge { display: inline-block; background: #eef0ff; color: #4b56bd; padding: 4px 8px; border-radius: 999px; margin: 4px 4px 0 0; font-size: .8rem; }
+a { color: #4351c7; }
+footer { color: #697386; font-size: .85rem; margin-top: 36px; }
