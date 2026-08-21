@@ -5,42 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="A simple Bengaluru traffic calendar using historical weekday/time patterns plus holidays, long weekends, weather and disruptions.">
   <title>Bengaluru Traffic-Risk Calendar | ManujG AI Labs</title>
-  <link rel="stylesheet" href="./styles.css?v=20260821e">
+  <link rel="stylesheet" href="./styles.css?v=20260821f">
 </head>
 <body>
-  <header class="hero">
-    <div class="wrap">
-      <p class="eyebrow">ManujG AI Labs · Experimental public tool</p>
-      <h1>Bengaluru Traffic-Risk Calendar</h1>
-      <p class="lede">Find the quieter and busier times to travel in your part of Bengaluru. We start with historical Bengaluru traffic patterns by weekday and time, then account for holidays, long weekends, rain and known disruptions.</p>
-      <div class="notice"><strong>No Google traffic data.</strong> Historical traffic backbone uses public TomTom Traffic Index patterns; this is not a route ETA.</div>
-    </div>
-  </header>
-
+  <header class="hero"><div class="wrap"><p class="eyebrow">ManujG AI Labs · Experimental public tool</p><h1>Bengaluru Traffic-Risk Calendar</h1><p class="lede">Find the quieter and busier times to travel in your part of Bengaluru. We start with historical Bengaluru traffic patterns by weekday and time, then account for holidays, long weekends, rain and known disruptions.</p><div class="notice"><strong>No Google traffic data.</strong> Historical traffic backbone uses public TomTom Traffic Index patterns; this is not a route ETA.</div></div></header>
   <main class="wrap">
-    <section class="controls" aria-label="Calendar controls">
-      <label>Area
-        <select id="zoneSelect"></select>
-      </label>
-      <label>Month
-        <select id="monthSelect"></select>
-      </label>
-      <div class="legend" id="legend"></div>
-    </section>
-
-    <section class="summary" id="summary" aria-live="polite"></section>
-    <section class="calendar" id="calendar" aria-label="Traffic risk calendar"></section>
-
-    <section class="method">
-      <h2>How to use this</h2>
-      <div class="method-grid">
-        <div><strong>First: choose the quieter time</strong><span>Each time window shows its typical historical traffic level and an approximate minutes-per-10-km figure. A 6–8 AM window can therefore be clearly better than 8–10 AM even when both are completely normal days.</span></div>
-        <div><strong>Then: check what is different today</strong><span>Public holidays, restricted holidays, school closures, long weekends and weather are treated separately rather than calling every festival a citywide holiday.</span></div>
-        <div><strong>Long weekends change several days</strong><span>Departures can worsen traffic before the break, city traffic can ease while people are away, and return traffic can build on Sunday evening and sometimes Monday morning.</span></div>
-      </div>
-      <p class="fineprint">TomTom's public Bengaluru 2025 citywide weekday/hour travel patterns provide the historical backbone. Area-specific changes are only applied when we have area-specific evidence; we do not invent zone travel-time multipliers. Weather, roadworks, rallies and events become clearer closer to the date.</p>
-    </section>
+    <section class="controls" aria-label="Calendar controls"><label>Area<select id="zoneSelect"></select></label><label>Month<select id="monthSelect"></select></label><div class="legend" id="legend"></div></section>
+    <section class="summary" id="summary" aria-live="polite"></section><section class="calendar" id="calendar" aria-label="Traffic risk calendar"></section>
+    <section class="method"><h2>How to use this</h2><div class="method-grid"><div><strong>Look at the expected traffic first</strong><span>The main label combines the historical pattern with known effects for that date. The normal weekday/time value is shown only as a reference.</span></div><div><strong>Holiday effects start before the holiday</strong><span>The evening before any statewide public holiday can become busier because of early departures, shopping and intercity travel—not only before Friday holidays.</span></div><div><strong>Long weekends affect several days</strong><span>Traffic can rise before people leave, ease while they are away, and rise again on Sunday evening or Monday morning as they return.</span></div></div><p class="fineprint">TomTom's public Bengaluru 2025 citywide weekday/hour travel patterns provide the historical backbone. Area-specific changes are only applied when we have area-specific evidence; we do not invent zone travel-time multipliers.</p></section>
   </main>
-  <script type="module" src="./app.mjs?v=20260821e"></script>
+  <script type="module" src="./app.mjs?v=20260821f"></script>
 </body>
 </html>
