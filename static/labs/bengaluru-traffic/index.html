@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="A simple Bengaluru traffic-risk calendar showing when traffic may be lighter or heavier than usual and why.">
   <title>Bengaluru Traffic-Risk Calendar | ManujG AI Labs</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=20260821c">
 </head>
 <body>
   <header class="hero">
     <div class="wrap">
       <p class="eyebrow">ManujG AI Labs · Experimental public tool</p>
       <h1>Bengaluru Traffic-Risk Calendar</h1>
-      <p class="lede">See when traffic may be lighter or heavier than usual in your part of Bengaluru, and the simple reason why — holidays, rain and other known disruptions.</p>
+      <p class="lede">See when traffic may be lighter or heavier than usual in your part of Bengaluru, and the simple reason why — holidays, long weekends, rain and other known disruptions.</p>
       <div class="notice"><strong>No Google traffic data.</strong> This predicts traffic pressure, not exact travel time.</div>
     </div>
   </header>
@@ -34,13 +34,13 @@
     <section class="method">
       <h2>How to use this</h2>
       <div class="method-grid">
-        <div><strong>Look for the percentage</strong><span>“30% lighter” means we expect less traffic pressure than is usual for that same day and time.</span></div>
-        <div><strong>Read the reason</strong><span>We explain the main known cause in ordinary language, such as a holiday or expected rain.</span></div>
-        <div><strong>Far-away dates can change</strong><span>Holiday patterns are known early. Weather, roadworks, rallies and other events become clearer closer to the day.</span></div>
+        <div><strong>Look for the percentage</strong><span>“20% lighter” means we expect less traffic pressure than is usual for that same weekday and time.</span></div>
+        <div><strong>Holiday type matters</strong><span>A statewide public holiday, a restricted holiday and a school-only closure are treated differently. We do not assume Bengaluru is shut just because a festival appears on a calendar.</span></div>
+        <div><strong>Long weekends have a pattern</strong><span>Traffic can rise before people leave, fall while they are away, and rise again on Sunday evening or Monday morning when they return.</span></div>
       </div>
-      <p class="fineprint">These are experimental estimates, not navigation instructions or exact journey times.</p>
+      <p class="fineprint">These are experimental estimates, not navigation instructions or exact journey times. Weather, roadworks, rallies and events become clearer closer to the day.</p>
     </section>
   </main>
-  <script type="module" src="./app.mjs"></script>
+  <script type="module" src="./app.mjs?v=20260821c"></script>
 </body>
 </html>
