@@ -69,8 +69,8 @@ try{
     }
 
     const fri=precedingFridayHoliday(dateKey),longWeekend=isWeekendHoliday(fri);
-    if(longWeekend&&day===6){factor*=.92;reasons.push('Some residents may still be away for the long weekend, easing city traffic.');}
-    if(longWeekend&&day===0){if(['pm-build','pm-peak','late-event'].includes(windowId)){factor*=1.15;reasons.push('Long-weekend return traffic can make Sunday evening roughly 10–20% heavier.');}else{factor*=.94;reasons.push('Many long-weekend travellers may still be away during the daytime.');}}
+    if(longWeekend&&day===6){factor*=.80;reasons.push('Historical Bengaluru long-weekend patterns show many residents remain away or stay home on Saturday, so inner-city traffic is usually materially lighter than a normal Saturday.');}
+    if(longWeekend&&day===0){if(['pm-build','pm-peak','late-event'].includes(windowId)){factor*=1.15;reasons.push('Long-weekend return traffic can make Sunday evening roughly 10–20% heavier as people re-enter Bengaluru.');}else{factor*=.85;reasons.push('Historical long-weekend patterns show many travellers are still away through Sunday daytime, keeping city traffic materially lighter than a normal Sunday.');}}
     if(longWeekend&&day===1&&['early-am','am-peak'].includes(windowId)){factor*=1.07;reasons.push('Normal Monday commuting resumes while some travellers may still be returning.');}
 
     const weather=weatherByKey.get(`${dateKey}|${windowId}`);
