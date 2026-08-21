@@ -30,6 +30,22 @@ try{
   function isWeekendHoliday(h){return h&&h.longWeekendPotential&&h.longWeekendPotential!=='low';}
   function precedingFridayHoliday(k){const d=weekday(k);if(![0,1,6].includes(d))return null;const shift=d===6?-1:d===0?-2:-3;return holidayByDate.get(addDaysKey(k,shift));}
 
+  function schoolClosureFactor(windowId){
+    if(windowId==='early-am')return 0.94;
+    if(windowId==='am-peak')return 0.90;
+    if(windowId==='late-am')return 0.96;
+    if(windowId==='midday')return 0.98;
+    if(windowId==='pm-build')return 0.94;
+    return 1;
+  }
+
+  function schoolClosureReason(windowId,name){
+    if(windowId==='early-am'||windowId==='am-peak')return `${name} is not a citywide holiday, but some Bengaluru schools are closed. Morning school-drop traffic should be lower while many offices remain open.`;
+    if(windowId==='late-am'||windowId==='midday')return `${name} closes some schools, so school-related trips remain slightly lower, but most normal office and commercial activity can continue.`;
+    if(windowId==='pm-build')return `${name} closes some schools, so afternoon school-pickup traffic should also be lower than on a normal school day.`;
+    return `${name} is not a citywide holiday. By the main evening office peak, school closures alone are not enough to assume substantially lighter traffic.`;
+  }
+
   function adjustments(dateKey,windowId,zoneId){
     let factor=1;const reasons=[];
     const h=holidayByDate.get(dateKey);const tomorrow=holidayByDate.get(addDaysKey(dateKey,1));const day=weekday(dateKey);
@@ -37,8 +53,8 @@ try{
       const pct=['am-peak','pm-peak'].includes(windowId)?-0.20:-0.14;factor*=1+pct;
       reasons.push(`${h.name} is a statewide public holiday, so many routine office, school and government trips will not happen.`);
     }else if(h?.schoolImpact==='partial-confirmed'){
-      if(['early-am','am-peak','late-am'].includes(windowId))factor*=0.92;
-      reasons.push(`${h.name} is not a citywide holiday, but some Bengaluru schools are closed. School-run traffic should be lower while many offices remain open.`);
+      factor*=schoolClosureFactor(windowId);
+      reasons.push(schoolClosureReason(windowId,h.name));
     }else if(h){reasons.push(`${h.name} is a restricted holiday. We are not assuming Bengaluru-wide traffic will fall without broader closure evidence.`);}
 
     if(tomorrow?.governmentStatus==='general'&&['pm-build','pm-peak','late-event'].includes(windowId)){
