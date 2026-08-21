@@ -1,0 +1,29 @@
+{
+  "source": {
+    "name": "TomTom Traffic Index - Bengaluru 2025",
+    "url": "https://www.tomtom.com/traffic-index/city/bengaluru/",
+    "metric": "average travel time in minutes for a 10 km trip",
+    "scope": "Bengaluru citywide; weighted annual averages by weekday and hour",
+    "retrieved": "2026-08-21"
+  },
+  "notes": "Window values are averages of the hourly travel-time values published in TomTom's 2025 weekly driving pattern. Zone factors are explicitly heuristic broad-area modifiers and are not TomTom zone-level measurements.",
+  "weekdayOrder": ["sun","mon","tue","wed","thu","fri","sat"],
+  "windows": {
+    "early-am": {"sun":26.0,"mon":27.5,"tue":28.5,"wed":28.5,"thu":28.5,"fri":28.5,"sat":27.5},
+    "am-peak": {"sun":30.0,"mon":36.5,"tue":37.5,"wed":37.5,"thu":37.5,"fri":36.5,"sat":33.5},
+    "late-am": {"sun":34.0,"mon":40.5,"tue":41.0,"wed":41.0,"thu":42.0,"fri":41.0,"sat":39.0},
+    "midday": {"sun":36.0,"mon":39.3,"tue":39.7,"wed":40.3,"thu":40.7,"fri":39.3,"sat":43.0},
+    "pm-build": {"sun":36.5,"mon":40.5,"tue":40.5,"wed":41.0,"thu":41.5,"fri":41.5,"sat":43.5},
+    "pm-peak": {"sun":36.3,"mon":42.7,"tue":42.3,"wed":43.7,"thu":44.0,"fri":45.0,"sat":44.0},
+    "late-event": {"sun":30.3,"mon":31.0,"tue":31.0,"wed":32.0,"thu":33.0,"fri":34.3,"sat":34.7}
+  },
+  "zoneTravelTimeFactors": {
+    "orr-east": 1.10,
+    "whitefield": 1.07,
+    "south-east": 1.08,
+    "north-airport": 1.04,
+    "central": 1.05,
+    "south": 1.02,
+    "west": 1.03
+  }
+}
