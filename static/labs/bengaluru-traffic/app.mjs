@@ -21,12 +21,12 @@ try{
 
   function dayCode(k){return['sun','mon','tue','wed','thu','fri','sat'][weekday(k)];}
   function typicalMinutes(k,w){return Math.round(Number(historical.windows?.[w]?.[dayCode(k)]));}
-  function band(minutes){if(minutes<=30)return{label:'Light',cls:'traffic-light'};if(minutes<=35)return{label:'Moderate',cls:'traffic-moderate'};if(minutes<=40)return{label:'Busy',cls:'traffic-busy'};if(minutes<=45)return{label:'Heavy',cls:'traffic-heavy'};return{label:'Very heavy',cls:'traffic-severe'};}
-  function barWidth(minutes){return Math.max(12,Math.min(100,Math.round(((minutes-20)/30)*100)));}
+  function band(minutes){if(minutes<=30)return{label:'Light',cls:'traffic-light',level:1};if(minutes<=35)return{label:'Moderate',cls:'traffic-moderate',level:2};if(minutes<=40)return{label:'Busy',cls:'traffic-busy',level:3};if(minutes<=45)return{label:'Heavy',cls:'traffic-heavy',level:4};return{label:'Very heavy',cls:'traffic-severe',level:5};}
   function holidayLabel(h){if(!h)return'';if(h.governmentStatus==='general')return`Public holiday · ${h.name}`;if(h.schoolImpact==='partial-confirmed')return`Some schools closed · ${h.name}`;return`Restricted holiday · ${h.name}`;}
   function zoneProfile(zoneId){return zoneData.profiles?.[zoneId]??null;}
   function isLocalPeak(zoneId,windowId){return zoneProfile(zoneId)?.peakWindowIds?.includes(windowId)??false;}
   function zoneWindowNote(zoneId,windowId){const p=zoneProfile(zoneId);if(!p||!isLocalPeak(zoneId,windowId))return'';return `This is usually a rush-hour period around ${p.junctions?.slice(0,3).join(', ')||'this area'}.`;}
+  function scaleHtml(f){return `<div class="traffic-scale" aria-label="Traffic level ${f.band.label}"><span class="scale-label">Traffic level</span><div class="scale-steps">${[1,2,3,4,5].map(n=>`<i class="scale-step ${n<=f.band.level?f.band.cls:''}"></i>`).join('')}</div><strong>${f.band.label}</strong></div>`;}
 
   function isWeekendHoliday(h){return h&&h.longWeekendPotential&&h.longWeekendPotential!=='low';}
   function precedingFridayHoliday(k){const d=weekday(k);if(![0,1,6].includes(d))return null;const shift=d===6?-1:d===0?-2:-3;return holidayByDate.get(addDaysKey(k,shift));}
@@ -58,18 +58,18 @@ try{
   }
 
   function forecast(dateKey,windowId,zoneId){const normal=typicalMinutes(dateKey,windowId),a=adjustments(dateKey,windowId,zoneId),expected=Math.max(10,Math.round(normal*a.factor)),delta=Math.round((a.factor-1)*100);return{normal,expected,delta,band:band(expected),reasons:a.reasons,localPeak:isLocalPeak(zoneId,windowId)};}
-  function changeText(f){if(Math.abs(f.delta)<5)return'Near normal';if(f.delta<0)return`${Math.abs(f.delta)}% lighter`;return`${f.delta}% heavier`;}
+  function changeText(f){if(Math.abs(f.delta)<5)return'Near normal';if(f.delta<0)return`${Math.abs(f.delta)}% lighter than usual`;return`${f.delta}% heavier than usual`;}
   function changeClass(f){if(Math.abs(f.delta)<5)return'change-normal';return f.delta<0?'change-lighter':'change-heavier';}
   function bestWorst(items){const sorted=[...items].sort((a,b)=>a.forecast.expected-b.forecast.expected);return{best:sorted[0],worst:sorted.at(-1)};}
 
   function render(){
     const zone=config.zones.find(z=>z.id===zoneSelect.value)??config.zones[0],selectedMonth=months[Number(monthSelect.value)||0],dates=dateKeys.filter(k=>monthKey(k)===selectedMonth),windows=config.timeWindows.filter(w=>!w.conditional),profile=zoneProfile(zone.id);
     const rush=profile?.localPeaks?.length?`<div class="summary-pill rush-pill"><span>Area rush hours</span><strong>${profile.localPeaks.join(' · ')}</strong></div>`:`<div class="summary-pill"><span>Area timing</span><strong>Bengaluru-wide pattern</strong></div>`;
-    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy">Pick a time by the <strong>expected traffic level</strong>. Open “Why?” only when you want the explanation.</p>`;
+    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy">The <strong>traffic level</strong> shows how busy the roads are expected to be. The percentage separately tells you how this date compares with a normal ${dayName(dates[0]) || 'day'} at that time.</p>`;
 
     calendar.innerHTML=dates.map(dateKey=>{
       const h=holidayByDate.get(dateKey),items=windows.map(w=>({window:w,forecast:forecast(dateKey,w.id,zone.id)})),{best,worst}=bestWorst(items);
-      const rows=items.map(({window,forecast:f})=>`<div class="traffic-row ${f.localPeak?'rush-row':''}"><div class="row-top"><div class="row-time">${window.label}${f.localPeak?'<span class="rush-badge">Area rush hour</span>':''}</div><div class="traffic-chip ${f.band.cls}">${f.band.label}</div></div><div class="traffic-line"><div class="traffic-fill ${f.band.cls}" style="width:${barWidth(f.expected)}%"></div></div><div class="row-metrics"><strong>~${f.expected} min / 10 km</strong><span class="change-chip ${changeClass(f)}">${changeText(f)}</span></div><div class="normal-ref">Usual ${dayName(dateKey)}: ~${f.normal} min / 10 km</div><details><summary>Why?</summary><p>${f.reasons.join(' ')}</p></details></div>`).join('');
+      const rows=items.map(({window,forecast:f})=>`<div class="traffic-row ${f.localPeak?'rush-row':''}"><div class="row-top"><div class="row-time">${window.label}${f.localPeak?'<span class="rush-badge">Area rush hour</span>':''}</div></div>${scaleHtml(f)}<div class="row-metrics"><strong>Expected: ~${f.expected} min / 10 km</strong><span class="change-chip ${changeClass(f)}">${changeText(f)}</span></div><div class="normal-ref">Usual ${dayName(dateKey)} at this time: ~${f.normal} min / 10 km</div><div class="why-text"><strong>Why:</strong> ${f.reasons.join(' ')}</div></div>`).join('');
       return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div>${h?`<div class="holiday">${holidayLabel(h)}</div>`:''}</div><div class="day-picks"><div class="pick best-pick"><span>Best</span><strong>${best.window.label}</strong><small>~${best.forecast.expected} min</small></div><div class="pick worst-pick"><span>Hardest</span><strong>${worst.window.label}</strong><small>~${worst.forecast.expected} min</small></div></div></div><div class="windows">${rows}</div></article>`;
     }).join('');
   }
