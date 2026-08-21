@@ -17,77 +17,61 @@ try{
   const months=[...new Set(dateKeys.map(monthKey))];
   for(const z of config.zones??[]){const o=document.createElement('option');o.value=z.id;o.textContent=`${z.name} — ${z.examples.join(', ')}`;zoneSelect.append(o);}
   months.forEach((key,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=monthLabel(key);monthSelect.append(o);});
-  legend.innerHTML='<span>Light: good time to travel</span><span>Busy: allow extra time</span><span>Area rush hour: this zone is usually busiest around this time</span>';
+  legend.innerHTML='<span class="legend-light">Light</span><span class="legend-moderate">Moderate</span><span class="legend-busy">Busy</span><span class="legend-heavy">Heavy</span><span class="legend-rush">Area rush hour</span>';
 
   function dayCode(k){return['sun','mon','tue','wed','thu','fri','sat'][weekday(k)];}
   function typicalMinutes(k,w){return Math.round(Number(historical.windows?.[w]?.[dayCode(k)]));}
-  function band(minutes){if(minutes<=30)return{label:'Light',cls:'lighter'};if(minutes<=35)return{label:'Moderate',cls:'lighter'};if(minutes<=40)return{label:'Busy',cls:'same'};if(minutes<=45)return{label:'Heavy',cls:'heavier'};return{label:'Very heavy',cls:'heavier'};}
-  function holidayLabel(h){if(!h)return'';if(h.governmentStatus==='general')return`Public holiday: ${h.name}`;if(h.schoolImpact==='partial-confirmed')return`Some schools closed: ${h.name}`;return`Restricted holiday: ${h.name}`;}
+  function band(minutes){if(minutes<=30)return{label:'Light',cls:'traffic-light'};if(minutes<=35)return{label:'Moderate',cls:'traffic-moderate'};if(minutes<=40)return{label:'Busy',cls:'traffic-busy'};if(minutes<=45)return{label:'Heavy',cls:'traffic-heavy'};return{label:'Very heavy',cls:'traffic-severe'};}
+  function barWidth(minutes){return Math.max(12,Math.min(100,Math.round(((minutes-20)/30)*100)));}
+  function holidayLabel(h){if(!h)return'';if(h.governmentStatus==='general')return`Public holiday · ${h.name}`;if(h.schoolImpact==='partial-confirmed')return`Some schools closed · ${h.name}`;return`Restricted holiday · ${h.name}`;}
   function zoneProfile(zoneId){return zoneData.profiles?.[zoneId]??null;}
   function isLocalPeak(zoneId,windowId){return zoneProfile(zoneId)?.peakWindowIds?.includes(windowId)??false;}
-  function zoneWindowNote(zoneId,windowId){const p=zoneProfile(zoneId);if(!p||!isLocalPeak(zoneId,windowId))return'';return `This falls within a documented rush-hour period for ${p.junctions?.slice(0,3).join(', ')||'this area'}, so traffic can be more sensitive to even small disruptions.`;}
+  function zoneWindowNote(zoneId,windowId){const p=zoneProfile(zoneId);if(!p||!isLocalPeak(zoneId,windowId))return'';return `This is usually a rush-hour period around ${p.junctions?.slice(0,3).join(', ')||'this area'}.`;}
 
   function isWeekendHoliday(h){return h&&h.longWeekendPotential&&h.longWeekendPotential!=='low';}
   function precedingFridayHoliday(k){const d=weekday(k);if(![0,1,6].includes(d))return null;const shift=d===6?-1:d===0?-2:-3;return holidayByDate.get(addDaysKey(k,shift));}
-
-  function schoolClosureFactor(windowId){
-    if(windowId==='early-am')return 0.94;
-    if(windowId==='am-peak')return 0.90;
-    if(windowId==='late-am')return 0.96;
-    if(windowId==='midday')return 0.98;
-    if(windowId==='pm-build')return 0.94;
-    return 1;
-  }
-
-  function schoolClosureReason(windowId,name){
-    if(windowId==='early-am'||windowId==='am-peak')return `${name} is not a citywide holiday, but some Bengaluru schools are closed. Morning school-drop traffic should be lower while many offices remain open.`;
-    if(windowId==='late-am'||windowId==='midday')return `${name} closes some schools, so school-related trips remain slightly lower, but most normal office and commercial activity can continue.`;
-    if(windowId==='pm-build')return `${name} closes some schools, so afternoon school-pickup traffic should also be lower than on a normal school day.`;
-    return `${name} is not a citywide holiday. By the main evening office peak, school closures alone are not enough to assume substantially lighter traffic.`;
-  }
+  function schoolClosureFactor(w){if(w==='early-am')return.94;if(w==='am-peak')return.90;if(w==='late-am')return.96;if(w==='midday')return.98;if(w==='pm-build')return.94;return 1;}
+  function schoolClosureReason(w,name){if(w==='early-am'||w==='am-peak')return`${name}: fewer school-drop trips, while offices mostly continue normally.`;if(w==='late-am'||w==='midday')return`${name}: slightly fewer school-related trips, but normal city activity continues.`;if(w==='pm-build')return`${name}: fewer school-pickup trips should ease some traffic.`;return`${name}: school closures alone should have little effect on the main office evening peak.`;}
 
   function adjustments(dateKey,windowId,zoneId){
     let factor=1;const reasons=[];
-    const h=holidayByDate.get(dateKey);const tomorrow=holidayByDate.get(addDaysKey(dateKey,1));const day=weekday(dateKey);
-    if(h?.governmentStatus==='general'){
-      const pct=['am-peak','pm-peak'].includes(windowId)?-0.20:-0.14;factor*=1+pct;
-      reasons.push(`${h.name} is a statewide public holiday, so many routine office, school and government trips will not happen.`);
-    }else if(h?.schoolImpact==='partial-confirmed'){
-      factor*=schoolClosureFactor(windowId);
-      reasons.push(schoolClosureReason(windowId,h.name));
-    }else if(h){reasons.push(`${h.name} is a restricted holiday. We are not assuming Bengaluru-wide traffic will fall without broader closure evidence.`);}
+    const h=holidayByDate.get(dateKey),tomorrow=holidayByDate.get(addDaysKey(dateKey,1)),day=weekday(dateKey);
+    if(h?.governmentStatus==='general'){factor*=1+(['am-peak','pm-peak'].includes(windowId)?-.20:-.14);reasons.push(`${h.name} is a statewide public holiday, reducing routine office, school and government trips.`);}
+    else if(h?.schoolImpact==='partial-confirmed'){factor*=schoolClosureFactor(windowId);reasons.push(schoolClosureReason(windowId,h.name));}
+    else if(h){reasons.push(`${h.name} is a restricted holiday, so no citywide traffic reduction is assumed.`);}
 
     if(tomorrow?.governmentStatus==='general'&&['pm-build','pm-peak','late-event'].includes(windowId)){
-      factor*=1.10;reasons.push(`Tomorrow is the public holiday ${tomorrow.name}. Evening traffic can build as people leave work early, shop or start intercity trips.`);
-      if(isWeekendHoliday(tomorrow)&&['west','north-airport','south-east','orr-east'].includes(zoneId)){factor*=1.05;reasons.push('The effect can be stronger on roads leading out of Bengaluru because the holiday connects to a longer break.');}
+      factor*=1.10;reasons.push(`Tomorrow is ${tomorrow.name}; early departures, shopping and intercity trips can make the evening busier.`);
+      if(isWeekendHoliday(tomorrow)&&['west','north-airport','south-east','orr-east'].includes(zoneId)){factor*=1.05;reasons.push('This can be stronger on roads leading out of Bengaluru.');}
     }
 
-    const fri=precedingFridayHoliday(dateKey);const longWeekend=isWeekendHoliday(fri);
-    if(longWeekend&&day===6){factor*=0.92;reasons.push('This follows a Friday holiday, so some residents may still be away and Saturday city traffic can be quieter.');}
-    if(longWeekend&&day===0){
-      if(['pm-build','pm-peak','late-event'].includes(windowId)){factor*=1.15;reasons.push('The long weekend is ending. Bengaluru Traffic Police has reported roughly 10–20% higher congestion after 6 PM on holiday-return Sundays.');}
-      else{factor*=0.94;reasons.push('Many long-weekend travellers may still be away during the daytime, so roads can be quieter than a normal Sunday.');}
-    }
-    if(longWeekend&&day===1&&['early-am','am-peak'].includes(windowId)){factor*=1.07;reasons.push('Normal Monday office and school traffic resumes while some travellers may still be returning from the long weekend.');}
+    const fri=precedingFridayHoliday(dateKey),longWeekend=isWeekendHoliday(fri);
+    if(longWeekend&&day===6){factor*=.92;reasons.push('Some residents may still be away for the long weekend, easing city traffic.');}
+    if(longWeekend&&day===0){if(['pm-build','pm-peak','late-event'].includes(windowId)){factor*=1.15;reasons.push('Long-weekend return traffic can make Sunday evening roughly 10–20% heavier.');}else{factor*=.94;reasons.push('Many long-weekend travellers may still be away during the daytime.');}}
+    if(longWeekend&&day===1&&['early-am','am-peak'].includes(windowId)){factor*=1.07;reasons.push('Normal Monday commuting resumes while some travellers may still be returning.');}
 
     const weather=weatherByKey.get(`${dateKey}|${windowId}`);
-    if(weather?.zones?.includes(zoneId)&&Number(weather.delta||0)>0){factor*=1.08;const p=Number(weather.maxPrecipitationProbability??0);reasons.push(`Rain is likely${p?` (${p}% chance)`:''}, which can slow traffic further.`);}
+    if(weather?.zones?.includes(zoneId)&&Number(weather.delta||0)>0){factor*=1.08;const p=Number(weather.maxPrecipitationProbability??0);reasons.push(`Rain is likely${p?` (${p}% chance)`:''}, which can slow traffic.`);}
     const local=zoneWindowNote(zoneId,windowId);if(local)reasons.push(local);
-    if(!reasons.length)reasons.push('No major known holiday, long-weekend, weather or disruption effect is changing the normal historical pattern yet.');
+    if(!reasons.length)reasons.push('No major known factor is changing the normal pattern yet.');
     return{factor,reasons};
   }
 
-  function forecast(dateKey,windowId,zoneId){const normal=typicalMinutes(dateKey,windowId);const a=adjustments(dateKey,windowId,zoneId);const expected=Math.max(10,Math.round(normal*a.factor));const delta=Math.round((a.factor-1)*100);return{normal,expected,delta,band:band(expected),reasons:a.reasons,localPeak:isLocalPeak(zoneId,windowId)};}
-  function changeText(f){if(Math.abs(f.delta)<5)return'Close to the normal pattern';if(f.delta<0)return'Likely lighter than normal';return'Likely heavier than normal';}
-  function rangeText(f){if(Math.abs(f.delta)<5)return'';if(f.reasons.some(r=>r.includes('10–20%')))return'About 10–20% heavier than a normal Sunday evening';return changeText(f);}
+  function forecast(dateKey,windowId,zoneId){const normal=typicalMinutes(dateKey,windowId),a=adjustments(dateKey,windowId,zoneId),expected=Math.max(10,Math.round(normal*a.factor)),delta=Math.round((a.factor-1)*100);return{normal,expected,delta,band:band(expected),reasons:a.reasons,localPeak:isLocalPeak(zoneId,windowId)};}
+  function changeText(f){if(Math.abs(f.delta)<5)return'Near normal';if(f.delta<0)return`${Math.abs(f.delta)}% lighter`;return`${f.delta}% heavier`;}
+  function changeClass(f){if(Math.abs(f.delta)<5)return'change-normal';return f.delta<0?'change-lighter':'change-heavier';}
   function bestWorst(items){const sorted=[...items].sort((a,b)=>a.forecast.expected-b.forecast.expected);return{best:sorted[0],worst:sorted.at(-1)};}
 
   function render(){
-    const zone=config.zones.find(z=>z.id===zoneSelect.value)??config.zones[0];const selectedMonth=months[Number(monthSelect.value)||0];const dates=dateKeys.filter(k=>monthKey(k)===selectedMonth);const windows=config.timeWindows.filter(w=>!w.conditional);const profile=zoneProfile(zone.id);
-    const peaks=profile?.localPeaks?.length?`<p class="zone-note"><strong>Typical rush hours for this area:</strong> ${profile.localPeaks.join(' and ')}. <span class="evidence">Evidence: ${profile.evidence}.</span></p>`:`<p class="zone-note"><strong>Area rush-hour timing:</strong> not reliable enough yet, so the Bengaluru-wide timing curve is used.</p>`;
-    const profileText=profile?`<p class="zone-note"><strong>Area context:</strong> ${profile.message}${profile.junctions?.length?` Documented junctions: ${profile.junctions.join(', ')}.`:''}</p>`:'';
-    summary.innerHTML=`<h2>${monthLabel(selectedMonth)} · ${zone.name}</h2><p><strong>The main label is the expected traffic for that date and time.</strong> The historical average is shown only as a reference underneath.</p>${peaks}${profileText}<p class="meta">The minutes-per-10-km baseline remains Bengaluru-wide TomTom data. Area rush-hour labels come from published corridor/junction studies; no unsupported zone travel-time multiplier is used.</p>`;
-    calendar.innerHTML=dates.map(dateKey=>{const h=holidayByDate.get(dateKey);const items=windows.map(w=>({window:w,forecast:forecast(dateKey,w.id,zone.id)}));const {best,worst}=bestWorst(items);const rows=items.map(({window,forecast:f})=>`<div class="window simple-window ${f.localPeak?'local-peak-row':''}"><div class="time">${window.label}${f.localPeak?'<span class="local-peak-badge">Area rush hour</span>':''}</div><div><div class="plain-result ${f.band.cls}">${f.band.label} · expected ~${f.expected} min per 10 km</div><div class="travel-advice">Normal ${dayName(dateKey)} at this time: ~${f.normal} min/10 km · ${rangeText(f)||changeText(f)}</div><div class="plain-why"><strong>Why:</strong> ${f.reasons.join(' ')}</div></div></div>`).join('');return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div><div class="day-result lighter">Best expected window: ${best.window.label} · ~${best.forecast.expected} min/10 km</div><div class="day-worst">Hardest expected window: ${worst.window.label} · ~${worst.forecast.expected} min/10 km</div></div>${h?`<span class="holiday">${holidayLabel(h)}</span>`:''}</div><div class="windows">${rows}</div></article>`;}).join('');
+    const zone=config.zones.find(z=>z.id===zoneSelect.value)??config.zones[0],selectedMonth=months[Number(monthSelect.value)||0],dates=dateKeys.filter(k=>monthKey(k)===selectedMonth),windows=config.timeWindows.filter(w=>!w.conditional),profile=zoneProfile(zone.id);
+    const rush=profile?.localPeaks?.length?`<div class="summary-pill rush-pill"><span>Area rush hours</span><strong>${profile.localPeaks.join(' · ')}</strong></div>`:`<div class="summary-pill"><span>Area timing</span><strong>Bengaluru-wide pattern</strong></div>`;
+    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy">Pick a time by the <strong>expected traffic level</strong>. Open “Why?” only when you want the explanation.</p>`;
+
+    calendar.innerHTML=dates.map(dateKey=>{
+      const h=holidayByDate.get(dateKey),items=windows.map(w=>({window:w,forecast:forecast(dateKey,w.id,zone.id)})),{best,worst}=bestWorst(items);
+      const rows=items.map(({window,forecast:f})=>`<div class="traffic-row ${f.localPeak?'rush-row':''}"><div class="row-top"><div class="row-time">${window.label}${f.localPeak?'<span class="rush-badge">Area rush hour</span>':''}</div><div class="traffic-chip ${f.band.cls}">${f.band.label}</div></div><div class="traffic-line"><div class="traffic-fill ${f.band.cls}" style="width:${barWidth(f.expected)}%"></div></div><div class="row-metrics"><strong>~${f.expected} min / 10 km</strong><span class="change-chip ${changeClass(f)}">${changeText(f)}</span></div><div class="normal-ref">Usual ${dayName(dateKey)}: ~${f.normal} min / 10 km</div><details><summary>Why?</summary><p>${f.reasons.join(' ')}</p></details></div>`).join('');
+      return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div>${h?`<div class="holiday">${holidayLabel(h)}</div>`:''}</div><div class="day-picks"><div class="pick best-pick"><span>Best</span><strong>${best.window.label}</strong><small>~${best.forecast.expected} min</small></div><div class="pick worst-pick"><span>Hardest</span><strong>${worst.window.label}</strong><small>~${worst.forecast.expected} min</small></div></div></div><div class="windows">${rows}</div></article>`;
+    }).join('');
   }
   function safeRender(){try{render();}catch(e){console.error(e);summary.innerHTML='<h2>Forecast temporarily unavailable</h2><p>Please refresh shortly.</p>';}}
   zoneSelect.addEventListener('change',safeRender);monthSelect.addEventListener('change',safeRender);safeRender();
