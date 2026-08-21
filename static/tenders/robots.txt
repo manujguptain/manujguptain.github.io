@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /tenders/
+
+Sitemap: https://manujg.com/tenders/sitemap.xml
