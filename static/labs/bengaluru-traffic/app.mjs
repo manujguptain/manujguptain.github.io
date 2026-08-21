@@ -28,8 +28,11 @@ try{
   function zoneWindowNote(zoneId,windowId){const p=zoneProfile(zoneId);if(!p||!isLocalPeak(zoneId,windowId))return'';return `This is usually a rush-hour period around ${p.junctions?.slice(0,3).join(', ')||'this area'}.`;}
   function scaleHtml(f){return `<div class="traffic-scale" aria-label="Traffic level ${f.band.label}"><span class="scale-label">Traffic level</span><div class="scale-steps">${[1,2,3,4,5].map(n=>`<i class="scale-step ${n<=f.band.level?f.band.cls:''}"></i>`).join('')}</div><strong>${f.band.label}</strong></div>`;}
   function eventProfile(name){if(!name)return null;return (eventData.profiles??[]).find(p=>(p.match??[]).some(m=>name.toLowerCase().includes(String(m).toLowerCase())))??null;}
-  function eventDayFactor(h,windowId){const p=eventProfile(h?.name);const n=Number(p?.dayFactors?.[windowId]);return Number.isFinite(n)&&n>0?{profile:p,factor:n}:null;}
-  function eventPreDayFactor(h,windowId){const p=eventProfile(h?.name);const n=Number(p?.preDayFactors?.[windowId]);return Number.isFinite(n)&&n>0?{profile:p,factor:n}:null;}
+  function positiveFactor(value){const n=Number(value);return Number.isFinite(n)&&n>0?n:null;}
+  function eventDayFactor(h,windowId){const p=eventProfile(h?.name);const factor=positiveFactor(p?.dayFactors?.[windowId]);return factor?{profile:p,factor}:null;}
+  function eventPreDayFactor(h,windowId){const p=eventProfile(h?.name);const factor=positiveFactor(p?.preDayFactors?.[windowId]);return factor?{profile:p,factor}:null;}
+  function eventZoneFactor(p,kind,zoneId,windowId){const map=kind==='pre'?p?.zonePreDayFactors:p?.zoneDayFactors;return positiveFactor(map?.[zoneId]?.[windowId]);}
+  function confidenceText(p){return p?.confidence?` Evidence confidence: ${String(p.confidence).replace('-', ' ')}.`:'';}
 
   function isWeekendHoliday(h){return h&&h.longWeekendPotential&&h.longWeekendPotential!=='low';}
   function precedingFridayHoliday(k){const d=weekday(k);if(![0,1,6].includes(d))return null;const shift=d===6?-1:d===0?-2:-3;return holidayByDate.get(addDaysKey(k,shift));}
@@ -42,7 +45,9 @@ try{
     const eventToday=eventDayFactor(h,windowId);
     if(eventToday){
       factor*=eventToday.factor;
-      reasons.push(`${h.name}: historical Bengaluru festival patterns suggest traffic is usually substantially different from a normal ${dayName(dateKey)}. ${eventToday.profile.reason}`);
+      reasons.push(`${h.name}: ${eventToday.profile.reason}${confidenceText(eventToday.profile)}`);
+      const localFactor=eventZoneFactor(eventToday.profile,'day',zoneId,windowId);
+      if(localFactor&&Math.abs(localFactor-1)>=.02){factor*=localFactor;reasons.push(`This selected area has a documented event hotspot, so its local pattern differs from the citywide festival pattern.`);}
     }else if(h?.governmentStatus==='general'){
       factor*=1+(['am-peak','pm-peak'].includes(windowId)?-.20:-.14);
       reasons.push(`${h.name} is a statewide public holiday, reducing routine office, school and government trips.`);
@@ -55,7 +60,9 @@ try{
     const preEvent=eventPreDayFactor(tomorrow,windowId);
     if(preEvent){
       factor*=preEvent.factor;
-      reasons.push(`Tomorrow is ${tomorrow.name}; its historical Bengaluru pattern shows extra pre-festival shopping/outbound traffic at this time.`);
+      reasons.push(`Tomorrow is ${tomorrow.name}; historical Bengaluru evidence shows a pre-event shopping/outbound effect at this time.`);
+      const localPreFactor=eventZoneFactor(preEvent.profile,'pre',zoneId,windowId);
+      if(localPreFactor&&Math.abs(localPreFactor-1)>=.02){factor*=localPreFactor;reasons.push(`The pre-event effect is stronger in this area because of known market/outbound activity.`);}
     }else if(tomorrow?.governmentStatus==='general'&&['pm-build','pm-peak','late-event'].includes(windowId)){
       factor*=1.10;reasons.push(`Tomorrow is ${tomorrow.name}; early departures, shopping and intercity trips can make the evening busier.`);
       if(isWeekendHoliday(tomorrow)&&['west','north-airport','south-east','orr-east'].includes(zoneId)){factor*=1.05;reasons.push('This can be stronger on roads leading out of Bengaluru.');}
@@ -86,7 +93,7 @@ try{
   function render(){
     const zone=config.zones.find(z=>z.id===zoneSelect.value)??config.zones[0],selectedMonth=months[Number(monthSelect.value)||0],dates=dateKeys.filter(k=>monthKey(k)===selectedMonth),windows=config.timeWindows.filter(w=>!w.conditional),profile=zoneProfile(zone.id);
     const rush=profile?.localPeaks?.length?`<div class="summary-pill rush-pill"><span>Area rush hours</span><strong>${profile.localPeaks.join(' · ')}</strong></div>`:`<div class="summary-pill"><span>Area timing</span><strong>Bengaluru-wide pattern</strong></div>`;
-    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy">The <strong>traffic level</strong> shows how busy the roads are expected to be. The percentage separately tells you how this date compares with a normal ${dayName(dates[0]) || 'day'} at that time. Festival-specific Bengaluru history is used when evidence exists.</p>`;
+    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy">The <strong>traffic level</strong> shows how busy the roads are expected to be. The percentage separately tells you how this date compares with a normal ${dayName(dates[0]) || 'day'} at that time. Festival-specific Bengaluru history and documented local event hotspots are used when evidence exists.</p>`;
 
     calendar.innerHTML=dates.map(dateKey=>{
       const h=holidayByDate.get(dateKey),items=windows.map(w=>({window:w,forecast:forecast(dateKey,w.id,zone.id)})),{best,worst}=bestWorst(items);
