@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="A simple Bengaluru traffic calendar using historical weekday/time patterns plus holidays, long weekends, weather and disruptions.">
-  <title>Bengaluru Traffic-Risk Calendar | ManujG AI Labs</title>
-  <link rel="stylesheet" href="./styles.css?v=20260821f">
+  <meta name="description" content="An experimental Bengaluru traffic calendar POC using historical weekday/time patterns plus holidays, long weekends, weather and public mobility evidence.">
+  <title>Bengaluru Traffic-Risk Calendar POC | ManujG AI Labs</title>
+  <link rel="stylesheet" href="./styles.css?v=20260821g">
 </head>
 <body>
-  <header class="hero"><div class="wrap"><p class="eyebrow">ManujG AI Labs · Experimental public tool</p><h1>Bengaluru Traffic-Risk Calendar</h1><p class="lede">Find the quieter and busier times to travel in your part of Bengaluru. We start with historical Bengaluru traffic patterns by weekday and time, then account for holidays, long weekends, rain and known disruptions.</p><div class="notice"><strong>No Google traffic data.</strong> Historical traffic backbone uses public TomTom Traffic Index patterns; this is not a route ETA.</div></div></header>
+  <header class="hero"><div class="wrap"><p class="eyebrow">ManujG AI Labs · Proof of Concept / Experiment</p><h1>Bengaluru Traffic-Risk Calendar</h1><p class="lede">An experimental proof of concept exploring whether public historical traffic patterns, holidays, long weekends, weather and disruption signals can help people choose better travel times in Bengaluru.</p><div class="notice"><strong>POC only.</strong> This is a research/experimentation demo, not a navigation service or official traffic forecast. No Google traffic data is used.</div></div></header>
   <main class="wrap">
+    <section class="poc-note"><strong>About this experiment</strong><p>This page is a non-commercial ManujG AI Labs proof of concept created to explore what is possible with publicly available information. It summarizes and derives signals from referenced sources rather than reproducing their datasets as a competing service. Source owners retain rights in their original material. Estimates can be incomplete or wrong and should not be treated as official traffic advice.</p></section>
     <section class="controls" aria-label="Calendar controls"><label>Area<select id="zoneSelect"></select></label><label>Month<select id="monthSelect"></select></label><div class="legend" id="legend"></div></section>
     <section class="summary" id="summary" aria-live="polite"></section><section class="calendar" id="calendar" aria-label="Traffic risk calendar"></section>
-    <section class="method"><h2>How to use this</h2><div class="method-grid"><div><strong>Look at the expected traffic first</strong><span>The main label combines the historical pattern with known effects for that date. The normal weekday/time value is shown only as a reference.</span></div><div><strong>Holiday effects start before the holiday</strong><span>The evening before any statewide public holiday can become busier because of early departures, shopping and intercity travel—not only before Friday holidays.</span></div><div><strong>Long weekends affect several days</strong><span>Traffic can rise before people leave, ease while they are away, and rise again on Sunday evening or Monday morning as they return.</span></div></div><p class="fineprint">TomTom's public Bengaluru 2025 citywide weekday/hour travel patterns provide the historical backbone. Area-specific changes are only applied when we have area-specific evidence; we do not invent zone travel-time multipliers.</p></section>
+    <section class="method"><h2>How to use this</h2><div class="method-grid"><div><strong>Look at the expected traffic first</strong><span>The main label combines Bengaluru's historical weekday/time pattern with known effects for that date. The normal value is shown underneath as a reference.</span></div><div><strong>Holiday effects start before the holiday</strong><span>The evening before a statewide public holiday can become busier because of early departures, shopping and intercity travel.</span></div><div><strong>Area context is evidence-based</strong><span>Where public mobility studies identify high-volume junctions, the page adds a hotspot warning. It does not invent zone-specific travel-time multipliers.</span></div></div><p class="fineprint">Historical backbone: public TomTom Traffic Index Bengaluru patterns. Area hotspot context: public Bengaluru Comprehensive Mobility Plan / related public mobility studies. Weather, roadworks, rallies and events become clearer closer to the date.</p></section>
+    <section class="feedback"><strong>Have feedback or better Bengaluru traffic data?</strong><p>This is an experiment and suggestions are welcome. Please use the <a href="/contact/">contact page</a>.</p></section>
   </main>
-  <script type="module" src="./app.mjs?v=20260821f"></script>
+  <script type="module" src="./app.mjs?v=20260821g"></script>
 </body>
 </html>
