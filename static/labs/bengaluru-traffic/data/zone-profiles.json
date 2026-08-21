@@ -1,0 +1,58 @@
+{
+  "source": {
+    "name": "Bengaluru Comprehensive Mobility Plan / Revised Master Plan traffic counts",
+    "url": "https://data.opencity.in/dataset/bengaluru-comprehensive-mobility-plan",
+    "note": "Used only to identify documented high-volume junctions and peak-sensitive areas. No zone-specific travel-time multiplier is inferred from these counts."
+  },
+  "profiles": {
+    "orr-east": {
+      "evidence": "strong",
+      "hotspotLevel": "high",
+      "junctions": ["Doddanekundi", "Tin Factory / KR Puram", "Kundalahalli"],
+      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
+      "message": "This area contains several documented high-volume junctions on the eastern ring-road corridor. Peak periods are especially disruption-sensitive."
+    },
+    "whitefield": {
+      "evidence": "moderate",
+      "hotspotLevel": "high",
+      "junctions": ["Kundalahalli", "Doddanekundi"],
+      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
+      "message": "The Whitefield approach includes documented high-volume junctions such as Kundalahalli and Doddanekundi, so commute peaks can deteriorate quickly when anything unusual happens."
+    },
+    "south-east": {
+      "evidence": "strong",
+      "hotspotLevel": "very-high",
+      "junctions": ["Central Silk Board", "HSR Layout 27th Main"],
+      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
+      "message": "Central Silk Board is one of Bengaluru's most heavily loaded documented junctions. Morning and evening commute windows are particularly sensitive."
+    },
+    "north-airport": {
+      "evidence": "strong",
+      "hotspotLevel": "very-high",
+      "junctions": ["Hebbal", "Hennur Cross", "Nagawara", "BEL Circle"],
+      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
+      "message": "Hebbal and nearby northern junctions carry very high documented traffic volumes. Airport and city-bound peaks can become severe when disruptions overlap normal demand."
+    },
+    "central": {
+      "evidence": "limited",
+      "hotspotLevel": "unknown",
+      "junctions": [],
+      "sensitiveWindows": [],
+      "message": "The current public junction dataset is not strong enough to create a separate Central Bengaluru peak profile, so the citywide historical pattern is used without a local modifier."
+    },
+    "south": {
+      "evidence": "moderate",
+      "hotspotLevel": "elevated",
+      "junctions": ["Sarakki", "Devegowda Petrol Bunk"],
+      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
+      "message": "South Bengaluru includes documented busy junctions such as Sarakki and Devegowda Petrol Bunk. Peak windows can be locally sensitive even when the citywide pattern looks manageable."
+    },
+    "west": {
+      "evidence": "moderate",
+      "hotspotLevel": "elevated",
+      "junctions": ["Goragunte Palya", "Sumanahalli"],
+      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
+      "message": "West Bengaluru includes high-volume junctions such as Goragunte Palya and Sumanahalli. Holiday departure and return traffic can also matter on outbound corridors."
+    }
+  }
+}
