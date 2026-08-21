@@ -24,10 +24,8 @@ try{
   legend.innerHTML='<span>Best: lighter roads</span><span>Busy: allow extra time</span><span>Very heavy: avoid if flexible</span>';
 
   function dayCode(dateKey){return['sun','mon','tue','wed','thu','fri','sat'][weekday(dateKey)];}
-  function typicalMinutes(dateKey,windowId,zoneId){
-    const city=historical.windows?.[windowId]?.[dayCode(dateKey)];
-    const factor=historical.zoneTravelTimeFactors?.[zoneId]??1;
-    return Number((Number(city)*factor).toFixed(0));
+  function typicalMinutes(dateKey,windowId){
+    return Math.round(Number(historical.windows?.[windowId]?.[dayCode(dateKey)]));
   }
   function trafficBand(minutes){
     if(minutes<=30)return{label:'Light',className:'lighter',advice:'Usually a good time to travel'};
@@ -104,7 +102,7 @@ try{
   }
 
   function forecast(dateKey,windowId,zoneId){
-    const typical=typicalMinutes(dateKey,windowId,zoneId);
+    const typical=typicalMinutes(dateKey,windowId);
     const band=trafficBand(typical);
     const effect=specialEffect(dateKey,windowId,zoneId);
     return{typical,band,effect};
@@ -122,14 +120,14 @@ try{
     const dates=dateKeys.filter(key=>monthKey(key)===selectedMonth);
     const visibleWindows=config.timeWindows.filter(w=>!w.conditional);
     if(!dates.length||!visibleWindows.length)throw new Error('No forecast dates or time windows are available.');
-    summary.innerHTML=`<h2>${monthLabel(selectedMonth)} · ${zone.name}</h2><p><strong>Choose your travel time using the historical traffic level first.</strong> Then check whether a holiday, long weekend, rain or disruption is likely to make that time better or worse than normal.</p><p class="meta">Historical backbone: TomTom Bengaluru 2025 weekday/hour travel-time patterns. Broad area factors are estimates, not measured TomTom zone data.</p>`;
+    summary.innerHTML=`<h2>${monthLabel(selectedMonth)} · ${zone.name}</h2><p><strong>Choose your travel time using Bengaluru's historical traffic level first.</strong> Then check whether something specific to ${zone.name} or the date is likely to make it better or worse.</p><p class="meta">Historical backbone: TomTom Bengaluru 2025 weekday/hour citywide travel-time patterns. We do not invent zone-specific travel-time multipliers; the area selection is used only where we have area-specific signals.</p>`;
 
     calendar.innerHTML=dates.map(dateKey=>{
       const holiday=holidayByDate.get(dateKey);
       const items=visibleWindows.map(w=>({window:w,forecast:forecast(dateKey,w.id,zone.id)}));
       const {best,worst}=bestAndWorst(items);
-      const windows=items.map(({window,forecast:f})=>`<div class="window simple-window"><div class="time">${window.label}</div><div><div class="plain-result ${f.band.className}">${f.band.label} · about ${f.typical} min per 10 km</div><div class="travel-advice">${f.band.advice}</div><div class="today-change ${f.effect.direction}"><strong>For this date:</strong> ${todayText(f.effect)}</div><div class="plain-why"><strong>Why:</strong> ${f.effect.text}</div></div></div>`).join('');
-      return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div><div class="day-result lighter">Best window: ${best.window.label} · ~${best.forecast.typical} min/10 km</div><div class="day-worst">Most difficult: ${worst.window.label} · ~${worst.forecast.typical} min/10 km</div></div>${holiday?`<span class="holiday">${holidayLabel(holiday)}</span>`:''}</div><div class="windows">${windows}</div></article>`;
+      const windows=items.map(({window,forecast:f})=>`<div class="window simple-window"><div class="time">${window.label}</div><div><div class="plain-result ${f.band.className}">${f.band.label} · Bengaluru historical average ~${f.typical} min per 10 km</div><div class="travel-advice">${f.band.advice}</div><div class="today-change ${f.effect.direction}"><strong>For this date/area:</strong> ${todayText(f.effect)}</div><div class="plain-why"><strong>Why:</strong> ${f.effect.text}</div></div></div>`).join('');
+      return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div><div class="day-result lighter">Historically best: ${best.window.label} · ~${best.forecast.typical} min/10 km</div><div class="day-worst">Historically hardest: ${worst.window.label} · ~${worst.forecast.typical} min/10 km</div></div>${holiday?`<span class="holiday">${holidayLabel(holiday)}</span>`:''}</div><div class="windows">${windows}</div></article>`;
     }).join('');
   }
 
