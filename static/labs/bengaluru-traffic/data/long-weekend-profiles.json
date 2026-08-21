@@ -1,0 +1,48 @@
+{
+  "version": "2026-08-21",
+  "notes": "Long-weekend role factors refine the generic Bengaluru long-weekend pattern. They are travel-time multipliers against the normal same-weekday/time baseline, not literal traffic-volume changes. Event-specific overrides are used only where historical evidence is strong enough; otherwise the generic profile is retained.",
+  "generic": {
+    "outboundEvening": 1.10,
+    "outboundCorridorExtra": 1.05,
+    "awaySaturday": 0.80,
+    "awaySundayDaytime": 0.85,
+    "awayOtherDay": 0.82,
+    "returnDaytime": 0.85,
+    "returnEvening": 1.15,
+    "reboundMorning": 1.07,
+    "confidence": "high",
+    "evidence": [
+      {
+        "url": "https://bangaloremirror.indiatimes.com/bangalore/cover-story/when-traffic-takes-a-holiday/articleshow/126494775.cms",
+        "note": "Bengaluru Traffic Police describes strong inner-city relief during long weekends, heavier outbound movement before the break and a Sunday-evening return surge."
+      }
+    ]
+  },
+  "eventOverrides": [
+    {
+      "match": ["Varamahalakshmi Vrata"],
+      "enabled": true,
+      "confidence": "high",
+      "factors": {
+        "awaySaturday": 0.74,
+        "awaySundayDaytime": 0.80,
+        "returnDaytime": 0.80,
+        "returnEvening": 1.18,
+        "reboundMorning": 1.08
+      },
+      "reason": "Varamahalakshmi long-weekend evidence shows an unusually strong Bengaluru exodus/at-home effect continuing beyond the festival day, followed by a return-to-city surge.",
+      "evidence": [
+        {
+          "year": 2025,
+          "url": "https://www.hindustantimes.com/cities/bengaluru-news/felt-like-the-early-2010s-bengaluru-experiences-rare-traffic-free-roads-on-varamahalakshmi-festival-101754642310066.html",
+          "note": "Reports unusually empty Bengaluru roads during Varamahalakshmi."
+        },
+        {
+          "year": 2024,
+          "url": "https://publictv.in/traffic-jam-for-kilometers-of-people-coming-to-bengaluru-after-the-long-holiday/",
+          "note": "Documents the return-to-Bengaluru surge after the Independence Day/Varamahalakshmi long weekend."
+        }
+      ]
+    }
+  ]
+}
