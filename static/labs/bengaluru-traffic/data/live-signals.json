@@ -1,7 +1,2030 @@
 {
-  "generatedAt": null,
-  "weather": [],
+  "generatedAt": "2026-08-21T07:08:49.528Z",
+  "sources": {
+    "weather": "Open-Meteo forecast API",
+    "news": "GDELT DOC 2.0 article search"
+  },
+  "weather": [
+    {
+      "date": "2026-08-21",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-21",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-21",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 6,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-21",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 39,
+      "precipitationMm": 0.6,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-21",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 45,
+      "precipitationMm": 0,
+      "reason": "rain risk 45% / 0.0 mm"
+    },
+    {
+      "date": "2026-08-21",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 43,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 43% / 0.2 mm"
+    },
+    {
+      "date": "2026-08-21",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 14,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 27,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 76,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 76% / 0.2 mm"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 86,
+      "precipitationMm": 1.9,
+      "reason": "rain risk 86% / 1.9 mm"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 87,
+      "precipitationMm": 0.6,
+      "reason": "rain risk 87% / 0.6 mm"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 82,
+      "precipitationMm": 0.6,
+      "reason": "rain risk 82% / 0.6 mm"
+    },
+    {
+      "date": "2026-08-22",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 35,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 10,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 33,
+      "precipitationMm": 0.1,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 76,
+      "precipitationMm": 1,
+      "reason": "rain risk 76% / 1.0 mm"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 94,
+      "precipitationMm": 1.7,
+      "reason": "rain risk 94% / 1.7 mm"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 100,
+      "precipitationMm": 4.8,
+      "reason": "rain risk 100% / 4.8 mm"
+    },
+    {
+      "date": "2026-08-23",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 88,
+      "precipitationMm": 0.5,
+      "reason": "rain risk 88% / 0.5 mm"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 19,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 63,
+      "precipitationMm": 0.4,
+      "reason": "rain risk 63% / 0.4 mm"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 84,
+      "precipitationMm": 0.8,
+      "reason": "rain risk 84% / 0.8 mm"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 97,
+      "precipitationMm": 1.1,
+      "reason": "rain risk 97% / 1.1 mm"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 98,
+      "precipitationMm": 1.7,
+      "reason": "rain risk 98% / 1.7 mm"
+    },
+    {
+      "date": "2026-08-24",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 67,
+      "precipitationMm": 0.1,
+      "reason": "rain risk 67% / 0.1 mm"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 6,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 25,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 57,
+      "precipitationMm": 0,
+      "reason": "rain risk 57% / 0.0 mm"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 76,
+      "precipitationMm": 0.6,
+      "reason": "rain risk 76% / 0.6 mm"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 88,
+      "precipitationMm": 1.8,
+      "reason": "rain risk 88% / 1.8 mm"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 90,
+      "precipitationMm": 0.9,
+      "reason": "rain risk 90% / 0.9 mm"
+    },
+    {
+      "date": "2026-08-25",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 67,
+      "precipitationMm": 0,
+      "reason": "rain risk 67% / 0.0 mm"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0.5,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 12,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 31,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 41,
+      "precipitationMm": 0,
+      "reason": "rain risk 41% / 0.0 mm"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 74,
+      "precipitationMm": 1,
+      "reason": "rain risk 74% / 1.0 mm"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 14,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 82,
+      "precipitationMm": 0.5,
+      "reason": "rain risk 82% / 0.5 mm"
+    },
+    {
+      "date": "2026-08-26",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 33,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 5,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 35,
+      "precipitationMm": 0.6,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 56,
+      "precipitationMm": 0.4,
+      "reason": "rain risk 56% / 0.4 mm"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 61,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 61% / 0.2 mm"
+    },
+    {
+      "date": "2026-08-27",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 38,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 4,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 33,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 51,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 51% / 0.2 mm"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 55,
+      "precipitationMm": 0.1,
+      "reason": "rain risk 55% / 0.1 mm"
+    },
+    {
+      "date": "2026-08-28",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 34,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 35,
+      "precipitationMm": 0.6,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 56,
+      "precipitationMm": 0.4,
+      "reason": "rain risk 56% / 0.4 mm"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 9,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 61,
+      "precipitationMm": 0.4,
+      "reason": "rain risk 61% / 0.4 mm"
+    },
+    {
+      "date": "2026-08-29",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 39,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 3,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 5,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 12,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 37,
+      "precipitationMm": 0.9,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 52,
+      "precipitationMm": 0.6,
+      "reason": "rain risk 52% / 0.6 mm"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 55,
+      "precipitationMm": 0.5,
+      "reason": "rain risk 55% / 0.5 mm"
+    },
+    {
+      "date": "2026-08-30",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 39,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 11,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 4,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 34,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 53,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 53% / 0.2 mm"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 57,
+      "precipitationMm": 0.1,
+      "reason": "rain risk 57% / 0.1 mm"
+    },
+    {
+      "date": "2026-08-31",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 39,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 7,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 6,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 20,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 28,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 31,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-01",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 28,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 17,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 18,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 30,
+      "precipitationMm": 0.2,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 43,
+      "precipitationMm": 1.1,
+      "reason": "rain risk 43% / 1.1 mm"
+    },
+    {
+      "date": "2026-09-02",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 47,
+      "precipitationMm": 1.5,
+      "reason": "rain risk 47% / 1.5 mm"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 40,
+      "precipitationMm": 0,
+      "reason": "rain risk 40% / 0.0 mm"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 25,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 43,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 43% / 0.2 mm"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 52,
+      "precipitationMm": 0.3,
+      "reason": "rain risk 52% / 0.3 mm"
+    },
+    {
+      "date": "2026-09-03",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 51,
+      "precipitationMm": 0.3,
+      "reason": "rain risk 51% / 0.3 mm"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 38,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 2,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 27,
+      "precipitationMm": 0.3,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 48,
+      "precipitationMm": 0.2,
+      "reason": "rain risk 48% / 0.2 mm"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 45,
+      "precipitationMm": 0.9,
+      "reason": "rain risk 45% / 0.9 mm"
+    },
+    {
+      "date": "2026-09-04",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 41,
+      "precipitationMm": 1.2,
+      "reason": "rain risk 41% / 1.2 mm"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "early-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 39,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "am-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "late-am",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 0,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "midday",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 6,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "pm-build",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 12,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "pm-peak",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 0,
+      "confidenceBoost": 4,
+      "maxPrecipitationProbability": 27,
+      "precipitationMm": 0,
+      "reason": "weather checked; low rain impact"
+    },
+    {
+      "date": "2026-09-05",
+      "windowId": "late-event",
+      "zones": [
+        "orr-east",
+        "whitefield",
+        "south-east",
+        "north-airport",
+        "central",
+        "south",
+        "west"
+      ],
+      "delta": 5,
+      "confidenceBoost": 8,
+      "maxPrecipitationProbability": 43,
+      "precipitationMm": 0,
+      "reason": "rain risk 43% / 0.0 mm"
+    }
+  ],
   "events": [],
   "advisories": [],
-  "notes": ["Live enrichment has not run yet. Calendar baseline remains active."]
+  "notes": [
+    "News intelligence unavailable: fetch failed"
+  ]
 }
