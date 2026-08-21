@@ -1,58 +1,64 @@
 {
   "source": {
-    "name": "Bengaluru Comprehensive Mobility Plan / Revised Master Plan traffic counts",
-    "url": "https://data.opencity.in/dataset/bengaluru-comprehensive-mobility-plan",
-    "note": "Used only to identify documented high-volume junctions and peak-sensitive areas. No zone-specific travel-time multiplier is inferred from these counts."
+    "name": "Bengaluru public mobility studies and corridor traffic surveys",
+    "note": "Peak timing is shown only where a published survey/study provides usable local timing evidence. No zone-specific travel-time multiplier is inferred."
   },
   "profiles": {
     "orr-east": {
-      "evidence": "strong",
+      "evidence": "moderate",
       "hotspotLevel": "high",
-      "junctions": ["Doddanekundi", "Tin Factory / KR Puram", "Kundalahalli"],
-      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
-      "message": "This area contains several documented high-volume junctions on the eastern ring-road corridor. Peak periods are especially disruption-sensitive."
+      "junctions": ["Doddanekundi", "Tin Factory / KR Puram", "Kundalahalli", "Iblur approach"],
+      "localPeaks": ["around 9–10 AM", "around 5:30–6:30 PM"],
+      "peakWindowIds": ["am-peak", "pm-peak"],
+      "message": "The eastern ORR contains several documented high-volume junctions. Available corridor surveys put the critical morning period around 9–10 AM and evening around 5:30–6:30 PM."
     },
     "whitefield": {
       "evidence": "moderate",
       "hotspotLevel": "high",
       "junctions": ["Kundalahalli", "Doddanekundi"],
-      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
-      "message": "The Whitefield approach includes documented high-volume junctions such as Kundalahalli and Doddanekundi, so commute peaks can deteriorate quickly when anything unusual happens."
+      "localPeaks": ["around 9–10 AM", "around 5:30–6:30 PM"],
+      "peakWindowIds": ["am-peak", "pm-peak"],
+      "message": "Whitefield approaches include high-volume eastern junctions. Local peak timing evidence is less complete, so the eastern ORR timing is used as a cautious proxy rather than a separate travel-time curve."
     },
     "south-east": {
       "evidence": "strong",
       "hotspotLevel": "very-high",
-      "junctions": ["Central Silk Board", "HSR Layout 27th Main"],
-      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
-      "message": "Central Silk Board is one of Bengaluru's most heavily loaded documented junctions. Morning and evening commute windows are particularly sensitive."
+      "junctions": ["Central Silk Board", "HSR Layout 27th Main", "Iblur"],
+      "localPeaks": ["around 9–10 AM", "around 5:30–6:30 PM"],
+      "peakWindowIds": ["am-peak", "pm-peak"],
+      "message": "Central Silk Board is among Bengaluru's most heavily loaded documented junctions. Corridor counts around Iblur/Silk Board show a strong morning peak around 9–10 AM and evening peak around 5:30–6:30 PM."
     },
     "north-airport": {
       "evidence": "strong",
       "hotspotLevel": "very-high",
       "junctions": ["Hebbal", "Hennur Cross", "Nagawara", "BEL Circle"],
-      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
-      "message": "Hebbal and nearby northern junctions carry very high documented traffic volumes. Airport and city-bound peaks can become severe when disruptions overlap normal demand."
+      "localPeaks": ["roughly 9–11 AM", "roughly 5–7 PM"],
+      "peakWindowIds": ["am-peak", "late-am", "pm-peak"],
+      "message": "Hebbal and nearby northern corridors have strong published peak-hour evidence. Studies place the morning peak broadly around 9–11 AM and evening around 5–7 PM, with individual northern count points peaking between 9:00 and 11:15 AM."
     },
     "central": {
       "evidence": "limited",
       "hotspotLevel": "unknown",
       "junctions": [],
-      "sensitiveWindows": [],
-      "message": "The current public junction dataset is not strong enough to create a separate Central Bengaluru peak profile, so the citywide historical pattern is used without a local modifier."
+      "localPeaks": [],
+      "peakWindowIds": [],
+      "message": "Current public evidence is not strong enough to assign a separate Central Bengaluru peak shape, so the Bengaluru-wide TomTom timing curve is used."
     },
     "south": {
-      "evidence": "moderate",
+      "evidence": "limited",
       "hotspotLevel": "elevated",
       "junctions": ["Sarakki", "Devegowda Petrol Bunk"],
-      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
-      "message": "South Bengaluru includes documented busy junctions such as Sarakki and Devegowda Petrol Bunk. Peak windows can be locally sensitive even when the citywide pattern looks manageable."
+      "localPeaks": [],
+      "peakWindowIds": [],
+      "message": "Public counts confirm busy South Bengaluru junctions, but the current evidence is not strong enough to assign a distinct local peak-time curve. The citywide timing curve is used."
     },
     "west": {
       "evidence": "moderate",
       "hotspotLevel": "elevated",
       "junctions": ["Goragunte Palya", "Sumanahalli"],
-      "sensitiveWindows": ["am-peak", "pm-build", "pm-peak"],
-      "message": "West Bengaluru includes high-volume junctions such as Goragunte Palya and Sumanahalli. Holiday departure and return traffic can also matter on outbound corridors."
+      "localPeaks": ["about 7:45–10:40 AM", "about 5:30–8:30 PM"],
+      "peakWindowIds": ["early-am", "am-peak", "pm-build", "pm-peak"],
+      "message": "A Goragunte Palya traffic study observed a broad morning congestion period from about 7:45–10:40 AM and evening from about 5:30–8:30 PM."
     }
   }
 }
