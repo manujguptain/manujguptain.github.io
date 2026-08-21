@@ -1,0 +1,29 @@
+{
+  "product": "Bengaluru Traffic-Risk Calendar",
+  "timezone": "Asia/Kolkata",
+  "riskScale": [
+    {"min": 0, "max": 24, "label": "Light"},
+    {"min": 25, "max": 44, "label": "Normal"},
+    {"min": 45, "max": 59, "label": "Elevated"},
+    {"min": 60, "max": 74, "label": "High"},
+    {"min": 75, "max": 100, "label": "Severe"}
+  ],
+  "timeWindows": [
+    {"id": "early-am", "label": "6–8 AM", "start": "06:00", "end": "08:00"},
+    {"id": "am-peak", "label": "8–10 AM", "start": "08:00", "end": "10:00"},
+    {"id": "late-am", "label": "10 AM–12 PM", "start": "10:00", "end": "12:00"},
+    {"id": "midday", "label": "12–3 PM", "start": "12:00", "end": "15:00"},
+    {"id": "pm-build", "label": "3–5 PM", "start": "15:00", "end": "17:00"},
+    {"id": "pm-peak", "label": "5–8 PM", "start": "17:00", "end": "20:00"},
+    {"id": "late-event", "label": "8–11 PM", "start": "20:00", "end": "23:00", "conditional": true}
+  ],
+  "zones": [
+    {"id": "orr-east", "name": "ORR East", "examples": ["Bellandur", "Marathahalli", "Mahadevapura", "KR Puram"]},
+    {"id": "whitefield", "name": "Whitefield", "examples": ["ITPL", "Hope Farm", "Varthur"]},
+    {"id": "south-east", "name": "South-East", "examples": ["Silk Board", "HSR", "Sarjapur Road", "Electronic City"]},
+    {"id": "north-airport", "name": "North / Airport", "examples": ["Hebbal", "Yelahanka", "Airport Road"]},
+    {"id": "central", "name": "Central Bengaluru", "examples": ["CBD", "Majestic", "Vasanth Nagar", "Shivajinagar"]},
+    {"id": "south", "name": "South Bengaluru", "examples": ["Jayanagar", "JP Nagar", "Bannerghatta Road", "Kanakapura Road"]},
+    {"id": "west", "name": "West Bengaluru", "examples": ["Rajajinagar", "Vijayanagar", "Mysuru Road", "Tumakuru Road"]}
+  ]
+}

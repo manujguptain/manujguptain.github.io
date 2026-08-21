@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A transparent Bengaluru traffic-risk calendar using calendar patterns, holidays and event intelligence — without Google traffic data.">
+  <title>Bengaluru Traffic-Risk Calendar | ManujG AI Labs</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">ManujG AI Labs · Experimental public tool</p>
+      <h1>Bengaluru Traffic-Risk Calendar</h1>
+      <p class="lede">Plan around unusually difficult traffic before you leave. The baseline uses Bengaluru time patterns, zone behaviour and known holidays. Weather, roadworks, rallies and major events will be added as fresh intelligence becomes available.</p>
+      <div class="notice"><strong>No Google traffic data.</strong> This is a risk forecast, not a route ETA.</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="controls" aria-label="Calendar controls">
+      <label>Zone
+        <select id="zoneSelect"></select>
+      </label>
+      <label>Month
+        <select id="monthSelect"></select>
+      </label>
+      <div class="legend" id="legend"></div>
+    </section>
+
+    <section class="summary" id="summary" aria-live="polite"></section>
+    <section class="calendar" id="calendar" aria-label="Traffic risk calendar"></section>
+
+    <section class="method">
+      <h2>How to read this</h2>
+      <div class="method-grid">
+        <div><strong>Risk</strong><span>Expected congestion pressure for that zone and time window.</span></div>
+        <div><strong>Confidence</strong><span>How much evidence is currently available. Long-range dates are intentionally lower confidence.</span></div>
+        <div><strong>Traffic shadow</strong><span>Holidays can alter behaviour before and after the holiday, including outbound and return traffic.</span></div>
+      </div>
+      <p class="fineprint">Baseline forecasts are experimental and should not be used as navigation instructions. Predictions will become more specific as verified weather, roadwork, rally, strike and major-event signals are integrated.</p>
+    </section>
+  </main>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

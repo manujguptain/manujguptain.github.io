@@ -1,0 +1,29 @@
+{
+  "generatedFor": "2026-08-21 onward",
+  "notes": "Baseline calendar inputs only. School calendars vary by institution and should be added as a separate future input. Religious dates can change by official notification.",
+  "source": {
+    "name": "Karnataka Holidays 2026 - greytHR compilation",
+    "url": "https://www.greythr.com/wiki/acts/st-karnataka/holidays/2026/",
+    "status": "secondary-source; verify against Karnataka Gazette before production"
+  },
+  "holidays": [
+    {"date":"2026-08-21","name":"Varamahalaxmi Vrata","kind":"regional"},
+    {"date":"2026-08-26","name":"Eid-Milad","kind":"regional"},
+    {"date":"2026-08-27","name":"Yajur Upakarma","kind":"regional"},
+    {"date":"2026-08-28","name":"Brahma Sri Narayana Guru Jayanthi / Raksha Bandhan","kind":"regional"},
+    {"date":"2026-09-04","name":"Krishna Janmashtami","kind":"regional"},
+    {"date":"2026-09-08","name":"Kanya Mariyamma Jayanthi","kind":"regional"},
+    {"date":"2026-09-14","name":"Varasiddhi Vinayaka Vrata","kind":"regional"},
+    {"date":"2026-09-17","name":"Vishwakarma Jayanthi","kind":"regional"},
+    {"date":"2026-09-25","name":"Ananta Padmanabha Vrata","kind":"regional"},
+    {"date":"2026-10-02","name":"Gandhi Jayanthi","kind":"national"},
+    {"date":"2026-10-20","name":"Mahanavami / Ayudha Pooja","kind":"regional"},
+    {"date":"2026-10-21","name":"Vijayadashami","kind":"regional"},
+    {"date":"2026-11-10","name":"Balipadyami / Deepavali","kind":"regional"},
+    {"date":"2026-11-24","name":"Guru Nanak Jayanthi","kind":"regional"},
+    {"date":"2026-11-26","name":"Huttari Festival","kind":"regional"},
+    {"date":"2026-11-27","name":"Kanakadasa Jayanthi","kind":"regional"},
+    {"date":"2026-12-24","name":"Christmas Eve","kind":"regional"},
+    {"date":"2026-12-25","name":"Christmas","kind":"regional"}
+  ]
+}
