@@ -8,6 +8,15 @@ Here is a collection of standalone interactive tools, utilities, and application
 
 ---
 
+### [Bengaluru Traffic-Risk Calendar](/labs/bengaluru-traffic/)
+**Type:** Experimental Mobility Tool | **Status:** POC
+
+A proof of concept that combines public historical traffic patterns, holidays, long-weekend behaviour, weather and published area rush-hour information to estimate when Bengaluru roads may be easier or harder than usual.
+
+[Open Traffic Calendar &rarr;](/labs/bengaluru-traffic/)
+
+---
+
 ### [Passport Photo Editor](/tools/passport-photo/passport-photo-editor.html)
 **Type:** Utility | **Status:** New
 
