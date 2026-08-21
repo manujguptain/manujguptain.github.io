@@ -25,41 +25,71 @@ try{
     const o=document.createElement('option');o.value=z.id;o.textContent=`${z.name} — ${z.examples.join(', ')}`;zoneSelect.append(o);
   }
   months.forEach((key,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=monthLabel(key);monthSelect.append(o);});
-  legend.innerHTML=(config.riskScale??[]).map(r=>`<span>${r.label}: ${r.min}–${r.max}</span>`).join('');
+  legend.innerHTML='<span>↓ Lighter than usual</span><span>≈ About usual</span><span>↑ Heavier than usual</span>';
 
-  function riskLabel(score){return config.riskScale.find(r=>score>=r.min&&score<=r.max)?.label??'Unknown';}
   function clamp(n){return Math.max(0,Math.min(100,Math.round(n)));}
   function weekdayAdjust(day,windowId){if(day===0)return-22;if(day===6)return-14;if(day===5&&windowId==='pm-peak')return 8;if(day===1)return-2;return 0;}
+  function normalScore(dateKey,windowId,zoneId){return clamp(windowBase[windowId]+(zoneBias[zoneId]??0)+weekdayAdjust(weekday(dateKey),windowId));}
 
   function trafficShadow(dateKey,windowId,zoneId){
     const holiday=holidayByDate.get(dateKey);
     const tomorrowHoliday=holidayByDate.get(addDaysKey(dateKey,1));
     const yesterdayHoliday=holidayByDate.get(addDaysKey(dateKey,-1));
-    let delta=0;const reasons=[];
-    if(holiday){delta-=(windowId==='am-peak'||windowId==='pm-peak')?20:13;reasons.push(`${holiday.name}: lower routine commute`);}
-    if(tomorrowHoliday&&(windowId==='pm-build'||windowId==='pm-peak')){delta+=10;reasons.push(`pre-holiday travel before ${tomorrowHoliday.name}`);if(['west','north-airport','south-east'].includes(zoneId))delta+=5;}
-    if(yesterdayHoliday&&weekday(dateKey)===0&&['pm-build','pm-peak','late-event'].includes(windowId)){delta+=8;reasons.push('return traffic after holiday break');}
-    return{delta,reasons};
+    let delta=0;let explanation='';
+    if(holiday){
+      delta-=(windowId==='am-peak'||windowId==='pm-peak')?20:13;
+      explanation=`${holiday.name} is a holiday, so routine school and office travel is expected to be lower.`;
+    }
+    if(tomorrowHoliday&&(windowId==='pm-build'||windowId==='pm-peak')){
+      delta+=10;
+      if(['west','north-airport','south-east'].includes(zoneId))delta+=5;
+      explanation=`Tomorrow is ${tomorrowHoliday.name}. Some people may leave work early or start holiday travel, so evening traffic can be heavier.`;
+    }
+    if(yesterdayHoliday&&weekday(dateKey)===0&&['pm-build','pm-peak','late-event'].includes(windowId)){
+      delta+=8;
+      explanation='People returning after the holiday break may make evening traffic heavier.';
+    }
+    return{delta,explanation};
   }
 
   function liveAdjustment(dateKey,windowId,zoneId){
     const weather=weatherByKey.get(`${dateKey}|${windowId}`);
-    if(!weather||!weather.zones?.includes(zoneId))return{delta:0,confidenceBoost:0,reasons:[],live:false};
-    return{delta:Number(weather.delta||0),confidenceBoost:Number(weather.confidenceBoost||0),reasons:[weather.reason],live:true};
+    if(!weather||!weather.zones?.includes(zoneId))return{delta:0,confidenceBoost:0,explanation:'',live:false};
+    const rainProb=Number(weather.maxPrecipitationProbability??0);
+    const rainMm=Number(weather.precipitationMm??0);
+    return{
+      delta:Number(weather.delta||0),
+      confidenceBoost:Number(weather.confidenceBoost||0),
+      explanation:Number(weather.delta||0)>0?`Rain is likely (${rainProb}% chance${rainMm?`, around ${rainMm} mm`:''}), which usually slows Bengaluru traffic.`:'Weather is not expected to add much traffic pressure.',
+      live:true
+    };
   }
 
   function forecast(dateKey,windowId,zoneId){
-    const day=weekday(dateKey);
-    let score=windowBase[windowId]+(zoneBias[zoneId]??0)+weekdayAdjust(day,windowId);
-    const shadow=trafficShadow(dateKey,windowId,zoneId);score+=shadow.delta;
-    const live=liveAdjustment(dateKey,windowId,zoneId);score+=live.delta;
-    const reasons=[day===0?'Sunday baseline':day===6?'Saturday baseline':'weekday baseline'];
-    if(windowId==='am-peak')reasons.push('morning commute peak');
-    if(windowId==='pm-peak')reasons.push('evening commute peak');
-    reasons.push(...shadow.reasons,...live.reasons);
+    const usual=normalScore(dateKey,windowId,zoneId);
+    const shadow=trafficShadow(dateKey,windowId,zoneId);
+    const live=liveAdjustment(dateKey,windowId,zoneId);
+    const score=clamp(usual+shadow.delta+live.delta);
+    const changePct=usual?Math.round(((score-usual)/usual)*100):0;
     const daysAhead=daysBetween(START_KEY,dateKey);
     const baseConfidence=daysAhead<=7?64:daysAhead<=30?55:46;
-    return{score:clamp(score),confidence:clamp(baseConfidence+live.confidenceBoost),reasons,live:live.live};
+    const explanations=[];
+    if(shadow.explanation)explanations.push(shadow.explanation);
+    if(live.explanation)explanations.push(live.explanation);
+    if(!explanations.length)explanations.push('No major known holiday or weather effect is changing the usual pattern for this time.');
+    return{score,usual,changePct,confidence:clamp(baseConfidence+live.confidenceBoost),explanation:explanations.join(' '),live:live.live};
+  }
+
+  function comparisonText(changePct){
+    const abs=Math.abs(changePct);
+    if(abs<6)return 'About the usual traffic';
+    if(changePct<0)return `About ${abs}% lighter than usual`;
+    return `About ${abs}% heavier than usual`;
+  }
+  function comparisonClass(changePct){return Math.abs(changePct)<6?'same':changePct<0?'lighter':'heavier';}
+  function dayHeadline(items){
+    const avg=Math.round(items.reduce((s,x)=>s+x.forecast.changePct,0)/items.length);
+    return comparisonText(avg);
   }
 
   function render(){
@@ -69,35 +99,26 @@ try{
     const dates=dateKeys.filter(key=>monthKey(key)===selectedMonth);
     const visibleWindows=config.timeWindows.filter(w=>!w.conditional);
     if(!dates.length||!visibleWindows.length)throw new Error('No forecast dates or time windows are available.');
-    const forecasts=dates.flatMap(dateKey=>visibleWindows.map(w=>forecast(dateKey,w.id,zone.id)));
-    const avg=Math.round(forecasts.reduce((sum,item)=>sum+item.score,0)/forecasts.length);
-    const liveCount=forecasts.filter(item=>item.live).length;
-    const generated=liveSignals.generatedAt?new Date(liveSignals.generatedAt).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}):'not yet refreshed';
-    const candidateCount=(liveSignals.advisories??[]).length;
-    summary.innerHTML=`<h2>${monthLabel(selectedMonth)} · ${zone.name}</h2><p>Monthly risk: <strong>${riskLabel(avg)} (${avg}/100)</strong>. ${liveCount?`${liveCount} time windows include weather intelligence.`:'Long-range dates currently use calendar intelligence.'}</p><p class="meta">Live data refresh: ${generated} · ${candidateCount} disruption headlines held for verification (not scored).</p>`;
+    const allForecasts=dates.flatMap(dateKey=>visibleWindows.map(w=>forecast(dateKey,w.id,zone.id)));
+    const avgChange=Math.round(allForecasts.reduce((s,f)=>s+f.changePct,0)/allForecasts.length);
+    const generated=liveSignals.generatedAt?new Date(liveSignals.generatedAt).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}):null;
+    summary.innerHTML=`<h2>${monthLabel(selectedMonth)} · ${zone.name}</h2><p><strong>${comparisonText(avgChange)}</strong> across the month based on what is currently known.</p><p class="meta">Long-range dates mainly use weekday and holiday patterns.${generated?` Weather/news last checked ${generated}.`:' Near-term weather has not refreshed yet.'}</p>`;
+
     calendar.innerHTML=dates.map(dateKey=>{
       const holiday=holidayByDate.get(dateKey);
       const dayForecasts=visibleWindows.map(w=>({window:w,forecast:forecast(dateKey,w.id,zone.id)}));
-      const windows=dayForecasts.map(({window,forecast:f})=>`<div class="window"><span class="time">${window.label}</span><span class="bar"><i style="width:${f.score}%"></i></span><span class="risk">${riskLabel(f.score)} ${f.score}${f.live?' · live':''}</span><span class="reason">${f.reasons.slice(0,4).join(' · ')}</span></div>`).join('');
+      const headline=dayHeadline(dayForecasts);
+      const overallClass=comparisonClass(Math.round(dayForecasts.reduce((s,x)=>s+x.forecast.changePct,0)/dayForecasts.length));
+      const windows=dayForecasts.map(({window,forecast:f})=>`<div class="window simple-window"><div class="time">${window.label}</div><div><div class="plain-result ${comparisonClass(f.changePct)}">${comparisonText(f.changePct)}</div><div class="plain-why"><strong>Why:</strong> ${f.explanation}</div></div></div>`).join('');
       const conf=Math.round(dayForecasts.reduce((sum,item)=>sum+item.forecast.confidence,0)/dayForecasts.length);
-      const hasLive=dayForecasts.some(item=>item.forecast.live);
-      return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div></div>${holiday?`<span class="holiday">${holiday.name}</span>`:''}</div><div class="windows">${windows}</div><div class="confidence">Confidence ${conf}% · ${hasLive?'calendar + near-term weather':'calendar baseline'}</div></article>`;
+      return`<article class="day"><div class="day-head"><div><div class="date">${dayLabel(dateKey)}</div><div class="day-result ${overallClass}">${headline}</div></div>${holiday?`<span class="holiday">Holiday: ${holiday.name}</span>`:''}</div><div class="windows">${windows}</div><div class="confidence">How certain are we? ${confidenceWords(conf)}</div></article>`;
     }).join('');
   }
 
-  function safeRender(){
-    try{render();}
-    catch(error){console.error('Bengaluru traffic calendar render failed',error);summary.innerHTML='<h2>Forecast temporarily unavailable</h2><p>The calendar data loaded, but the forecast renderer hit an error.</p>';calendar.innerHTML=`<article class="day"><div class="day-head"><div class="date">Render diagnostic</div></div><div class="windows"><p class="reason">${escapeHtml(error?.message??'Unknown rendering error')}</p></div></article>`;}
-  }
-
-  zoneSelect.addEventListener('change',safeRender);
-  monthSelect.addEventListener('change',safeRender);
-  safeRender();
-}catch(error){
-  console.error('Bengaluru traffic calendar startup failed',error);
-  summary.innerHTML='<h2>Forecast data could not be loaded</h2><p>The page shell is available, but one or more forecast data files failed to load.</p>';
-  calendar.innerHTML=`<article class="day"><div class="day-head"><div class="date">Load diagnostic</div></div><div class="windows"><p class="reason">${escapeHtml(error?.message??'Unknown startup error')}</p></div></article>`;
-}
+  function confidenceWords(conf){if(conf>=70)return'fairly confident';if(conf>=55)return'moderate confidence';return'early estimate — details can change closer to the date';}
+  function safeRender(){try{render();}catch(error){console.error(error);summary.innerHTML='<h2>Forecast temporarily unavailable</h2><p>Please refresh shortly.</p>';calendar.innerHTML=`<article class="day"><div class="windows"><p>${escapeHtml(error?.message??'Unknown rendering error')}</p></div></article>`;}}
+  zoneSelect.addEventListener('change',safeRender);monthSelect.addEventListener('change',safeRender);safeRender();
+}catch(error){console.error(error);summary.innerHTML='<h2>Forecast data could not be loaded</h2><p>Please refresh shortly.</p>';}
 
 async function loadJson(url,fallback){try{const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`${url} returned HTTP ${response.status}`);return await response.json();}catch(error){if(fallback!==undefined)return fallback;throw error;}}
 function buildDateKeys(startKey,endKey){const result=[];let cursor=parseKey(startKey);const end=parseKey(endKey);while(cursor<=end){result.push(formatKey(cursor));cursor.setUTCDate(cursor.getUTCDate()+1);}return result;}
