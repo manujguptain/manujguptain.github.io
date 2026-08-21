@@ -1,0 +1,85 @@
+{
+  "version": "2026-08-21",
+  "notes": "Evidence-informed Bengaluru event priors. Factors multiply the normal same-weekday/time historical travel-time baseline. These are conservative priors, not measured citywide vehicle-count reductions. Strong event profiles override generic administrative holiday rules. Local procession/market effects should be applied only to affected zones when supported by advisories.",
+  "profiles": [
+    {
+      "match": ["Varamahalakshmi Vrata"],
+      "profileType": "observed-strong",
+      "confidence": "medium-high",
+      "dayFactors": {"early-am":0.76,"am-peak":0.70,"late-am":0.75,"midday":0.80,"pm-build":0.78,"pm-peak":0.78,"late-event":0.82},
+      "preDayFactors": {"pm-build":1.08,"pm-peak":1.12,"late-event":1.08},
+      "reason": "Varamahalakshmi has repeatedly produced unusually light Bengaluru city traffic on the festival day, despite being administratively a restricted holiday. The previous day can be busier around shopping/market areas.",
+      "evidence": [
+        {"year":2025,"url":"https://www.hindustantimes.com/cities/bengaluru-news/felt-like-the-early-2010s-bengaluru-experiences-rare-traffic-free-roads-on-varamahalakshmi-festival-101754642310066.html","note":"Reports unusually traffic-free roads; multiple commuters described dramatic reductions in travel time."},
+        {"year":2025,"url":"https://tv9kannada.com/videos/varamahalakshmi-festival-rush-huge-crowd-gathers-for-shopping-at-kr-market-bengaluru-1063688.html","note":"KR Market shopping rush and congestion on the day before the festival."},
+        {"year":2024,"url":"https://publictv.in/traffic-jam-for-kilometers-of-people-coming-to-bengaluru-after-the-long-holiday/","note":"Documented return traffic into Bengaluru after the Independence Day/Varamahalakshmi long weekend."}
+      ]
+    },
+    {
+      "match": ["Mahanavami / Ayudha Pooja","Vijayadashami"],
+      "profileType": "observed-strong",
+      "confidence": "medium-high",
+      "dayFactors": {"early-am":0.72,"am-peak":0.68,"late-am":0.72,"midday":0.76,"pm-build":0.78,"pm-peak":0.78,"late-event":0.82},
+      "preDayFactors": {"pm-build":1.10,"pm-peak":1.15,"late-event":1.10},
+      "reason": "Dasara holidays have repeatedly produced unusually calm city roads while outbound travel rises before the break and congestion returns sharply when offices and schools reopen.",
+      "evidence": [
+        {"year":2025,"url":"https://www.hindustantimes.com/cities/bengaluru-news/bengaluru-back-to-normal-viral-post-shows-stark-contrast-between-dasara-calm-and-post-holiday-chaos-101759804402690.html","note":"Contrasts unusually empty Dasara roads with heavy post-holiday traffic."},
+        {"year":2025,"url":"https://kannada.oneindia.com/news/bengaluru/dasara-holidays-ease-bengaluru-traffic-highways-see-heavy-outflow-428997.html","note":"Reports easing within Bengaluru and heavy outbound holiday movement."}
+      ]
+    },
+    {
+      "match": ["Balipadyami / Deepavali"],
+      "profileType": "observed-strong",
+      "confidence": "medium-high",
+      "dayFactors": {"early-am":0.72,"am-peak":0.68,"late-am":0.72,"midday":0.76,"pm-build":0.78,"pm-peak":0.80,"late-event":0.84},
+      "preDayFactors": {"pm-build":1.10,"pm-peak":1.16,"late-event":1.12},
+      "reason": "Deepavali periods have produced very light Bengaluru city roads while large numbers of residents leave the city; outbound corridors can be substantially busier beforehand.",
+      "evidence": [
+        {"year":2025,"url":"https://timesofindia.indiatimes.com/city/bengaluru/whitetopping-deadline-to-reopenbengaluru-road-extended/articleshow/124793936.cms","note":"Reports ORR almost empty during Deepavali holidays and expected to fill again as workers return."},
+        {"year":2025,"url":"https://kannada.goodreturns.in/news/bengaluru-diwali-2025-traffic-free-roads-peaceful-city-life-and-impact-on-business-034719.html","note":"Reports unusually empty and calm Bengaluru roads around Deepavali."}
+      ]
+    },
+    {
+      "match": ["Varasiddhi Vinayaka Vrata"],
+      "profileType": "observed-mixed",
+      "confidence": "medium",
+      "dayFactors": {"early-am":0.78,"am-peak":0.75,"late-am":0.82,"midday":0.88,"pm-build":0.92,"pm-peak":0.95,"late-event":1.00},
+      "preDayFactors": {"pm-build":1.08,"pm-peak":1.10,"late-event":1.08},
+      "reason": "Ganesh Chaturthi can make normal morning commuting much lighter, while later procession and immersion activity may create localized congestion that should be handled by zone-specific advisories.",
+      "evidence": [
+        {"year":2024,"url":"https://www.hindustantimes.com/cities/bengaluru-news/karnataka-ushers-in-ganesh-chaturthi-with-its-customary-fervour-political-tussle-over-govts-order-101725779936637.html","note":"Reports Bengaluru roads mostly empty during the usual morning peak."},
+        {"year":2025,"url":"https://tv9kannada.com/karnataka/bengaluru/ganesha-visarjan-procession-traffic-diversions-and-road-closures-in-bengaluru-1074259.html","note":"Documents localized procession/immersion restrictions later in the festival period."}
+      ]
+    },
+    {
+      "match": ["Eid-Milad"],
+      "profileType": "observed-mixed",
+      "confidence": "medium",
+      "dayFactors": {"early-am":0.82,"am-peak":0.80,"late-am":0.85,"midday":0.88,"pm-build":0.90,"pm-peak":0.90,"late-event":0.92},
+      "preDayFactors": {"pm-build":1.06,"pm-peak":1.08,"late-event":1.06},
+      "reason": "A general holiday reduces routine commuting, but Eid-Milad processions can create severe localized congestion in central/northern corridors; live BTP advisories should override the citywide lull locally.",
+      "evidence": [
+        {"year":2025,"url":"https://www.hindustantimes.com/cities/bengaluru-news/traffic-diversions-in-bengaluru-for-eid-milad-procession-today-check-diversions-101757055250344.html","note":"BTP advisory expected significant congestion around procession corridors including City Market and central Bengaluru."}
+      ]
+    },
+    {
+      "match": ["Christmas"],
+      "profileType": "observed-mixed",
+      "confidence": "medium",
+      "dayFactors": {"early-am":0.76,"am-peak":0.74,"late-am":0.78,"midday":0.82,"pm-build":0.84,"pm-peak":0.86,"late-event":0.90},
+      "preDayFactors": {"pm-build":1.08,"pm-peak":1.12,"late-event":1.12},
+      "reason": "Christmas can leave many city roads unusually light while outbound highways, churches and major shopping destinations experience localized surges.",
+      "evidence": [
+        {"year":2025,"url":"https://tv9kannada.com/karnataka/bengaluru/bengaluru-christmas-traffic-viral-video-shows-empty-entry-heavy-exit-1127605.html","note":"Shows the holiday paradox of empty Bengaluru entry/city roads and heavy outbound movement."}
+      ]
+    },
+    {
+      "match": ["Gandhi Jayanthi","Kanakadasa Jayanthi"],
+      "profileType": "generic-general",
+      "confidence": "low-medium",
+      "dayFactors": {"early-am":0.86,"am-peak":0.82,"late-am":0.86,"midday":0.88,"pm-build":0.88,"pm-peak":0.86,"late-event":0.92},
+      "preDayFactors": {"pm-build":1.05,"pm-peak":1.08,"late-event":1.05},
+      "reason": "General holiday prior only. This profile should be replaced when Bengaluru-specific historical evidence is collected."
+    }
+  ]
+}
