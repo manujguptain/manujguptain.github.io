@@ -8,8 +8,8 @@ const summary=document.querySelector('#summary');
 const legend=document.querySelector('#legend');
 
 try{
-  const [config,holidayData,historical,zoneData,eventData,liveSignals]=await Promise.all([
-    loadJson('./data/config.json'),loadJson('./data/holidays-2026.json'),loadJson('./data/historical-baseline-2025.json'),loadJson('./data/zone-profiles.json'),loadJson('./data/event-profiles.json',{profiles:[]}),loadJson('./data/live-signals.json',EMPTY_SIGNALS)
+  const [config,holidayData,historical,zoneData,eventData,longWeekendData,liveSignals]=await Promise.all([
+    loadJson('./data/config.json'),loadJson('./data/holidays-2026.json'),loadJson('./data/historical-baseline-2025.json'),loadJson('./data/zone-profiles.json'),loadJson('./data/event-profiles.json',{profiles:[]}),loadJson('./data/long-weekend-profiles.json',{generic:{},eventOverrides:[]}),loadJson('./data/live-signals.json',EMPTY_SIGNALS)
   ]);
   const holidayByDate=new Map((holidayData.holidays??[]).map(h=>[h.date,h]));
   const weatherByKey=new Map((liveSignals.weather??[]).map(w=>[`${w.date}|${w.windowId}`,w]));
@@ -31,6 +31,7 @@ try{
   function zoneWindowNote(zoneId,windowId){const p=zoneProfile(zoneId);if(!p||!isLocalPeak(zoneId,windowId))return'';return `This is usually a rush-hour period around ${p.junctions?.slice(0,3).join(', ')||'this area'}.`;}
   function scaleHtml(f){return `<div class="traffic-scale" aria-label="Traffic level ${f.band.label}"><span class="scale-label">Traffic level</span><div class="scale-steps">${[1,2,3,4,5].map(n=>`<i class="scale-step ${n<=f.band.level?f.band.cls:''}"></i>`).join('')}</div><strong>${f.band.label}</strong></div>`;}
   function eventProfile(name){if(!name)return null;return (eventData.profiles??[]).find(p=>(p.match??[]).some(m=>name.toLowerCase().includes(String(m).toLowerCase())))??null;}
+  function longWeekendOverride(name){if(!name)return null;return (longWeekendData.eventOverrides??[]).find(p=>(p.match??[]).some(m=>name.toLowerCase().includes(String(m).toLowerCase())))??null;}
   function positiveFactor(value){const n=Number(value);return Number.isFinite(n)&&n>0?n:null;}
   function eventDayFactor(h,windowId){const p=eventProfile(h?.name);const factor=positiveFactor(p?.dayFactors?.[windowId]);return factor?{profile:p,factor}:null;}
   function eventPreDayFactor(h,windowId){const p=eventProfile(h?.name);const factor=positiveFactor(p?.preDayFactors?.[windowId]);return factor?{profile:p,factor}:null;}
@@ -38,20 +39,37 @@ try{
   function confidenceText(p){return p?.confidence?` Evidence confidence: ${String(p.confidence).replace('-', ' ')}.`:'';}
 
   function isWeekendHoliday(h){return h&&h.longWeekendPotential&&h.longWeekendPotential!=='low';}
-  function strongLongWeekendAnchor(h,key){if(!h)return false;const wd=weekday(key),p=eventProfile(h.name),strongEvent=['observed-strong','general-long-weekend'].includes(p?.profileType);return [1,2,4,5].includes(wd)&&(isWeekendHoliday(h)||h.governmentStatus==='general'||strongEvent);}
-  function longWeekendGeometry(anchorKey){const wd=weekday(anchorKey);if(wd===5)return{outbound:-1,awayStart:0,awayEnd:2,returnDay:2,rebound:3};if(wd===1)return{outbound:-3,awayStart:-2,awayEnd:0,returnDay:0,rebound:1};if(wd===4)return{outbound:-1,awayStart:0,awayEnd:3,returnDay:3,rebound:4};if(wd===2)return{outbound:-4,awayStart:-3,awayEnd:0,returnDay:0,rebound:1};return null;}
+  function strongLongWeekendAnchor(h,key){
+    if(!h||!isWeekendHoliday(h))return false;
+    const wd=weekday(key),p=eventProfile(h.name),override=longWeekendOverride(h.name),credibleClosure=h.governmentStatus==='general'||['observed-strong','general-long-weekend'].includes(p?.profileType)||override?.enabled===true;
+    return [1,2,4,5].includes(wd)&&credibleClosure;
+  }
+  function longWeekendGeometry(anchorKey){
+    const wd=weekday(anchorKey);
+    if(wd===5)return{outbound:-1,awayStart:0,awayEnd:2,returnDay:2,rebound:3};
+    if(wd===1)return{outbound:-3,awayStart:-2,awayEnd:0,returnDay:-1,rebound:1};
+    if(wd===4)return{outbound:-1,awayStart:0,awayEnd:3,returnDay:3,rebound:4};
+    if(wd===2)return{outbound:-4,awayStart:-3,awayEnd:0,returnDay:0,rebound:1};
+    return null;
+  }
   function longWeekendContext(dateKey){
     for(let shift=-4;shift<=4;shift++){
       const anchorKey=addDaysKey(dateKey,shift),h=holidayByDate.get(anchorKey);if(!strongLongWeekendAnchor(h,anchorKey))continue;
       const g=longWeekendGeometry(anchorKey);if(!g)continue;
       const rel=dayDiff(anchorKey,dateKey);
-      if(rel===g.outbound)return{role:'outbound',holiday:h,anchorKey};
-      if(rel===g.returnDay)return{role:'return',holiday:h,anchorKey};
-      if(rel>=g.awayStart&&rel<=g.awayEnd)return{role:'away',holiday:h,anchorKey};
-      if(rel===g.rebound)return{role:'rebound',holiday:h,anchorKey};
+      if(rel===g.outbound)return{role:'outbound',holiday:h,anchorKey,override:longWeekendOverride(h.name)};
+      if(rel===g.returnDay)return{role:'return',holiday:h,anchorKey,override:longWeekendOverride(h.name)};
+      if(rel>=g.awayStart&&rel<=g.awayEnd)return{role:'away',holiday:h,anchorKey,override:longWeekendOverride(h.name)};
+      if(rel===g.rebound)return{role:'rebound',holiday:h,anchorKey,override:longWeekendOverride(h.name)};
     }
     return null;
   }
+  function longWeekendFactor(lw,key){
+    const generic=longWeekendData.generic??{},specific=lw?.override?.factors??{};
+    const value=positiveFactor(specific[key])??positiveFactor(generic[key]);
+    return value??1;
+  }
+  function longWeekendEvidenceNote(lw){return lw?.override?.reason?` ${lw.override.reason}`:'';}
   function schoolClosureFactor(w){if(w==='early-am')return.94;if(w==='am-peak')return.90;if(w==='late-am')return.96;if(w==='midday')return.98;if(w==='pm-build')return.94;return 1;}
   function schoolClosureReason(w,name){if(w==='early-am'||w==='am-peak')return`${name}: fewer school-drop trips, while offices mostly continue normally.`;if(w==='late-am'||w==='midday')return`${name}: slightly fewer school-related trips, but normal city activity continues.`;if(w==='pm-build')return`${name}: fewer school-pickup trips should ease some traffic.`;return`${name}: school closures alone should have little effect on the main office evening peak.`;}
 
@@ -68,13 +86,21 @@ try{
     if(preEvent){factor*=preEvent.factor;reasons.push(`Tomorrow is ${tomorrow.name}; historical Bengaluru evidence shows a pre-event shopping/outbound effect at this time.`);const localPreFactor=eventZoneFactor(preEvent.profile,'pre',zoneId,windowId);if(localPreFactor&&Math.abs(localPreFactor-1)>=.02){factor*=localPreFactor;reasons.push('The pre-event effect is stronger in this area because of known market/outbound activity.');}}
 
     const lw=longWeekendContext(dateKey);
-    if(lw?.role==='outbound'&&!preEvent&&['pm-build','pm-peak','late-event'].includes(windowId)){factor*=1.10;reasons.push(`${lw.holiday.name} creates a long-weekend pattern; historical Bengaluru evidence shows heavier outbound traffic before the break.`);if(['west','north-airport','south-east','orr-east'].includes(zoneId)){factor*=1.05;reasons.push('This can be stronger on roads leading out of Bengaluru.');}}
-    if(lw?.role==='away'&&!h){const wd=weekday(dateKey),awayFactor=wd===6?.80:wd===0?.85:.82;factor*=awayFactor;reasons.push(`This date sits inside the ${lw.holiday.name} long-weekend away period. Historical Bengaluru patterns show materially lighter inner-city traffic while many residents are out of town or staying home.`);}
-    if(lw?.role==='return'){
-      if(['pm-build','pm-peak','late-event'].includes(windowId)){factor*=1.15;reasons.push(`${lw.holiday.name} long-weekend return traffic is expected to build as travellers re-enter Bengaluru.`);}
-      else if(!h){factor*=.85;reasons.push(`Many ${lw.holiday.name} long-weekend travellers are still away during the daytime, keeping city traffic lighter than usual.`);}
+    if(lw?.role==='outbound'&&!preEvent&&['pm-build','pm-peak','late-event'].includes(windowId)){
+      factor*=longWeekendFactor(lw,'outboundEvening');
+      reasons.push(`${lw.holiday.name} creates a long-weekend pattern; historical Bengaluru evidence shows heavier outbound traffic before the break.${longWeekendEvidenceNote(lw)}`);
+      if(['west','north-airport','south-east','orr-east'].includes(zoneId)){factor*=longWeekendFactor(lw,'outboundCorridorExtra');reasons.push('This can be stronger on roads leading out of Bengaluru.');}
     }
-    if(lw?.role==='rebound'&&['early-am','am-peak'].includes(windowId)){factor*=1.07;reasons.push(`The ${lw.holiday.name} long weekend has ended; normal commuting resumes while some travellers may still be returning.`);}
+    if(lw?.role==='away'&&!h){
+      const wd=weekday(dateKey),key=wd===6?'awaySaturday':wd===0?'awaySundayDaytime':'awayOtherDay';
+      factor*=longWeekendFactor(lw,key);
+      reasons.push(`This date sits inside the ${lw.holiday.name} long-weekend away period. Historical Bengaluru patterns show materially lighter inner-city traffic while many residents are out of town or staying home.${longWeekendEvidenceNote(lw)}`);
+    }
+    if(lw?.role==='return'){
+      if(['pm-build','pm-peak','late-event'].includes(windowId)){factor*=longWeekendFactor(lw,'returnEvening');reasons.push(`${lw.holiday.name} long-weekend return traffic is expected to build as travellers re-enter Bengaluru.${longWeekendEvidenceNote(lw)}`);}
+      else if(!h){factor*=longWeekendFactor(lw,'returnDaytime');reasons.push(`Many ${lw.holiday.name} long-weekend travellers are still away during the daytime, keeping city traffic lighter than usual.${longWeekendEvidenceNote(lw)}`);}
+    }
+    if(lw?.role==='rebound'&&['early-am','am-peak'].includes(windowId)){factor*=longWeekendFactor(lw,'reboundMorning');reasons.push(`The ${lw.holiday.name} long weekend has ended; normal commuting resumes while some travellers may still be returning.${longWeekendEvidenceNote(lw)}`);}
 
     const weather=weatherByKey.get(`${dateKey}|${windowId}`);
     if(weather?.zones?.includes(zoneId)&&Number(weather.delta||0)>0){const weatherDelta=Math.min(20,Math.max(0,Number(weather.delta||0)));factor*=1+weatherDelta/100;const p=Number(weather.maxPrecipitationProbability??0);reasons.push(`Weather adds about ${weatherDelta}% slowdown risk${p?` (${p}% rain chance)`:''}.`);}
@@ -98,7 +124,7 @@ try{
   function render(){
     const zone=config.zones.find(z=>z.id===zoneSelect.value)??config.zones[0],selectedMonth=months[Number(monthSelect.value)||0],dates=dateKeys.filter(k=>monthKey(k)===selectedMonth),windows=config.timeWindows.filter(w=>!w.conditional),profile=zoneProfile(zone.id);
     const rush=profile?.localPeaks?.length?`<div class="summary-pill rush-pill"><span>Area rush hours</span><strong>${profile.localPeaks.join(' · ')}</strong></div>`:`<div class="summary-pill"><span>Area timing</span><strong>Bengaluru-wide pattern</strong></div>`;
-    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy"><strong>Today and the next three days stay expanded.</strong> Later forecasts and past dates are collapsed until you select them. Festival history, long-weekend carry-over and documented local hotspots are applied automatically.</p>`;
+    summary.innerHTML=`<div class="summary-top"><div><p class="summary-kicker">${zone.name}</p><h2>${monthLabel(selectedMonth)}</h2></div>${rush}</div><p class="summary-copy"><strong>Today and the next three days stay expanded.</strong> Later forecasts and past dates are collapsed until you select them. Festival history, evidence-based long-weekend carry-over and documented local hotspots are applied automatically.</p>`;
     const immediate=dates.filter(k=>{const r=dayDiff(todayKey,k);return r>=0&&r<=3;});
     const future=dates.filter(k=>dayDiff(todayKey,k)>3);
     const past=dates.filter(k=>dayDiff(todayKey,k)<0).reverse();
