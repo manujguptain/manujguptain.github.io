@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="A simple Bengaluru traffic-risk calendar showing when traffic may be lighter or heavier than usual and why.">
+  <meta name="description" content="A simple Bengaluru traffic calendar using historical weekday/time patterns plus holidays, long weekends, weather and disruptions.">
   <title>Bengaluru Traffic-Risk Calendar | ManujG AI Labs</title>
-  <link rel="stylesheet" href="./styles.css?v=20260821c">
+  <link rel="stylesheet" href="./styles.css?v=20260821d">
 </head>
 <body>
   <header class="hero">
     <div class="wrap">
       <p class="eyebrow">ManujG AI Labs · Experimental public tool</p>
       <h1>Bengaluru Traffic-Risk Calendar</h1>
-      <p class="lede">See when traffic may be lighter or heavier than usual in your part of Bengaluru, and the simple reason why — holidays, long weekends, rain and other known disruptions.</p>
-      <div class="notice"><strong>No Google traffic data.</strong> This predicts traffic pressure, not exact travel time.</div>
+      <p class="lede">Find the quieter and busier times to travel in your part of Bengaluru. We start with historical Bengaluru traffic patterns by weekday and time, then account for holidays, long weekends, rain and known disruptions.</p>
+      <div class="notice"><strong>No Google traffic data.</strong> Historical traffic backbone uses public TomTom Traffic Index patterns; this is not a route ETA.</div>
     </div>
   </header>
 
@@ -34,13 +34,13 @@
     <section class="method">
       <h2>How to use this</h2>
       <div class="method-grid">
-        <div><strong>Look for the percentage</strong><span>“20% lighter” means we expect less traffic pressure than is usual for that same weekday and time.</span></div>
-        <div><strong>Holiday type matters</strong><span>A statewide public holiday, a restricted holiday and a school-only closure are treated differently. We do not assume Bengaluru is shut just because a festival appears on a calendar.</span></div>
-        <div><strong>Long weekends have a pattern</strong><span>Traffic can rise before people leave, fall while they are away, and rise again on Sunday evening or Monday morning when they return.</span></div>
+        <div><strong>First: choose the quieter time</strong><span>Each time window shows its typical historical traffic level and an approximate minutes-per-10-km figure. A 6–8 AM window can therefore be clearly better than 8–10 AM even when both are completely normal days.</span></div>
+        <div><strong>Then: check what is different today</strong><span>Public holidays, restricted holidays, school closures, long weekends and weather are treated separately rather than calling every festival a citywide holiday.</span></div>
+        <div><strong>Long weekends change several days</strong><span>Departures can worsen traffic before the break, city traffic can ease while people are away, and return traffic can build on Sunday evening and sometimes Monday morning.</span></div>
       </div>
-      <p class="fineprint">These are experimental estimates, not navigation instructions or exact journey times. Weather, roadworks, rallies and events become clearer closer to the day.</p>
+      <p class="fineprint">TomTom's public Bengaluru 2025 citywide weekday/hour travel patterns provide the historical backbone. Broad area adjustments are estimates, not measured TomTom zone-level data. Weather, roadworks, rallies and events become clearer closer to the date.</p>
     </section>
   </main>
-  <script type="module" src="./app.mjs?v=20260821c"></script>
+  <script type="module" src="./app.mjs?v=20260821d"></script>
 </body>
 </html>
