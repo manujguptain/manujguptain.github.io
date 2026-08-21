@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="A transparent Bengaluru traffic-risk calendar using calendar patterns, holidays and event intelligence — without Google traffic data.">
+  <meta name="description" content="A simple Bengaluru traffic-risk calendar showing when traffic may be lighter or heavier than usual and why.">
   <title>Bengaluru Traffic-Risk Calendar | ManujG AI Labs</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -12,14 +12,14 @@
     <div class="wrap">
       <p class="eyebrow">ManujG AI Labs · Experimental public tool</p>
       <h1>Bengaluru Traffic-Risk Calendar</h1>
-      <p class="lede">Plan around unusually difficult traffic before you leave. The baseline uses Bengaluru time patterns, zone behaviour and known holidays. Weather, roadworks, rallies and major events will be added as fresh intelligence becomes available.</p>
-      <div class="notice"><strong>No Google traffic data.</strong> This is a risk forecast, not a route ETA.</div>
+      <p class="lede">See when traffic may be lighter or heavier than usual in your part of Bengaluru, and the simple reason why — holidays, rain and other known disruptions.</p>
+      <div class="notice"><strong>No Google traffic data.</strong> This predicts traffic pressure, not exact travel time.</div>
     </div>
   </header>
 
   <main class="wrap">
     <section class="controls" aria-label="Calendar controls">
-      <label>Zone
+      <label>Area
         <select id="zoneSelect"></select>
       </label>
       <label>Month
@@ -32,13 +32,13 @@
     <section class="calendar" id="calendar" aria-label="Traffic risk calendar"></section>
 
     <section class="method">
-      <h2>How to read this</h2>
+      <h2>How to use this</h2>
       <div class="method-grid">
-        <div><strong>Risk</strong><span>Expected congestion pressure for that zone and time window.</span></div>
-        <div><strong>Confidence</strong><span>How much evidence is currently available. Long-range dates are intentionally lower confidence.</span></div>
-        <div><strong>Traffic shadow</strong><span>Holidays can alter behaviour before and after the holiday, including outbound and return traffic.</span></div>
+        <div><strong>Look for the percentage</strong><span>“30% lighter” means we expect less traffic pressure than is usual for that same day and time.</span></div>
+        <div><strong>Read the reason</strong><span>We explain the main known cause in ordinary language, such as a holiday or expected rain.</span></div>
+        <div><strong>Far-away dates can change</strong><span>Holiday patterns are known early. Weather, roadworks, rallies and other events become clearer closer to the day.</span></div>
       </div>
-      <p class="fineprint">Baseline forecasts are experimental and should not be used as navigation instructions. Predictions will become more specific as verified weather, roadwork, rally, strike and major-event signals are integrated.</p>
+      <p class="fineprint">These are experimental estimates, not navigation instructions or exact journey times.</p>
     </section>
   </main>
   <script type="module" src="./app.mjs"></script>
