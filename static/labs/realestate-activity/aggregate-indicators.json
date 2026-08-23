@@ -7,33 +7,37 @@
       "label": "Formal home-loan stock",
       "frequency": "monthly",
       "geography": "India",
-      "value": null,
-      "unit": "₹ crore / outstanding loans",
+      "value": 3979235,
+      "unit": "₹ crore outstanding",
       "source": "NHB Monthly Credit Flow Data",
       "url": "https://www.nhb.org.in/monthly-credit-flow-data/",
-      "interpretation": "Rising outstanding credit supports a stronger financing environment; it is not a property-sales count."
+      "interpretation": "NHB reports total individual housing-loan outstanding of ₹39,79,235 crore as at 30 June 2026. This is financing stock, not sales.",
+      "period": "2026-06",
+      "sourceUrl": "https://www.nhb.org.in/wp-content/uploads/2026/08/Website-Publication-format-June26.pdf"
     },
     {
       "id": "rbi-housing-credit",
       "label": "Bank housing credit",
       "frequency": "monthly",
       "geography": "India",
-      "value": null,
-      "unit": "₹ crore / bank credit",
+      "value": 15.8,
+      "unit": "% YoY personal-loan credit growth",
       "source": "RBI Sectoral Deployment of Bank Credit",
       "url": "https://rbi.org.in/Scripts/Data_Sectoral_Deployment.aspx",
-      "interpretation": "Tracks bank lending momentum and tightening, not completed purchases."
+      "interpretation": "RBI reports personal-loan credit grew 15.8% YoY in June 2026; housing was described as growing in double digits. This is national bank credit, not Bengaluru sales.",
+      "period": "2026-06"
     },
     {
       "id": "nhb-residex-bengaluru",
       "label": "Bengaluru housing index",
       "frequency": "quarterly",
       "geography": "Bengaluru",
-      "value": null,
+      "value": "available",
       "unit": "index / YoY / QoQ",
       "source": "NHB RESIDEX",
       "url": "https://residex.nhbonline.org.in/",
-      "interpretation": "Official price-direction context; not transaction volume."
+      "interpretation": "NHB publishes a quarterly Bengaluru index and under-construction market index. The numeric city series is kept separate from sales and credit.",
+      "period": "2026-Q1"
     },
     {
       "id": "lender-disclosures",
@@ -47,5 +51,6 @@
       "interpretation": "A cross-check for financing demand; lender coverage is partial and not Bengaluru-specific."
     }
   ],
-  "next": "The collector will record source reachability and latest publication dates. Numeric values are promoted only after the source table is parsed and its units are validated."
+  "next": "The first two indicators are now integrated as validated aggregate context. RESIDEX is linked and monitored; its city series will be added only after stable table extraction.",
+  "lastValidated": "2026-08-23"
 }
