@@ -1,0 +1,55 @@
+{
+  "lastUpdated": "2026-08-23",
+  "definition": "Reported primary-market housing sales; not registered sale deeds. Values are not merged into one official series because publishers and coverage differ.",
+  "observations": [
+    {
+      "period": "2024-Q1",
+      "value": 16995,
+      "source": "JLL",
+      "url": "https://www.jll.com/en-in/newsroom/jll-bengaluru-emerges-as-the-forefront-of-residential-sales-in-india-in-q1-2024",
+      "comparability": "reported"
+    },
+    {
+      "period": "2024-Q2",
+      "value": 16350,
+      "source": "ANAROCK via Hindustan Times",
+      "url": "https://www.hindustantimes.com/real-estate/bengaluru-housing-sales-dip-8-in-q2-2025-despite-12-increase-in-property-prices-anarock-101752822109895.html",
+      "comparability": "reported"
+    },
+    {
+      "period": "2024-Q3",
+      "value": 14604,
+      "source": "Knight Frank",
+      "url": "https://content.knightfrank.com/research/2902/documents/en/india-real-estate-office-and-residential-market-jul-sep-2024-11576.pdf",
+      "comparability": "reported"
+    },
+    {
+      "period": "2025-Q2",
+      "value": 15100,
+      "source": "ANAROCK via Hindustan Times",
+      "url": "https://www.hindustantimes.com/real-estate/bengaluru-housing-sales-dip-8-in-q2-2025-despite-12-increase-in-property-prices-anarock-101752822109895.html",
+      "comparability": "reported"
+    },
+    {
+      "period": "2025-Q3",
+      "value": 16840,
+      "source": "PropEquity via public coverage",
+      "url": "https://www.propequity.in/press-coverage",
+      "comparability": "reported"
+    },
+    {
+      "period": "2026-Q1",
+      "value": 17991,
+      "source": "PropEquity via Economic Times",
+      "url": "https://m.economictimes.com/markets/digital-real-estate/realty-news/housing-sales-in-top-9-cities-dip-13-in-jan-mar-fall-below-1-lakh-unit-after-18-quarters-propequity/articleshow/129917463.cms",
+      "comparability": "reported"
+    },
+    {
+      "period": "2026-Q2",
+      "value": 21516,
+      "source": "PropEquity via Business Standard",
+      "url": "https://www.business-standard.com/industry/news/housing-sales-in-india-s-top-nine-cities-grow-19-in-q2-2026-propequity-126062500871_1.html",
+      "comparability": "reported"
+    }
+  ]
+}
