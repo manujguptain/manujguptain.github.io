@@ -1,6 +1,55 @@
 {
-  "collectorRunAt": null,
-  "latestSourceFetchedAt": null,
-  "status": "not-run",
-  "results": []
+  "collectorRunAt": "2026-08-23T10:20:52.874Z",
+  "latestSourceFetchedAt": "2026-08-23T10:20:52.874Z",
+  "status": "source-probes-completed",
+  "results": [
+    {
+      "id": "kaveri-landing",
+      "kind": "official-registration-portal",
+      "url": "https://kaveri.karnataka.gov.in/landing-page",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:20:52.874Z",
+      "error": "TypeError: fetch failed",
+      "durationMs": 10809
+    },
+    {
+      "id": "karnataka-rera-projects",
+      "kind": "official-supply-portal",
+      "url": "https://rera.karnataka.gov.in/viewAllProjects",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:20:52.874Z",
+      "error": "TypeError: fetch failed",
+      "durationMs": 10493
+    },
+    {
+      "id": "datagov-search",
+      "kind": "open-data-catalog",
+      "url": "https://api.data.gov.in",
+      "status": 404,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:20:52.874Z",
+      "durationMs": 6551
+    },
+    {
+      "id": "karnataka-revenue",
+      "kind": "official-government-publications",
+      "url": "https://revenue.karnataka.gov.in/en",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:20:52.874Z",
+      "error": "TypeError: fetch failed",
+      "durationMs": 10491
+    },
+    {
+      "id": "jll-residential-research",
+      "kind": "independent-market-cross-check",
+      "url": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
+      "status": 200,
+      "ok": true,
+      "checkedAt": "2026-08-23T10:20:52.874Z",
+      "durationMs": 156
+    }
+  ]
 }
