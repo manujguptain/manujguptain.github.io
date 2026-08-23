@@ -1,7 +1,36 @@
 {
-  "discoveredAt": null,
-  "apiKeyMode": "not-run",
+  "discoveredAt": "2026-08-23T10:27:13.307Z",
+  "apiKeyMode": "demo-key",
   "purpose": "Dataset discovery only; no record is promoted to purchase activity automatically.",
-  "queries": [],
-  "results": []
+  "queries": [
+    "property registration Karnataka",
+    "sale deed Karnataka",
+    "registered documents Karnataka stamps"
+  ],
+  "results": [
+    {
+      "query": "property registration Karnataka",
+      "url": "https://api.data.gov.in/catalog/v1?format=json&limit=50&offset=0&api-key=DEMO_KEY&filters%5Btitle%5D=property+registration+Karnataka",
+      "status": 403,
+      "ok": false,
+      "count": 0,
+      "records": []
+    },
+    {
+      "query": "sale deed Karnataka",
+      "url": "https://api.data.gov.in/catalog/v1?format=json&limit=50&offset=0&api-key=DEMO_KEY&filters%5Btitle%5D=sale+deed+Karnataka",
+      "status": 403,
+      "ok": false,
+      "count": 0,
+      "records": []
+    },
+    {
+      "query": "registered documents Karnataka stamps",
+      "url": "https://api.data.gov.in/catalog/v1?format=json&limit=50&offset=0&api-key=DEMO_KEY&filters%5Btitle%5D=registered+documents+Karnataka+stamps",
+      "status": 403,
+      "ok": false,
+      "count": 0,
+      "records": []
+    }
+  ]
 }
