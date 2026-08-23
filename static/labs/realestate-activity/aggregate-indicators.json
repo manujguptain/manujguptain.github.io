@@ -20,12 +20,11 @@
       "label": "Bank housing credit",
       "frequency": "monthly",
       "geography": "India",
-      "value": 15.8,
-      "unit": "% YoY personal-loan credit growth",
+      "value": null,
+      "unit": "₹ crore / housing credit",
       "source": "RBI Sectoral Deployment of Bank Credit",
       "url": "https://rbi.org.in/Scripts/Data_Sectoral_Deployment.aspx",
-      "interpretation": "RBI reports personal-loan credit grew 15.8% YoY in June 2026; housing was described as growing in double digits. This is national bank credit, not Bengaluru sales.",
-      "period": "2026-06"
+      "interpretation": "The RBI publishes a housing-credit line in its sectoral tables. The current table file is not machine-readable in this collector, so no housing-only number is displayed. Broad personal-loan growth is deliberately excluded."
     },
     {
       "id": "nhb-residex-bengaluru",
