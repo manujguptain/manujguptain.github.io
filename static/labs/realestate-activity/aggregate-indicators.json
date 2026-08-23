@@ -47,25 +47,14 @@
       "label": "Bengaluru housing index",
       "frequency": "quarterly",
       "geography": "Bengaluru",
-      "value": "available",
-      "unit": "index / YoY / QoQ",
-      "source": "NHB RESIDEX",
-      "url": "https://residex.nhbonline.org.in/",
-      "interpretation": "NHB publishes a quarterly Bengaluru index and under-construction market index. The numeric city series is kept separate from sales and credit.",
-      "period": "2026-Q1"
-    },
-    {
-      "id": "lender-disclosures",
-      "label": "Lender disbursement pulse",
-      "frequency": "quarterly",
-      "geography": "India / lender-specific",
-      "value": null,
-      "unit": "₹ crore / disbursements",
-      "source": "Listed housing-finance company investor disclosures",
-      "url": "https://www.rbi.org.in/Scripts/Statistics.aspx",
-      "interpretation": "A cross-check for financing demand; lender coverage is partial and not Bengaluru-specific."
+      "value": 9.1,
+      "period": "2025-Q2 / Q1 FY26",
+      "unit": "% YoY price change",
+      "source": "NHB RESIDEX, reported by ETRealty",
+      "url": "https://realty.economictimes.indiatimes.com/news/residential/property-prices-surge-in-major-indian-cities-nhb-reports/123574616",
+      "interpretation": "Bengaluru’s primary-residential price index rose 9.1% year-on-year in Q1 FY26. This is price direction, not sales volume. The RESIDEX dashboard also publishes quarterly city series."
     }
   ],
-  "next": "The first two indicators are now integrated as validated aggregate context. RESIDEX is linked and monitored; its city series will be added only after stable table extraction.",
+  "next": "The page now shows validated NHB housing-credit comparisons and a validated Bengaluru RESIDEX YoY figure. Lender-specific disclosures remain out of the core score because they are partial and not Bengaluru-specific.",
   "lastValidated": "2026-08-23"
 }
