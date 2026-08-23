@@ -44,5 +44,19 @@
       ]
     }
   ],
-  "method": "Insights are derived from independently published observations. Figures are not combined when definitions or periods are not like-for-like. No registration count is inferred."
+  "method": "Insights are derived from independently published observations. Figures are not combined when definitions or periods are not like-for-like. No registration count is inferred.",
+  "trend": {
+    "label": "Current trend: active, but cooling at the margin",
+    "status": "MIXED",
+    "confidence": "medium",
+    "answer": "Bengaluru is not showing a simple boom or collapse. The latest same-source comparison shows Q2 2026 sales up 47% year-on-year and launches up 71% year-on-year, which means activity is expanding. But JLL reports Q2 demand down 6% quarter-on-quarter, while supply is growing faster than sales in the PropEquity comparison. The practical reading is: demand is still strong, but buyers may have more choice and negotiating leverage than the headline sales number suggests.",
+    "signals": [
+      "PropEquity: Q2 2026 Bengaluru sales 21,516, +47% YoY",
+      "PropEquity: Q2 2026 Bengaluru launches 24,340, +71% YoY",
+      "JLL: Q2 2026 demand approximately 17,000, -6% QoQ",
+      "Knight Frank: H1 2026 sales +5% YoY and launches +4% YoY",
+      "Knight Frank: unsold inventory +22% YoY; 5.3 quarters to sell"
+    ],
+    "method": "Trend direction prioritises same-publisher period comparisons. Cross-publisher figures are used as corroboration, not added together."
+  }
 }
