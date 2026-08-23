@@ -57,6 +57,50 @@
       "sourceUrl": "https://www.cushmanwakefield.com/en/india/insights/marketbeat-india/bengaluru-marketbeat",
       "confidence": "reported-approximate",
       "notes": "Total H1 launches reported as crossing 25,000 units; not completed purchases."
+    },
+    {
+      "metricId": "reported_primary_sales",
+      "geography": "Bengaluru",
+      "period": "2026-H1",
+      "value": 27968,
+      "unit": "housing units sold",
+      "sourceId": "knight-frank-via-etrealty-h1-2026",
+      "sourceUrl": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572",
+      "confidence": "reported",
+      "notes": "Knight Frank figure reproduced by ETRealty; primary-market research, not sale-deed registrations. Reported +5% year-on-year."
+    },
+    {
+      "metricId": "new_project_supply",
+      "geography": "Bengaluru",
+      "period": "2026-H1",
+      "value": 34749,
+      "unit": "residential units launched",
+      "sourceId": "knight-frank-via-etrealty-h1-2026",
+      "sourceUrl": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572",
+      "confidence": "reported",
+      "notes": "Knight Frank figure reproduced by ETRealty; launches are new supply, not completed purchases. Reported +4% year-on-year."
+    },
+    {
+      "metricId": "unsold_inventory",
+      "geography": "Bengaluru",
+      "period": "2026-H1",
+      "value": 74299,
+      "unit": "unsold residential units",
+      "sourceId": "knight-frank-via-etrealty-h1-2026",
+      "sourceUrl": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572",
+      "confidence": "reported",
+      "notes": "Reported +22% year-on-year; quarters-to-sell 5.3 and inventory age 14.4 quarters."
+    },
+    {
+      "metricId": "inventory_pressure",
+      "geography": "South Bengaluru",
+      "period": "2026-H1",
+      "value": 7.4,
+      "unit": "quarters to sell",
+      "sourceId": "knight-frank-via-etrealty-h1-2026",
+      "sourceUrl": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572",
+      "confidence": "reported",
+      "notes": "Highest reported corridor QTS; 33,534 unsold units, up 20% year-on-year."
     }
   ],
   "lastUpdated": "2026-08-23"
