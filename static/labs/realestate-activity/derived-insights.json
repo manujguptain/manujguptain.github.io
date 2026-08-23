@@ -1,0 +1,48 @@
+{
+  "lastUpdated": "2026-08-23",
+  "insights": [
+    {
+      "id": "activity",
+      "label": "Activity is real, but definitions differ",
+      "signal": "ACTIVE",
+      "confidence": "medium",
+      "summary": "Knight Frank-reported H1 sales rose 5% year-on-year to 27,968 units, while JLL separately reports approximately 17,000 units of Q2 demand. These are market-research measures, not registrations, so they show activity rather than legal transfers.",
+      "evidence": [
+        "knight-frank-via-etrealty-h1-2026",
+        "jll-bengaluru-q2-2026"
+      ]
+    },
+    {
+      "id": "inventory",
+      "label": "Inventory pressure is the clearest risk signal",
+      "signal": "WATCH",
+      "confidence": "high",
+      "summary": "Unsold inventory rose 22% year-on-year to 74,299 units and the city-wide time-to-sell was 5.3 quarters. That means buyers should inspect project-level inventory and absorption rather than assume city-wide demand means every project is moving.",
+      "evidence": [
+        "knight-frank-via-etrealty-h1-2026"
+      ]
+    },
+    {
+      "id": "corridors",
+      "label": "South looks more inventory-heavy than East or North",
+      "signal": "COMPARE",
+      "confidence": "medium",
+      "summary": "South Bengaluru had 33,534 unsold units and 7.4 quarters to sell, versus East at 4.9 and North at 3.9. This is a corridor-level screening signal, not a verdict on an individual project.",
+      "evidence": [
+        "knight-frank-via-etrealty-h1-2026"
+      ]
+    },
+    {
+      "id": "supply",
+      "label": "New supply is substantial and concentrated",
+      "signal": "CONCENTRATED",
+      "confidence": "medium",
+      "summary": "Knight Frank-reported H1 launches were 34,749 units, while Cushman reported H1 launches crossing 25,000. The gap is a methodology warning; both sources still indicate substantial supply. South, East and North account for most launches.",
+      "evidence": [
+        "knight-frank-via-etrealty-h1-2026",
+        "cushman-bengaluru-h1-2026"
+      ]
+    }
+  ],
+  "method": "Insights are derived from independently published observations. Figures are not combined when definitions or periods are not like-for-like. No registration count is inferred."
+}
