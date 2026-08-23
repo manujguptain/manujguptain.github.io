@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-08-23T10:36:43.559Z",
+  "collectedAt": "2026-08-23T10:43:32.877Z",
   "policy": "No login, OTP, CAPTCHA bypass, personal data or paid feeds. Counts are promoted only after document-type and geography validation.",
   "observations": [
     {
@@ -8,7 +8,7 @@
       "role": "registration-portal",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:36:01.490Z",
+      "checkedAt": "2026-08-23T10:42:48.607Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -18,7 +18,7 @@
       "role": "official-publications",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:36:12.016Z",
+      "checkedAt": "2026-08-23T10:42:59.138Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -28,7 +28,7 @@
       "role": "rera-supply",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:36:22.510Z",
+      "checkedAt": "2026-08-23T10:43:09.633Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -38,7 +38,7 @@
       "role": "rera-completions",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:36:33.003Z",
+      "checkedAt": "2026-08-23T10:43:20.125Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -49,9 +49,61 @@
       "status": 200,
       "ok": true,
       "finalUrl": "https://www.jll.com/en-in/insights/market-dynamics/bengaluru-residential",
-      "checkedAt": "2026-08-23T10:36:43.496Z",
-      "contentSha256": "f04bdd4f2af2f952c98225b3d2f3aace4474612d8abac4dd4917a3aeb0b04ca9",
-      "contentLength": 257204,
+      "checkedAt": "2026-08-23T10:43:30.619Z",
+      "contentSha256": "d6e2ba75da4a4a6eef390dc0256ebadaad3e18009aaaf1efe2fc84f610b48df1",
+      "contentLength": 257202,
+      "registrationKeywordHits": 0,
+      "extractionStatus": "page-captured-no-aggregate-count-promoted"
+    },
+    {
+      "sourceId": "jll-india-residential",
+      "sourceUrl": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
+      "role": "market-cross-check",
+      "status": 200,
+      "ok": true,
+      "finalUrl": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
+      "checkedAt": "2026-08-23T10:43:30.724Z",
+      "contentSha256": "4c38762aa88e3d304cfcfda324b4dc611086dc14cedb8ad20ad864d9d3468c9a",
+      "contentLength": 265116,
+      "registrationKeywordHits": 0,
+      "extractionStatus": "page-captured-no-aggregate-count-promoted"
+    },
+    {
+      "sourceId": "anarock-research",
+      "sourceUrl": "https://www.anarock.com/",
+      "role": "market-cross-check",
+      "status": 403,
+      "ok": false,
+      "finalUrl": "https://www.anarock.com/",
+      "checkedAt": "2026-08-23T10:43:30.751Z",
+      "contentSha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+      "contentLength": 118,
+      "registrationKeywordHits": 0,
+      "extractionStatus": "page-captured-no-aggregate-count-promoted"
+    },
+    {
+      "sourceId": "knight-frank-research",
+      "sourceUrl": "https://www.knightfrank.co.in/research",
+      "role": "market-cross-check",
+      "status": 200,
+      "ok": true,
+      "finalUrl": "https://www.knightfrank.co.in/research",
+      "checkedAt": "2026-08-23T10:43:31.490Z",
+      "contentSha256": "c9f97675c0a4ba6ce7d32b37280da92b16cc8642bded1f0620faad65b2f595a8",
+      "contentLength": 249453,
+      "registrationKeywordHits": 0,
+      "extractionStatus": "page-captured-no-aggregate-count-promoted"
+    },
+    {
+      "sourceId": "cushman-bengaluru",
+      "sourceUrl": "https://www.cushmanwakefield.com/en/india/insights/marketbeat-india/bengaluru-marketbeat",
+      "role": "market-cross-check",
+      "status": 200,
+      "ok": true,
+      "finalUrl": "https://www.cushmanwakefield.com/en/india/insights/marketbeat-india/bengaluru-marketbeat",
+      "checkedAt": "2026-08-23T10:43:31.673Z",
+      "contentSha256": "454157e17988d0883a9317b2c04215e66fe3671e5443cd1d6cee84f30190fc3e",
+      "contentLength": 87170,
       "registrationKeywordHits": 0,
       "extractionStatus": "page-captured-no-aggregate-count-promoted"
     }

@@ -1,6 +1,6 @@
 {
-  "collectorRunAt": "2026-08-23T10:35:19.257Z",
-  "latestSourceFetchedAt": "2026-08-23T10:35:19.257Z",
+  "collectorRunAt": "2026-08-23T10:42:15.131Z",
+  "latestSourceFetchedAt": "2026-08-23T10:42:15.131Z",
   "status": "source-probes-completed",
   "results": [
     {
@@ -9,9 +9,9 @@
       "url": "https://kaveri.karnataka.gov.in/landing-page",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:35:19.257Z",
+      "checkedAt": "2026-08-23T10:42:15.131Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10587
+      "durationMs": 10571
     },
     {
       "id": "karnataka-rera-projects",
@@ -19,7 +19,7 @@
       "url": "https://rera.karnataka.gov.in/viewAllProjects",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:35:19.257Z",
+      "checkedAt": "2026-08-23T10:42:15.131Z",
       "error": "TypeError: fetch failed",
       "durationMs": 10494
     },
@@ -27,11 +27,10 @@
       "id": "datagov-search",
       "kind": "open-data-catalog",
       "url": "https://api.data.gov.in",
-      "status": null,
+      "status": 404,
       "ok": false,
-      "checkedAt": "2026-08-23T10:35:19.257Z",
-      "error": "TypeError: fetch failed",
-      "durationMs": 10493
+      "checkedAt": "2026-08-23T10:42:15.131Z",
+      "durationMs": 1697
     },
     {
       "id": "karnataka-revenue",
@@ -39,9 +38,9 @@
       "url": "https://revenue.karnataka.gov.in/en",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:35:19.257Z",
+      "checkedAt": "2026-08-23T10:42:15.131Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10494
+      "durationMs": 10490
     },
     {
       "id": "jll-residential-research",
@@ -49,8 +48,8 @@
       "url": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
       "status": 200,
       "ok": true,
-      "checkedAt": "2026-08-23T10:35:19.257Z",
-      "durationMs": 62
+      "checkedAt": "2026-08-23T10:42:15.131Z",
+      "durationMs": 101
     }
   ]
 }
