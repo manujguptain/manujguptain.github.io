@@ -1,0 +1,64 @@
+{
+  "lastUpdated": "2026-08-23",
+  "source": {
+    "name": "Knight Frank figures reported by ETRealty",
+    "url": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572"
+  },
+  "areas": [
+    {
+      "name": "South Bengaluru",
+      "activity": "Largest market",
+      "salesShare": 34,
+      "launchShare": 36,
+      "unsold": 33534,
+      "qts": 7.4,
+      "signal": "HIGHER INVENTORY PRESSURE",
+      "meaning": "The largest market, but the longest reported sell-through period. Compare projects carefully and negotiate on inventory that has been available longer.",
+      "confidence": "medium"
+    },
+    {
+      "name": "East Bengaluru",
+      "activity": "Large and active",
+      "salesShare": 29,
+      "launchShare": 31,
+      "unsold": 22878,
+      "qts": 4.9,
+      "signal": "ACTIVE / BALANCED",
+      "meaning": "Strong activity with a shorter sell-through period than South. Project-level competition and delivery quality matter more than the city headline.",
+      "confidence": "medium"
+    },
+    {
+      "name": "North Bengaluru",
+      "activity": "Fastest growth",
+      "salesShare": 31,
+      "launchShare": 29,
+      "unsold": 15408,
+      "qts": 3.9,
+      "signal": "GROWING WITH LOWER PRESSURE",
+      "meaning": "Reported sales rose 11% year-on-year and launches 10% year-on-year. Growth is strong, but infrastructure and project execution need checking.",
+      "confidence": "medium"
+    },
+    {
+      "name": "West Bengaluru",
+      "activity": "Small reported base",
+      "salesShare": null,
+      "launchShare": null,
+      "unsold": 2291,
+      "qts": null,
+      "signal": "INSUFFICIENT PUBLIC DATA",
+      "meaning": "The published corridor data is too thin to call this area hot or cold. Do not infer a trend from the low inventory number alone.",
+      "confidence": "low"
+    },
+    {
+      "name": "Central Bengaluru",
+      "activity": "Small reported base",
+      "salesShare": null,
+      "launchShare": null,
+      "unsold": 187,
+      "qts": null,
+      "signal": "INSUFFICIENT PUBLIC DATA",
+      "meaning": "Very little comparable public volume is reported. Treat city-wide research as a poor proxy for individual central-market decisions.",
+      "confidence": "low"
+    }
+  ]
+}
