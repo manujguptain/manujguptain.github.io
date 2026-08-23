@@ -1,0 +1,23 @@
+{
+  "source": {
+    "publisher": "ANAROCK",
+    "report": "Bengaluru Q2 2026 Residential Market Viewpoints",
+    "reportPeriod": "2026-Q2",
+    "sourceUrl": "https://www.anarock.com/research/research-reports/bengaluru-q2-2026-residential-market-viewpoints",
+    "providedBy": "User-uploaded report",
+    "copyrightNote": "Derived facts only; report PDF and graphics are not republished."
+  },
+  "city": {
+    "sales": {"value": 15300, "qoqPct": -7, "yoyPct": 1},
+    "launches": {"value": 21700, "qoqPct": -11, "yoyPct": 42},
+    "availableInventory": {"value": 79200, "qoqPct": 9, "yoyPct": 34},
+    "inventoryOverhangMonths": {"value": 15, "qoqChangeMonths": 1}
+  },
+  "corridors": [
+    {"name":"South Bengaluru","sales":{"qoqDirection":"up","yoyDirection":"up"},"launches":{"sharePct":28,"qoqPct":204,"yoyPct":27},"inventory":{"qoqDirection":"up","yoyDirection":"up"},"dataQuality":"Direction reported; exact corridor percentage not published for sales or inventory."},
+    {"name":"East Bengaluru","sales":{"sharePct":44,"qoqPct":-12,"yoyPct":5},"launches":{"sharePct":43,"qoqPct":-29,"yoyPct":114},"inventory":{"sharePct":49,"qoqDirection":"up","yoyDirection":"up"},"dataQuality":"Inventory share reported; exact inventory QoQ/YoY percentage not published."},
+    {"name":"North Bengaluru","sales":{"sharePct":31,"qoqDirection":"down","yoyDirection":"down"},"launches":{"qoqDirection":"down","yoyDirection":"up"},"inventory":{"sharePct":28,"qoqDirection":"up","yoyDirection":"up"},"dataQuality":"Directions and shares reported; exact corridor percentages not published."},
+    {"name":"West Bengaluru","sales":{"qoqDirection":"up","yoyDirection":"down"},"launches":{"qoqDirection":"up","yoyDirection":"down"},"inventory":{"qoqDirection":"up","yoyDirection":"up"},"dataQuality":"Directions reported; exact percentages and shares not published."},
+    {"name":"Central Bengaluru","sales":{},"launches":{},"inventory":{},"dataQuality":"No comparable corridor trend published in this report."}
+  ]
+}
