@@ -11,9 +11,25 @@
       "unit": "₹ crore outstanding",
       "source": "NHB Monthly Credit Flow Data",
       "url": "https://www.nhb.org.in/monthly-credit-flow-data/",
-      "interpretation": "NHB reports total individual housing-loan outstanding of ₹39,79,235 crore as at 30 June 2026. This is financing stock, not sales.",
+      "interpretation": "This is the outstanding balance of individual housing loans across HFCs, public-sector banks, private-sector banks and RRBs—not the number of loans and not property sales. It increased 0.94% from May 2026 and 9.42% from June 2025. Rising outstanding balance indicates expanding formal housing finance, but may reflect new lending, drawdowns, repayment timing and balance growth.",
       "period": "2026-06",
-      "sourceUrl": "https://www.nhb.org.in/wp-content/uploads/2026/08/Website-Publication-format-June26.pdf"
+      "sourceUrl": "https://www.nhb.org.in/wp-content/uploads/2026/08/Website-Publication-format-June26.pdf",
+      "comparison": {
+        "previousMonth": {
+          "period": "2026-05",
+          "value": 3942115,
+          "change": 37120,
+          "changePct": 0.94,
+          "sourceUrl": "https://www.nhb.org.in/wp-content/uploads/2026/07/Website-Publication-format-May26-1.pdf"
+        },
+        "yearAgo": {
+          "period": "2025-06",
+          "value": 3636605,
+          "change": 342630,
+          "changePct": 9.42,
+          "sourceUrl": "https://www.nhb.org.in/wp-content/uploads/2025/07/Website-Publication-format-Jun25.pdf"
+        }
+      }
     },
     {
       "id": "rbi-housing-credit",
