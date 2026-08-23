@@ -1,0 +1,63 @@
+{
+  "datasetStatus": "source-backed-secondary-observations",
+  "lastReviewed": "2026-08-23",
+  "scope": "Bengaluru primary residential market; not government registration counts",
+  "observations": [
+    {
+      "metricId": "reported_primary_sales",
+      "geography": "Bengaluru",
+      "period": "2024-Q1",
+      "value": 16995,
+      "unit": "housing units sold",
+      "sourceId": "jll-bengaluru-q1-2024",
+      "sourceUrl": "https://www.jll.com/en-in/newsroom/jll-bengaluru-emerges-as-the-forefront-of-residential-sales-in-india-in-q1-2024",
+      "confidence": "reported",
+      "notes": "Primary-market research figure; not sale-deed registrations."
+    },
+    {
+      "metricId": "reported_primary_sales",
+      "geography": "Bengaluru",
+      "period": "2026-Q2",
+      "value": 17000,
+      "unit": "housing units sold, approximately",
+      "sourceId": "jll-bengaluru-q2-2026",
+      "sourceUrl": "https://www.jll.com/en-in/insights/market-dynamics/bengaluru-residential",
+      "confidence": "reported-approximate",
+      "notes": "JLL reports demand declined 6% quarter-on-quarter to approximately 17,000 units; not sale-deed registrations."
+    },
+    {
+      "metricId": "new_project_supply",
+      "geography": "Bengaluru",
+      "period": "2026-Q1",
+      "value": 27055,
+      "unit": "residential units launched",
+      "sourceId": "jll-residential-dynamics",
+      "sourceUrl": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
+      "confidence": "reported",
+      "notes": "Launch/supply figure; not completed purchases or registrations."
+    },
+    {
+      "metricId": "new_project_supply",
+      "geography": "Bengaluru",
+      "period": "2026-Q2",
+      "value": 12544,
+      "unit": "residential units launched",
+      "sourceId": "cushman-bengaluru-q2-2026",
+      "sourceUrl": "https://www.cushmanwakefield.com/en/india/insights/marketbeat-india/bengaluru-marketbeat",
+      "confidence": "reported",
+      "notes": "Residential launches reported by Cushman & Wakefield; not completed purchases."
+    },
+    {
+      "metricId": "new_project_supply",
+      "geography": "Bengaluru",
+      "period": "2026-H1",
+      "value": 25000,
+      "unit": "residential units launched approximately",
+      "sourceId": "cushman-bengaluru-h1-2026",
+      "sourceUrl": "https://www.cushmanwakefield.com/en/india/insights/marketbeat-india/bengaluru-marketbeat",
+      "confidence": "reported-approximate",
+      "notes": "Total H1 launches reported as crossing 25,000 units; not completed purchases."
+    }
+  ],
+  "lastUpdated": "2026-08-23"
+}
