@@ -101,6 +101,17 @@
       "sourceUrl": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572",
       "confidence": "reported",
       "notes": "Highest reported corridor QTS; 33,534 unsold units, up 20% year-on-year."
+    },
+    {
+      "metricId": "unsold_inventory_growth",
+      "geography": "Bengaluru",
+      "period": "2026-Q1",
+      "value": 12,
+      "unit": "% quarter-on-quarter growth in unsold inventory",
+      "sourceId": "anarock-via-propnewz-q1-2026",
+      "sourceUrl": "https://www.propnewz.com/blog/bengaluru-unsold-inventory-q1-2026-bengaluru-2026-06-24",
+      "confidence": "reported-secondary",
+      "notes": "ANAROCK figure reported by Prop Newz; indicates the steepest QoQ inventory rise among the top-seven cities. It is not the absolute unsold-unit count."
     }
   ],
   "lastUpdated": "2026-08-23"
