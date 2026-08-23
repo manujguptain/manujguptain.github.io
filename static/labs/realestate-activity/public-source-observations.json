@@ -1,5 +1,59 @@
 {
-  "collectedAt": null,
+  "collectedAt": "2026-08-23T10:36:43.559Z",
   "policy": "No login, OTP, CAPTCHA bypass, personal data or paid feeds. Counts are promoted only after document-type and geography validation.",
-  "observations": []
+  "observations": [
+    {
+      "sourceId": "kaveri-public",
+      "sourceUrl": "https://kaveri.karnataka.gov.in/landing-page",
+      "role": "registration-portal",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:36:01.490Z",
+      "extractionStatus": "fetch-failed",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "sourceId": "karnataka-revenue",
+      "sourceUrl": "https://revenue.karnataka.gov.in/en",
+      "role": "official-publications",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:36:12.016Z",
+      "extractionStatus": "fetch-failed",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "sourceId": "karnataka-rera-projects",
+      "sourceUrl": "https://rera.karnataka.gov.in/viewAllProjects",
+      "role": "rera-supply",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:36:22.510Z",
+      "extractionStatus": "fetch-failed",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "sourceId": "karnataka-rera-completed",
+      "sourceUrl": "https://rera.karnataka.gov.in/viewAllCompletedProjects",
+      "role": "rera-completions",
+      "status": null,
+      "ok": false,
+      "checkedAt": "2026-08-23T10:36:33.003Z",
+      "extractionStatus": "fetch-failed",
+      "error": "TypeError: fetch failed"
+    },
+    {
+      "sourceId": "jll-bengaluru",
+      "sourceUrl": "https://www.jll.com/en-in/insights/market-dynamics/bengaluru-residential",
+      "role": "market-cross-check",
+      "status": 200,
+      "ok": true,
+      "finalUrl": "https://www.jll.com/en-in/insights/market-dynamics/bengaluru-residential",
+      "checkedAt": "2026-08-23T10:36:43.496Z",
+      "contentSha256": "f04bdd4f2af2f952c98225b3d2f3aace4474612d8abac4dd4917a3aeb0b04ca9",
+      "contentLength": 257204,
+      "registrationKeywordHits": 0,
+      "extractionStatus": "page-captured-no-aggregate-count-promoted"
+    }
+  ]
 }

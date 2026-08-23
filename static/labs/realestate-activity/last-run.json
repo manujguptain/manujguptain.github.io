@@ -1,6 +1,6 @@
 {
-  "collectorRunAt": "2026-08-23T10:26:29.658Z",
-  "latestSourceFetchedAt": "2026-08-23T10:26:29.658Z",
+  "collectorRunAt": "2026-08-23T10:35:19.257Z",
+  "latestSourceFetchedAt": "2026-08-23T10:35:19.257Z",
   "status": "source-probes-completed",
   "results": [
     {
@@ -9,9 +9,9 @@
       "url": "https://kaveri.karnataka.gov.in/landing-page",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:26:29.658Z",
+      "checkedAt": "2026-08-23T10:35:19.257Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10565
+      "durationMs": 10587
     },
     {
       "id": "karnataka-rera-projects",
@@ -19,18 +19,19 @@
       "url": "https://rera.karnataka.gov.in/viewAllProjects",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:26:29.658Z",
+      "checkedAt": "2026-08-23T10:35:19.257Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10495
+      "durationMs": 10494
     },
     {
       "id": "datagov-search",
       "kind": "open-data-catalog",
       "url": "https://api.data.gov.in",
-      "status": 404,
+      "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:26:29.658Z",
-      "durationMs": 1425
+      "checkedAt": "2026-08-23T10:35:19.257Z",
+      "error": "TypeError: fetch failed",
+      "durationMs": 10493
     },
     {
       "id": "karnataka-revenue",
@@ -38,9 +39,9 @@
       "url": "https://revenue.karnataka.gov.in/en",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:26:29.658Z",
+      "checkedAt": "2026-08-23T10:35:19.257Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10067
+      "durationMs": 10494
     },
     {
       "id": "jll-residential-research",
@@ -48,8 +49,8 @@
       "url": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
       "status": 200,
       "ok": true,
-      "checkedAt": "2026-08-23T10:26:29.658Z",
-      "durationMs": 253
+      "checkedAt": "2026-08-23T10:35:19.257Z",
+      "durationMs": 62
     }
   ]
 }
