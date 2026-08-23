@@ -1,6 +1,6 @@
 {
-  "collectorRunAt": "2026-08-23T10:42:15.131Z",
-  "latestSourceFetchedAt": "2026-08-23T10:42:15.131Z",
+  "collectorRunAt": "2026-08-23T10:46:40.375Z",
+  "latestSourceFetchedAt": "2026-08-23T10:46:40.375Z",
   "status": "source-probes-completed",
   "results": [
     {
@@ -9,9 +9,9 @@
       "url": "https://kaveri.karnataka.gov.in/landing-page",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:42:15.131Z",
+      "checkedAt": "2026-08-23T10:46:40.375Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10571
+      "durationMs": 10586
     },
     {
       "id": "karnataka-rera-projects",
@@ -19,9 +19,9 @@
       "url": "https://rera.karnataka.gov.in/viewAllProjects",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:42:15.131Z",
+      "checkedAt": "2026-08-23T10:46:40.375Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10494
+      "durationMs": 10496
     },
     {
       "id": "datagov-search",
@@ -29,8 +29,8 @@
       "url": "https://api.data.gov.in",
       "status": 404,
       "ok": false,
-      "checkedAt": "2026-08-23T10:42:15.131Z",
-      "durationMs": 1697
+      "checkedAt": "2026-08-23T10:46:40.375Z",
+      "durationMs": 1667
     },
     {
       "id": "karnataka-revenue",
@@ -38,9 +38,9 @@
       "url": "https://revenue.karnataka.gov.in/en",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:42:15.131Z",
+      "checkedAt": "2026-08-23T10:46:40.375Z",
       "error": "TypeError: fetch failed",
-      "durationMs": 10490
+      "durationMs": 10491
     },
     {
       "id": "jll-residential-research",
@@ -48,8 +48,8 @@
       "url": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
       "status": 200,
       "ok": true,
-      "checkedAt": "2026-08-23T10:42:15.131Z",
-      "durationMs": 101
+      "checkedAt": "2026-08-23T10:46:40.375Z",
+      "durationMs": 655
     }
   ]
 }

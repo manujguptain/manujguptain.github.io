@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-08-23T10:43:32.877Z",
+  "collectedAt": "2026-08-23T10:48:00.258Z",
   "policy": "No login, OTP, CAPTCHA bypass, personal data or paid feeds. Counts are promoted only after document-type and geography validation.",
   "observations": [
     {
@@ -8,7 +8,7 @@
       "role": "registration-portal",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:42:48.607Z",
+      "checkedAt": "2026-08-23T10:47:14.569Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -18,7 +18,7 @@
       "role": "official-publications",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:42:59.138Z",
+      "checkedAt": "2026-08-23T10:47:25.092Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -28,7 +28,7 @@
       "role": "rera-supply",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:43:09.633Z",
+      "checkedAt": "2026-08-23T10:47:35.586Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -38,7 +38,7 @@
       "role": "rera-completions",
       "status": null,
       "ok": false,
-      "checkedAt": "2026-08-23T10:43:20.125Z",
+      "checkedAt": "2026-08-23T10:47:46.081Z",
       "extractionStatus": "fetch-failed",
       "error": "TypeError: fetch failed"
     },
@@ -49,10 +49,13 @@
       "status": 200,
       "ok": true,
       "finalUrl": "https://www.jll.com/en-in/insights/market-dynamics/bengaluru-residential",
-      "checkedAt": "2026-08-23T10:43:30.619Z",
-      "contentSha256": "d6e2ba75da4a4a6eef390dc0256ebadaad3e18009aaaf1efe2fc84f610b48df1",
+      "checkedAt": "2026-08-23T10:47:56.576Z",
+      "contentSha256": "d09ee4931a889acf04c10c2ee4be301b7660baf97036138f76cf04a376db3c98",
       "contentLength": 257202,
       "registrationKeywordHits": 0,
+      "metricHints": [
+        "tifamily Financial services Authors Rohan Sharma Looking for more insights? Never miss an update. Download PDF download Demand declined 6% q-o-q to approximately 17,000 units. Bengaluru's residential launches down 20% q-o-q. Overall property prices rose 3.1% while rents rose 2.5% q-o-q in Q2 2026. Looking for more"
+      ],
       "extractionStatus": "page-captured-no-aggregate-count-promoted"
     },
     {
@@ -62,10 +65,18 @@
       "status": 200,
       "ok": true,
       "finalUrl": "https://www.jll.com/en-in/insights/market-dynamics/india-residential",
-      "checkedAt": "2026-08-23T10:43:30.724Z",
+      "checkedAt": "2026-08-23T10:47:57.016Z",
       "contentSha256": "4c38762aa88e3d304cfcfda324b4dc611086dc14cedb8ad20ad864d9d3468c9a",
       "contentLength": 265116,
       "registrationKeywordHits": 0,
+      "metricHints": [
+        "_right Insights chevron_right Market dynamics 15 June 2026 Insight 15 June 2026 Residential Dynamics Report Q1 2026 New launches in Q1 2026 rose 13% year-on-year and drove an 8% increase in sales, demonstrating healthy buyer apetite despite supply exceeding sales growth Categories: Investment Location strat",
+        "during Q1 2026, with these four cities—each exceeding 10,000-unit sales—capturing approximately 77% of the total 70,631 units sold. Even with supply surpassing demand, the 8% year-on-year rise reflects solid buyer interest, reversing the Y-o-Y decline seen in Q1 2025. . This pattern reflects sustained consume",
+        "luent buyers are less sensitive to short-term economic fluctuations. Q1 2026 set a new quarterly record for residential launches with 90,023 new units, up 13% year-on-year and 32% quarter-on-quarter. Bengaluru led with 27,055 launches (up 32% year-on-year), while Delhi NCR recorded exceptional 64% year-on-y",
+        "ear growth with 13,631 units. Together, these two cities accounted for 45% of total Q1 2026 launches. Developers have strategically pivoted toward premium offerings, with the INR 10 million+ segment seeing launches surge 45% year-on-year—driven primarily by a 134% surge in the IN",
+        "id sales of well-located developments tightened inventory, accelerating price growth and enabling higher pricing on new launches. Developers are further accelerating this trend by launching new phases of existing projects at premium rates. Future housing demand will be fueled by stabilizing economic conditi",
+        "Supply growth will maintain momentum through robust developer confidence—as evidenced by the 13% year-on-year surge in launches—with quality developments in prime locations from established and major listed developers poised to expand market share through strong execution and brand strength. Consequently,"
+      ],
       "extractionStatus": "page-captured-no-aggregate-count-promoted"
     },
     {
@@ -75,10 +86,11 @@
       "status": 403,
       "ok": false,
       "finalUrl": "https://www.anarock.com/",
-      "checkedAt": "2026-08-23T10:43:30.751Z",
+      "checkedAt": "2026-08-23T10:47:57.076Z",
       "contentSha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
       "contentLength": 118,
       "registrationKeywordHits": 0,
+      "metricHints": [],
       "extractionStatus": "page-captured-no-aggregate-count-promoted"
     },
     {
@@ -88,10 +100,11 @@
       "status": 200,
       "ok": true,
       "finalUrl": "https://www.knightfrank.co.in/research",
-      "checkedAt": "2026-08-23T10:43:31.490Z",
+      "checkedAt": "2026-08-23T10:47:57.907Z",
       "contentSha256": "c9f97675c0a4ba6ce7d32b37280da92b16cc8642bded1f0620faad65b2f595a8",
       "contentLength": 249453,
       "registrationKeywordHits": 0,
+      "metricHints": [],
       "extractionStatus": "page-captured-no-aggregate-count-promoted"
     },
     {
@@ -101,10 +114,15 @@
       "status": 200,
       "ok": true,
       "finalUrl": "https://www.cushmanwakefield.com/en/india/insights/marketbeat-india/bengaluru-marketbeat",
-      "checkedAt": "2026-08-23T10:43:31.673Z",
-      "contentSha256": "454157e17988d0883a9317b2c04215e66fe3671e5443cd1d6cee84f30190fc3e",
+      "checkedAt": "2026-08-23T10:47:58.151Z",
+      "contentSha256": "b539b27028ec7840d1f814536ac1a9456175f1828c033b0640b777924ea364cc",
       "contentLength": 87170,
       "registrationKeywordHits": 0,
+      "metricHints": [
+        "d key demand drivers. Outer Ring Road and Peripheral East continued to attract the highest office leasing activity. Net absorption remained strong at 3.5 MSF, supported by fresh leasing and pre-commitments. Record Grade A office supply of 5.8 MSF in Q2, while office rentals continued to be appreciated, reflec",
+        "ade A vacancy tightened to 3.3%. Download the report Bengaluru Residential Report Bengaluru recorded 12,544 residential launches in Q2 2026, indicating steady market momentum with moderate annual growth of 4%. The South submarket led with a 38% share, driven by strong activity across Electronic City, Banner",
+        "arket followed with 28%, while East contributed 26%, supported by demand across key corridors such as Whitefield. Total launches crossed 25,000 units in H1 2026, marking a record first half. DOWNLOAD THE REPORT Bengaluru Industrial Report Bengaluru&rsquo;s warehousing and industrial market recorded strong m"
+      ],
       "extractionStatus": "page-captured-no-aggregate-count-promoted"
     }
   ]
