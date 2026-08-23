@@ -20,6 +20,6 @@ Promise.all([fetch('area-signals.json').then(r=>r.json()),fetch('reported-observ
   const share=a.qts?Math.min(100,a.qts/8*100):0;
   return '<article class="area"><span class="'+cls+'">'+a.signal+'</span><h3>'+a.name+'</h3><div class="metrics"><div><b>'+a.unsold.toLocaleString('en-IN')+'</b><span>unsold units</span></div>'+(a.qts?'<div><b class="qts">'+a.qts+'</b><span>quarters to sell</span></div>':'')+'</div>'+(a.qts?'<div class="bar"><i style="width:'+share+'%"></i></div>':'')+'<p>'+a.meaning+'</p><small class="fine">Confidence: '+a.confidence+' · H1 2026</small></article>';
  }).join('');
- document.getElementById('sources').innerHTML=data.observations.map(o=>'<div class="source"><b>'+o.geography+' · '+o.period+'</b> — '+o.unit+' · <a href="'+o.sourceUrl+'" target="_blank">source ↗</a><br><span class="fine">'+o.notes+'</span></div>').join('');
+ document.getElementById('sources').innerHTML='<div class="source"><b>PropEquity / Business Standard · Q2 2026</b> — city sales and launch growth used in the trend answer · <a href="https://www.business-standard.com/industry/news/housing-sales-in-india-s-top-nine-cities-grow-19-in-q2-2026-propequity-126062500871_1.html" target="_blank">source ↗</a></div>'+data.observations.map(o=>'<div class="source"><b>'+o.geography+' · '+o.period+'</b> — '+o.unit+' · <a href="'+o.sourceUrl+'" target="_blank">source ↗</a><br><span class="fine">'+o.notes+'</span></div>').join('');
 }).catch(()=>{document.getElementById('areas').textContent='Corridor data unavailable';});
 </script></body></html>
