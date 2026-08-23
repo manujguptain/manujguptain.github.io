@@ -1,0 +1,6 @@
+{
+  "datasetStatus": "verified-observations-only",
+  "lastUpdated": null,
+  "observations": [],
+  "rule": "Do not add a purchase observation without a source URL, period, geography and sale/conveyance document classification."
+}
