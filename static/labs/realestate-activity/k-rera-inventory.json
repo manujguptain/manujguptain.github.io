@@ -1,0 +1,16 @@
+{
+  "collectedAt": null,
+  "source": {
+    "name": "Karnataka RERA public project records",
+    "url": "https://rera.karnataka.gov.in/viewAllProjects?language=en"
+  },
+  "policy": "Only promoter-filed public fields are included. Available units are not treated as verified sale-deed registrations.",
+  "extraction": {
+    "discoveredProjects": 0,
+    "projectsWithInventoryFields": 0,
+    "parserVersion": "0.1",
+    "status": "scheduled extraction has not completed"
+  },
+  "builders": [],
+  "projects": []
+}
