@@ -50,8 +50,8 @@
       "value": 9.1,
       "period": "2025-Q2 / Q1 FY26",
       "unit": "% YoY price change",
-      "source": "NHB RESIDEX, reported by ETRealty",
-      "url": "https://realty.economictimes.indiatimes.com/news/residential/property-prices-surge-in-major-indian-cities-nhb-reports/123574616",
+      "source": "NHB RESIDEX (official dashboard); ETRealty is the readable cross-check",
+      "url": "https://residex.nhbonline.org.in/",
       "interpretation": "Bengaluru’s primary-residential price index rose 9.1% year-on-year in Q1 FY26. This is price direction, not sales volume. The RESIDEX dashboard also publishes quarterly city series."
     }
   ],
