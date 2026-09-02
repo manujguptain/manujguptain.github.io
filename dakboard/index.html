@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="420">
+  <title>DAKboard Display</title>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    iframe {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    #instructions {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      color: #ffffff;
+      background: #000000;
+      font: 18px/1.5 Arial, sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="instructions">
+    Add your DAKboard URL after the # symbol in the browser address bar.
+  </div>
+
+  <script>
+    (function () {
+      const instructions = document.getElementById("instructions");
+      const hashValue = window.location.hash.substring(1).trim();
+
+      if (!hashValue) return;
+
+      let targetUrl = hashValue;
+
+      try {
+        const decoded = decodeURIComponent(hashValue);
+        if (decoded.startsWith("http://") || decoded.startsWith("https://")) {
+          targetUrl = decoded;
+        }
+      } catch (_) {}
+
+      if (!targetUrl.startsWith("http://") && !targetUrl.startsWith("https://")) {
+        instructions.textContent =
+          "Invalid URL. Please append a complete URL beginning with https://.";
+        return;
+      }
+
+      const iframe = document.createElement("iframe");
+      iframe.src = targetUrl;
+      iframe.title = "DAKboard";
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute("scrolling", "no");
+      iframe.setAttribute("allowfullscreen", "");
+
+      document.body.replaceChildren(iframe);
+
+      window.setTimeout(function () {
+        window.location.reload();
+      }, 420000);
+    })();
+  </script>
+</body>
+</html>
