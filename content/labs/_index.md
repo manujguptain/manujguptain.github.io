@@ -36,3 +36,15 @@ Daily public-technology tender discovery and filtering.
 **Type:** Browser utility · **Status:** Live
 
 A private, browser-based passport-photo editor.
+
+### [STM32H7 ADC Digital Twin](/labs/stm32h7-adc-simulator/)
+
+**Type:** Engineering simulator · **Status:** Live
+
+An interactive model for testing STM32H7 ADC metrology behaviour, noise and harmonic distortion.
+
+### [SysCanvas Architecture Explorer](/labs/syscanvas/)
+
+**Type:** Architecture exploration tool · **Status:** MVP
+
+An interactive, visual explorer for Adaptive AUTOSAR architecture concepts.
