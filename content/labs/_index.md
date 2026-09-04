@@ -2,7 +2,6 @@
 title: "The Lab"
 summary: "Personal projects and experiments."
 layout: "list"
-url: "/labs/"
 aliases: ["/lab/", "/tools/"]
 ---
 
