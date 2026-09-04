@@ -4,6 +4,8 @@ date: 2026-02-27
 draft: false
 comments: true
 tags: ["ai", "engineering", "labview", "automation", "career", "tools"]
+url: "/notes/what-labview-taught-me/"
+aliases: ["/posts/what-labview-taught-me/"]
 ---
 
 When people talk about AI feeling like a revolution, I get it. The speed, the way you just describe what you want and something working comes out the other end — it really is impressive.
