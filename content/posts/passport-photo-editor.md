@@ -3,7 +3,8 @@ title: "Passport Photo Editor"
 date: 2026-03-22
 description: "Free, 100% browser-based passport photo editor. Crop, adjust, and print to any international standard — no uploads, no cost, completely private."
 layout: "single"
-aliases: ["/tools/passport-photo-editor/"]
+url: "/notes/passport-photo-editor/"
+aliases: ["/posts/passport-photo-editor/", "/tools/passport-photo-editor/"]
 ---
 
 I got tired of paying for something that a browser can do perfectly well. So I vibe-coded this up — **free for everyone, forever**.
