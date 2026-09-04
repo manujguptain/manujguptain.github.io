@@ -6,7 +6,8 @@ comments: true
 Summary: "Vibe coding works for scripts. It falls apart on large codebases. Here is the exact multi-file workflow I use to stop AI from hallucinating, looping, and burning tokens."
 categories: ["Engineering Leadership", "Software Development", "AI"]
 tags: ["vibe-coding", "ai-agents", "ci-cd", "software-architecture"]
-aliases: ["/lab/agentic-workflow-vibe-coding/"]
+url: "/notes/agentic-workflow-vibe-coding/"
+aliases: ["/posts/agentic-workflow-vibe-coding/", "/lab/agentic-workflow-vibe-coding/"]
 ---
 
 This is the workflow I follow these days.
