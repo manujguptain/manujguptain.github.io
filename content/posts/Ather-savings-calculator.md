@@ -6,6 +6,8 @@ comments: true
 summary: "Ather's savings tracker tells you how much you saved on petrol. It doesn't count what you spent keeping the scooter alive while parked. For occasional riders, that gap is the whole story."
 categories: ["EV", "India"]
 tags: ["ather", "electric-scooter", "ev", "india", "product-thinking"]
+url: "/notes/ather-savings-calculator/"
+aliases: ["/posts/ather-savings-calculator/"]
 ---
 
 I own an Ather 450X and I ride it in Bengaluru. The range estimate is genuinely accurate — better than I expected honestly. But there's something about the savings tracker that's been bothering me for a while and I want to write it down.
