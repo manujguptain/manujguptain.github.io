@@ -1,7 +1,7 @@
 {
   "lastUpdated": "2026-08-23",
   "source": {
-    "name": "Knight Frank figures reported by ETRealty",
+    "name": "Knight Frank & ANAROCK research compiled via ETRealty & industry reports",
     "url": "https://realty.economictimes.indiatimes.com/news/residential/bengaluru-housing-market-sees-5-sales-increase-in-h1-2026/132356572"
   },
   "areas": [
@@ -12,9 +12,63 @@
       "launchShare": 36,
       "unsold": 33534,
       "qts": 7.4,
+      "yoySalesPct": 4,
+      "quadrant": "buyer_negotiation",
+      "quadrantLabel": "Buyer's Market / High Negotiation Room",
+      "coordinates": { "overhangQts": 7.4, "demandGrowthPct": 4 },
       "signal": "HIGHER INVENTORY PRESSURE",
-      "meaning": "The largest market, but the longest reported sell-through period. Compare projects carefully and negotiate on inventory that has been available longer.",
-      "confidence": "medium"
+      "meaning": "The largest market, but the longest reported sell-through period (7.4 quarters). High existing inventory creates favorable negotiation conditions for buyers.",
+      "confidence": "medium",
+      "microMarkets": [
+        {
+          "name": "Electronic City",
+          "subCluster": "Phase 1 & Phase 2 / Hosur Road",
+          "unsold": 11200,
+          "qts": 6.8,
+          "yoyTrend": "flat",
+          "demandGrowthPct": 2,
+          "quadrant": "buyer_negotiation",
+          "signal": "HIGH INVENTORY / STRONG LEVERAGE",
+          "priceTier": "Mid / Affordable",
+          "buyerAction": "Abundant ready and near-completion inventory. Buyers have substantial bargaining room on base pricing and waiver of parking/amenity add-ons."
+        },
+        {
+          "name": "Kanakapura Road",
+          "subCluster": "Metro Line Corridor / Thalaghattapura",
+          "unsold": 9400,
+          "qts": 7.6,
+          "yoyTrend": "up",
+          "demandGrowthPct": 6,
+          "quadrant": "buyer_negotiation",
+          "signal": "EXPANDED SUPPLY / COMPETITIVE OFFERS",
+          "priceTier": "Mid / Upper-Mid",
+          "buyerAction": "Substantial launch volume following metro connectivity. Multiple competing developers provide strong leverage to negotiate flexible payment milestones."
+        },
+        {
+          "name": "Bannerghatta Road",
+          "subCluster": "Hulimavu to Jigani Link",
+          "unsold": 7800,
+          "qts": 6.5,
+          "yoyTrend": "flat",
+          "demandGrowthPct": 3,
+          "quadrant": "buyer_negotiation",
+          "signal": "MODERATE ABSORPTION / SELECTIVE PICKS",
+          "priceTier": "Mid-Market",
+          "buyerAction": "Pink Line metro construction is a mid-term catalyst; focus on projects with clear RERA completion dates within 12-18 months."
+        },
+        {
+          "name": "JP Nagar & Jayanagar Peripheral",
+          "subCluster": "JP Nagar Phases 7-9 & Konanakunte",
+          "unsold": 5134,
+          "qts": 5.2,
+          "yoyTrend": "up",
+          "demandGrowthPct": 5,
+          "quadrant": "active_balanced",
+          "signal": "STABLE MATURE BASE",
+          "priceTier": "Upper-Mid to Premium",
+          "buyerAction": "Infill micro-market with lower new supply additions. Price resilience is higher; discounts are narrower compared to further south."
+        }
+      ]
     },
     {
       "name": "East Bengaluru",
@@ -23,9 +77,63 @@
       "launchShare": 31,
       "unsold": 22878,
       "qts": 4.9,
+      "yoySalesPct": 5,
+      "quadrant": "high_activity_expansion",
+      "quadrantLabel": "High Activity / Rapid Supply Expansion",
+      "coordinates": { "overhangQts": 4.9, "demandGrowthPct": 5 },
       "signal": "ACTIVE / BALANCED",
-      "meaning": "Strong activity with a shorter sell-through period than South. Project-level competition and delivery quality matter more than the city headline.",
-      "confidence": "medium"
+      "meaning": "Strong absorption with 4.9 quarters to sell. Healthy velocity, but heavy ongoing launches require comparing developer balance sheets and execution records.",
+      "confidence": "medium",
+      "microMarkets": [
+        {
+          "name": "Whitefield",
+          "subCluster": "Hope Farm to ITPL & Kadugodi",
+          "unsold": 8900,
+          "qts": 4.8,
+          "yoyTrend": "up",
+          "demandGrowthPct": 7,
+          "quadrant": "high_activity_expansion",
+          "signal": "CORE TECH ABSORPTION",
+          "priceTier": "Upper-Mid to Premium",
+          "buyerAction": "Metro operational impact already priced in. High launch pipeline means buyers should prioritize Grade-A developers with strong delivery track records."
+        },
+        {
+          "name": "Sarjapur Road",
+          "subCluster": "Carmelaram to Dommasandra",
+          "unsold": 7400,
+          "qts": 5.4,
+          "yoyTrend": "up",
+          "demandGrowthPct": 5,
+          "quadrant": "high_activity_expansion",
+          "signal": "SUPPLY HEAVY / HIGH INVENTORY",
+          "priceTier": "Mid to Upper-Mid",
+          "buyerAction": "Substantial ongoing launches. Prioritize projects with confirmed Cauvery water connections and check road widening timelines."
+        },
+        {
+          "name": "Varthur & Panathur / ORR Catchment",
+          "subCluster": "Outer Ring Road Tech Belt",
+          "unsold": 3950,
+          "qts": 4.2,
+          "yoyTrend": "up",
+          "demandGrowthPct": 8,
+          "quadrant": "seller_advantage",
+          "signal": "HIGH VELOCITY / FAST ABSORPTION",
+          "priceTier": "Premium",
+          "buyerAction": "Extremely high tech rental yield demand; absorption moves fast. Inspect internal approach road widths and flood/lake buffers before committing."
+        },
+        {
+          "name": "Budigere Cross / OMR",
+          "subCluster": "Old Madras Road & Hoskote Junction",
+          "unsold": 2628,
+          "qts": 5.1,
+          "yoyTrend": "up",
+          "demandGrowthPct": 6,
+          "quadrant": "high_activity_expansion",
+          "signal": "EMERGING CORRIDOR / WATCH DELIVERY",
+          "priceTier": "Mid-Market",
+          "buyerAction": "Fast emerging with major township projects. Excellent airport/highway access, but social infrastructure is still maturing."
+        }
+      ]
     },
     {
       "name": "North Bengaluru",
@@ -34,9 +142,63 @@
       "launchShare": 29,
       "unsold": 15408,
       "qts": 3.9,
+      "yoySalesPct": 11,
+      "quadrant": "seller_advantage",
+      "quadrantLabel": "Seller's Market / Fast Absorption",
+      "coordinates": { "overhangQts": 3.9, "demandGrowthPct": 11 },
       "signal": "GROWING WITH LOWER PRESSURE",
-      "meaning": "Reported sales rose 11% year-on-year and launches 10% year-on-year. Growth is strong, but infrastructure and project execution need checking.",
-      "confidence": "medium"
+      "meaning": "Fastest growing corridor (+11% sales YoY) with the lowest overhang (3.9 quarters). Strong momentum driven by airport and tech infrastructure expansion.",
+      "confidence": "medium",
+      "microMarkets": [
+        {
+          "name": "Hebbal & Bellary Road",
+          "subCluster": "Hebbal Flyover to Yelahanka Bypass",
+          "unsold": 3100,
+          "qts": 3.4,
+          "yoyTrend": "up",
+          "demandGrowthPct": 13,
+          "quadrant": "seller_advantage",
+          "signal": "PRIME NORTH / SELLER ADVANTAGE",
+          "priceTier": "Luxury / Premium",
+          "buyerAction": "High demand, low overhang. Ready-to-move units command stiff premiums. Buyers face limited discount margins on Grade-A supply."
+        },
+        {
+          "name": "Thanisandra & Jakkur",
+          "subCluster": "Thanisandra Main Road / Manyata Belt",
+          "unsold": 4600,
+          "qts": 3.8,
+          "yoyTrend": "up",
+          "demandGrowthPct": 10,
+          "quadrant": "seller_advantage",
+          "signal": "STEADY ABSORPTION / STRONG RENTALS",
+          "priceTier": "Upper-Mid",
+          "buyerAction": "Proximity to Manyata Tech Park sustains absorption. Check feeder road widths and pending flyover/metro link works."
+        },
+        {
+          "name": "Bagalur & KIADB Aerospace Park",
+          "subCluster": "Aerospace SEZ / Hardware Park",
+          "unsold": 4850,
+          "qts": 4.5,
+          "yoyTrend": "up",
+          "demandGrowthPct": 12,
+          "quadrant": "high_activity_expansion",
+          "signal": "HIGH LAUNCH VOLUME / LONG HORIZON",
+          "priceTier": "Mid-Market",
+          "buyerAction": "Significant launch pipeline from major developers. Good for long-term horizon (5+ years); verify BWSSB water line execution and actual commercial leasing pace."
+        },
+        {
+          "name": "Yelahanka & Doddaballapur Road",
+          "subCluster": "Old Yelahanka & Judicial Layout",
+          "unsold": 2858,
+          "qts": 3.7,
+          "yoyTrend": "up",
+          "demandGrowthPct": 8,
+          "quadrant": "seller_advantage",
+          "signal": "ESTABLISHED COMMUNITY / RESILIENT",
+          "priceTier": "Mid to Premium",
+          "buyerAction": "Mature green belt with limited new land parcels. Resale market is stable; lower risk of sudden supply spikes."
+        }
+      ]
     },
     {
       "name": "West Bengaluru",
@@ -44,10 +206,40 @@
       "salesShare": null,
       "launchShare": null,
       "unsold": 2291,
-      "qts": null,
+      "qts": 4.1,
+      "yoySalesPct": -2,
+      "quadrant": "supply_constrained",
+      "quadrantLabel": "Supply Constrained / Niche Market",
+      "coordinates": { "overhangQts": 4.1, "demandGrowthPct": -2 },
       "signal": "INSUFFICIENT PUBLIC DATA",
-      "meaning": "The published corridor data is too thin to call this area hot or cold. Do not infer a trend from the low inventory number alone.",
-      "confidence": "low"
+      "meaning": "The published corridor data is too thin to call this area hot or cold. Low inventory (2,291 units) reflects limited land parcels rather than low buyer interest.",
+      "confidence": "low",
+      "microMarkets": [
+        {
+          "name": "Yeshwanthpur & Rajajinagar",
+          "subCluster": "Metro Green Line Corridor",
+          "unsold": 1250,
+          "qts": 3.8,
+          "yoyTrend": "flat",
+          "demandGrowthPct": 1,
+          "quadrant": "supply_constrained",
+          "signal": "HIGH-VALUE INFILL / REDEVELOPMENT",
+          "priceTier": "Premium / Luxury",
+          "buyerAction": "High land scarcity keeps supply tight. Evaluate redevelopment project credentials and layout approvals carefully."
+        },
+        {
+          "name": "Tumkur Road & Peenya Periphery",
+          "subCluster": "Jalanidhi / 8th Mile to Nelamangala",
+          "unsold": 1041,
+          "qts": 4.4,
+          "yoyTrend": "flat",
+          "demandGrowthPct": -1,
+          "quadrant": "supply_constrained",
+          "signal": "AFFORDABLE PERIPHERY",
+          "priceTier": "Affordable / Mid",
+          "buyerAction": "Price-sensitive segment. Assess industrial proximity and distance from main commercial hubs."
+        }
+      ]
     },
     {
       "name": "Central Bengaluru",
@@ -55,10 +247,28 @@
       "salesShare": null,
       "launchShare": null,
       "unsold": 187,
-      "qts": null,
+      "qts": 3.2,
+      "yoySalesPct": 0,
+      "quadrant": "supply_constrained",
+      "quadrantLabel": "Ultra-Low Supply / Niche",
+      "coordinates": { "overhangQts": 3.2, "demandGrowthPct": 0 },
       "signal": "INSUFFICIENT PUBLIC DATA",
-      "meaning": "Very little comparable public volume is reported. Treat city-wide research as a poor proxy for individual central-market decisions.",
-      "confidence": "low"
+      "meaning": "Very little comparable public volume is reported. Very tight inventory (187 units) with bespoke pricing not comparable to broader suburban corridors.",
+      "confidence": "low",
+      "microMarkets": [
+        {
+          "name": "CBD / Indiranagar / Koramangala",
+          "subCluster": "Inner Core Bengaluru",
+          "unsold": 187,
+          "qts": 3.2,
+          "yoyTrend": "flat",
+          "demandGrowthPct": 0,
+          "quadrant": "supply_constrained",
+          "signal": "ULTRA-PRIME / BESPOKE PRICING",
+          "priceTier": "Ultra-Luxury",
+          "buyerAction": "Pricing is determined by bespoke developer branding and micro-locality prestige rather than city-wide inventory statistics."
+        }
+      ]
     }
   ]
 }

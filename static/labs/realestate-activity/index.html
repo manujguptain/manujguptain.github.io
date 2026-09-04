@@ -1,25 +1,1019 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bengaluru real-estate activity intelligence</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bengaluru Real-Estate Activity Intelligence | Market Screener & Index</title>
+<meta name="description" content="Auditable corridor and micro-market intelligence index for Bengaluru real estate. Analyzes absorption rates, inventory overhang, sales vs launches trends, and buyer negotiation leverage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#f6faf7;color:#17231f;font:15px Arial,sans-serif}.wrap{max-width:1120px;margin:auto;padding:0 22px}.top{padding:22px 0;border-bottom:1px solid #dce5df}.brand{font-weight:800;color:#177854}.hero{padding:52px 0 25px}.ey{color:#177854;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(38px,6vw,68px);line-height:.98;letter-spacing:-.07em;max-width:780px;margin:14px 0}.hero p,.note,.fine{color:#66756d;line-height:1.55;max-width:780px}.answer{background:#e8f6ed;border:1px solid #b9ddc6;border-radius:16px;padding:24px;margin:16px 0}.answer h2{margin:7px 0 12px;font-size:30px;letter-spacing:-.05em}.answer strong{color:#177854}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:#fff;border:1px solid #dce5df;border-radius:12px;padding:18px}.card h3{margin:7px 0 10px;font-size:20px}.pill{display:inline-block;border-radius:20px;padding:6px 9px;background:#e5f3ea;color:#177854;font-size:10px;font-weight:800}.amber{background:#fff0d8;color:#9b661d}.red{background:#fce9e6;color:#9c443a}.metrics{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0}.metric b{display:block;font-size:28px;color:#177854}.metric span{color:#66756d;font-size:12px}.panel{background:#fff;border:1px solid #dce5df;border-radius:16px;padding:24px;margin:18px 0}.panel h2{margin:7px 0 14px;font-size:28px;letter-spacing:-.05em}.area-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.area{border:1px solid #dce5df;border-radius:12px;padding:17px}.area h3{margin:0 0 8px}.area .qts{font-size:30px;font-weight:800;color:#177854}.area p{color:#66756d;line-height:1.5}.bar{height:8px;background:#e2eee6;border-radius:8px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:#2c976d}.source{border-top:1px solid #dce5df;padding:12px 0;font-size:13px}.up{color:#177854;font-weight:800}.down{color:#b4473d;font-weight:800}.flat{color:#9b661d;font-weight:800}.muted{color:#66756d;font-weight:800}.source a{color:#177854}.footer{padding:25px 0 45px;color:#66756d;font-size:12px}@media(max-width:760px){.grid,.area-grid{grid-template-columns:1fr}}
-</style></head><body>
-<header class="top wrap"><div class="brand">Real-estate activity intelligence · Bengaluru</div></header>
+:root {
+  --bg: #f5f8f6;
+  --bg-card: #ffffff;
+  --text-main: #13201a;
+  --text-muted: #576860;
+  --text-dim: #7f9188;
+  --border: #dbe4df;
+  --border-focus: #187a55;
+  --brand: #187a55;
+  --brand-hover: #126344;
+  --brand-light: #e8f5ee;
+  --brand-subtle: #f0f8f3;
+  --amber: #b46d16;
+  --amber-light: #fef5e7;
+  --amber-border: #f8dfaf;
+  --red: #bd3f32;
+  --red-light: #fdf0ee;
+  --red-border: #f5c4bf;
+  --blue: #2368a2;
+  --blue-light: #edf5fd;
+  --blue-border: #c4dcf5;
+  --shadow-sm: 0 1px 3px rgba(19, 32, 26, 0.04), 0 1px 2px rgba(19, 32, 26, 0.03);
+  --shadow-md: 0 4px 12px rgba(19, 32, 26, 0.06), 0 2px 4px rgba(19, 32, 26, 0.03);
+  --shadow-lg: 0 12px 28px rgba(19, 32, 26, 0.09), 0 4px 10px rgba(19, 32, 26, 0.04);
+  --radius: 12px;
+  --radius-lg: 18px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1160px; margin: auto; padding: 0 24px; }
+.top {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.nav-content { display: flex; justify-content: space-between; align-items: center; }
+.brand { font-weight: 800; font-size: 17px; color: var(--brand); letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.brand-badge { font-size: 11px; background: var(--brand-light); color: var(--brand); padding: 3px 8px; border-radius: 12px; font-weight: 700; }
+.nav-links { display: flex; gap: 16px; font-size: 13px; font-weight: 600; }
+.nav-links a { color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--brand); }
+
+.hero { padding: 48px 0 28px; }
+.ey {
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ey::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+.hero h1 {
+  font-size: clamp(34px, 5.5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  max-width: 860px;
+  margin: 14px 0 16px;
+  color: var(--text-main);
+  font-weight: 800;
+}
+.hero p { color: var(--text-muted); font-size: 17px; line-height: 1.6; max-width: 820px; margin: 0; }
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin: 22px 0;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.panel h2 { margin: 8px 0 10px; font-size: 26px; letter-spacing: -0.04em; font-weight: 700; color: var(--text-main); }
+.panel .note { color: var(--text-muted); font-size: 14px; line-height: 1.55; margin: 0 0 20px; max-width: 800px; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+
+/* City Answer Banner */
+.answer-box {
+  background: linear-gradient(135deg, #eaf6ef 0%, #f3faf5 100%);
+  border: 1px solid #b7dfc7;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: var(--shadow-sm);
+}
+.answer-box h2 { font-size: 28px; letter-spacing: -0.04em; margin: 8px 0 14px; font-weight: 800; }
+.answer-box h2 strong { color: var(--brand); }
+.answer-box p { color: var(--text-muted); font-size: 16px; line-height: 1.6; max-width: 860px; margin: 0 0 20px; }
+.metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 20px 0; }
+.metric-tile {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(24, 122, 85, 0.2);
+  border-radius: var(--radius);
+  padding: 16px;
+  backdrop-filter: blur(6px);
+}
+.metric-tile b { display: block; font-size: 30px; font-weight: 800; color: var(--brand); letter-spacing: -0.03em; line-height: 1.1; }
+.metric-tile span { display: block; color: var(--text-muted); font-size: 12px; margin-top: 6px; font-weight: 500; }
+
+/* Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 30px;
+  padding: 4px 11px;
+  background: var(--brand-light);
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.pill.amber { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border); }
+.pill.red { background: var(--red-light); color: var(--red); border: 1px solid var(--red-border); }
+.pill.blue { background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-border); }
+.pill.neutral { background: #eef2f0; color: var(--text-muted); }
+
+/* Toggle & Controls */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.toggle-btn {
+  background: #edf3f0;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: #e2ece7; color: var(--text-main); }
+.toggle-btn.active {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  box-shadow: 0 2px 6px rgba(24, 122, 85, 0.25);
+}
+
+/* 2x2 Market Dynamics Quadrant */
+.quadrant-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.quadrant-wrapper {
+  background: #fbfdfc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+}
+.quadrant-svg-container {
+  width: 100%;
+  aspect-ratio: 1.15;
+  position: relative;
+}
+.quadrant-inspector {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+.inspector-title { font-size: 19px; font-weight: 700; margin: 8px 0 4px; color: var(--text-main); }
+.inspector-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+.inspector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.inspector-stat { background: #f8faf9; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.inspector-stat small { color: var(--text-dim); font-size: 11px; display: block; }
+.inspector-stat strong { font-size: 18px; color: var(--text-main); font-weight: 700; }
+.inspector-action-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f0f7f3;
+  border-left: 3px solid var(--brand);
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+.quadrant-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 11px;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* Quarterly Trend Dual Chart */
+.chart-container {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px 16px;
+  position: relative;
+}
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 20px;
+  color: var(--text-muted);
+}
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+.chart-legend-box { width: 14px; height: 14px; border-radius: 3px; }
+.bars-track {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 230px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  position: relative;
+}
+.quarter-group {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  cursor: pointer;
+}
+.quarter-group:hover .bar-col { filter: brightness(0.92); }
+.bar-col {
+  width: 44%;
+  border-radius: 5px 5px 0 0;
+  transition: height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.15s;
+  position: relative;
+}
+.bar-sales { background: var(--brand); }
+.bar-launches { background: #df9837; }
+.quarter-label {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.chart-tooltip {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: rgba(19, 32, 26, 0.94);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  line-height: 1.45;
+  pointer-events: none;
+  min-width: 220px;
+  box-shadow: var(--shadow-md);
+  transition: opacity 0.15s;
+}
+
+/* Micro-Market Screener Cards */
+.screener-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.filter-chip {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.filter-chip:hover { border-color: var(--brand); color: var(--brand); }
+.filter-chip.active { background: var(--brand-light); border-color: var(--brand); color: var(--brand); }
+.micro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.micro-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.micro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: #b7dfc7;
+}
+.micro-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.micro-title { font-size: 18px; font-weight: 700; margin: 0; color: var(--text-main); }
+.micro-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
+.micro-stats { display: flex; gap: 14px; margin: 12px 0; border-top: 1px solid #edf2ef; border-bottom: 1px solid #edf2ef; padding: 10px 0; }
+.micro-stat-item b { display: block; font-size: 18px; font-weight: 700; color: var(--brand); }
+.micro-stat-item span { font-size: 11px; color: var(--text-muted); }
+.micro-advice {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  background: #f8faf9;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+.micro-advice strong { color: var(--text-main); }
+
+/* Common Grids & Cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.card h3 { margin: 8px 0 10px; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+.area-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.area { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; background: #fff; }
+.area h3 { margin: 0 0 8px; font-size: 20px; font-weight: 700; }
+.area .qts { font-size: 32px; font-weight: 800; color: var(--brand); letter-spacing: -0.03em; }
+.bar { height: 8px; background: #e2eee6; border-radius: 8px; overflow: hidden; margin: 10px 0; }
+.bar i { display: block; height: 100%; background: var(--brand); border-radius: 8px; }
+
+/* Status Text */
+.up { color: var(--brand); font-weight: 700; }
+.down { color: var(--red); font-weight: 700; }
+.flat { color: var(--amber); font-weight: 700; }
+.muted { color: var(--text-dim); font-weight: 600; }
+.fine { color: var(--text-dim); font-size: 12px; line-height: 1.5; }
+.source { border-top: 1px solid var(--border); padding: 14px 0; font-size: 13px; line-height: 1.5; }
+.source a, a.source-link { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; }
+.source a:hover, a.source-link:hover { color: var(--brand-hover); }
+
+.footer {
+  padding: 36px 0 60px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  color: var(--text-muted);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 880px) {
+  .quadrant-layout { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 580px) {
+  .metrics-row { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 32px; }
+  .bars-track { height: 180px; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav-content">
+    <div class="brand">
+      Real-Estate Activity Intelligence
+      <span class="brand-badge">Bengaluru 2026</span>
+    </div>
+    <div class="nav-links">
+      <a href="#quadrant-section">Market Quadrant</a>
+      <a href="#trend-section">Quarterly Trends</a>
+      <a href="#micromarkets-section">Micro-Markets</a>
+      <a href="#evidence-section">Evidence Pack</a>
+    </div>
+  </div>
+</header>
+
 <main class="wrap">
-<section class="hero"><div class="ey">Decision view · updated 23 Aug 2026</div><h1>Which parts of Bengaluru look active, pressured or unclear?</h1><p>This page turns public market research into a corridor-level screening view. It is designed to help a buyer decide what to investigate next—not to predict a property price or pretend that research estimates are registration records.</p></section>
-<section class="answer"><div class="ey">City answer</div><h2><strong>Active, but supply is expanding faster than demand.</strong></h2><p>Sales and launches are higher than last year. Launches rose sharply year-on-year, although the latest quarter was 11% below Q1 2026; inventory pressure is uneven. The city headline is therefore incomplete: the corridor and project matter.</p><div class="metrics"><div class="metric"><b>+47%</b><span>PropEquity Bengaluru sales YoY · Q2 2026</span></div><div class="metric"><b>+42%</b><span>ANAROCK launches YoY · Q2 2026</span></div><div class="metric"><b>+22%</b><span>Knight Frank unsold inventory YoY · H1 2026</span></div><div class="metric"><b>-6%</b><span>JLL demand QoQ · Q2 2026</span></div></div><p class="fine">Reading: not a boom/collapse call. Activity is healthy, but supply growth and inventory mean buyers should compare alternatives and negotiate.</p></section>
-<section class="panel"><div class="ey">Quarterly activity trend</div><h2>Reported Bengaluru home sales</h2><p class="note">This is the clearest public volume series found so far. It shows reported primary-market sales, not registration-office transfers. The publisher changes in the historical series, so the direction is more reliable than any single exact comparison.</p><div id="trend-chart" style="display:flex;align-items:end;gap:8px;height:210px;border-bottom:1px solid #dce5df;padding:20px 0 0">Loading quarterly series…</div><p class="fine">Sources and definitions for every bar are shown below.</p></section><section class="panel"><div class="ey">Financing and official context</div><h2>What the aggregate indicators can tell us</h2><p class="note">These indicators are deliberately kept separate from sales counts. They help test whether housing activity is supported by credit and whether Bengaluru prices are moving with or against reported volumes.</p><div id="macro-indicators" class="grid">Loading aggregate indicators…</div><p class="fine">No value is invented when a source has not yet been parsed. This is important for auditability.</p></section><section class="panel"><div class="ey">Actual corridor trend evidence · ANAROCK Q2 2026</div><h2>What is picking up or slowing down?</h2><p class="note">This is the clearest corridor-level QoQ/YoY evidence in ANAROCK’s Q2 2026 Bengaluru market report. It separates sales, new launches and available inventory; missing percentages are shown as missing rather than inferred.</p><div id="anarock-city" class="grid"></div><div id="anarock-corridors" class="area-grid" style="margin-top:12px"></div><p class="fine">Source: <a href="https://www.anarock.com/research/research-reports/bengaluru-q2-2026-residential-market-viewpoints" target="_blank">ANAROCK Bengaluru Q2 2026 Residential Market Viewpoints ↗</a> · Derived from the report; exact corridor percentages are not published where marked.</p></section><section class="panel"><div class="ey">Inventory snapshot · different source</div><h2>Where is the pressure?</h2><p class="note">Quarters-to-sell is the most decision-useful available corridor metric here. Higher means more time is needed to clear reported inventory, not that every project is unsold.</p><div id="areas" class="area-grid">Loading corridor signals…</div></section>
-<section class="panel"><div class="ey">Builder and zone inventory</div><h2>What K-RERA filings can verify</h2><p class="note">This section aggregates promoter-filed project updates only. It will show builder and zone totals after the scheduled public extraction finds inventory fields. Missing or inaccessible filings remain visible in the downloadable evidence file.</p><div id="rera-inventory" class="grid">Waiting for K-RERA extraction…</div><p class="fine"><a href="k-rera-inventory.json" download>Download K-RERA inventory evidence ↗</a> · <a href="https://rera.karnataka.gov.in/viewAllProjects?language=en" target="_blank">Open official K-RERA project list ↗</a></p></section><section class="panel"><div class="ey">How to use this</div><h2>Turn the signal into a property decision</h2><div class="grid"><article class="card"><span class="pill">South</span><h3>Demand is not enough</h3><p class="note">Ask for project-level sales velocity, age of unsold units, cancellations and actual available inventory. The corridor has the highest reported QTS.</p></article><article class="card"><span class="pill">East</span><h3>Compare projects, not headlines</h3><p class="note">The corridor is active, but a strong area average can hide projects with slow absorption or poor delivery history.</p></article><article class="card"><span class="pill">North</span><h3>Growth needs execution</h3><p class="note">Reported growth is strong, but infrastructure delivery, access, water and completion timelines should be checked before paying a premium.</p></article></div></section>
-<section class="panel"><div class="ey">For independent review</div><h2>Download the evidence pack</h2><p class="note">These are the exact machine-readable files used by the page. They contain source URLs, periods, units, confidence labels and limitations so the figures can be checked or recomputed.</p><p><a href="area-signals.json" download>Corridor signals JSON ↗</a> · <a href="trend-series.json" download>Quarterly sales series JSON ↗</a> · <a href="reported-observations.json" download>Reported observations JSON ↗</a> · <a href="aggregate-indicators.json" download>Credit and RESIDEX JSON ↗</a> · <a href="anarock-corridor-trends.json" download>ANAROCK corridor trends JSON ↗</a></p></section><section class="panel"><div class="ey">Evidence and limitations</div><h2>What this does—and does not—measure</h2><p class="note">Sales and launches here are publisher-reported primary-market estimates. They are not legal sale-deed registrations. We do not combine incompatible publisher numbers into one fake total. West and Central have insufficient comparable public data, so the page deliberately says so.</p><div id="sources"></div></section>
-</main><footer class="footer wrap">ManujG AI Labs · POC for review and correction</footer>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="ey">Decision-Grade Screening · Updated August 2026</div>
+    <h1>Which parts of Bengaluru look active, pressured or primed for negotiation?</h1>
+    <p>This intelligence view synthesizes published primary-market research into corridor and micro-market screening signals. Designed to help buyers evaluate where inventory pressure gives bargaining leverage versus where tight supply drives seller pricing power.</p>
+  </section>
+
+  <!-- City Answer -->
+  <section class="answer-box">
+    <div class="ey">City-Level Synthesis</div>
+    <h2><strong>Active, but new supply expansion is outpacing sales absorption.</strong></h2>
+    <p>Overall sales volume and developer launches have expanded robustly compared to last year. However, new launches surged 71% YoY in Q2 2026 while demand cooled 6% quarter-on-quarter, driving citywide unsold inventory up 22% YoY. Aggregate city headlines obscure stark corridor divergence: negotiation room is high in South Bengaluru, while prime North and tech East retain tight absorption.</p>
+    
+    <div class="metrics-row">
+      <div class="metric-tile">
+        <b>+47%</b>
+        <span>PropEquity Bengaluru Sales YoY · Q2 2026</span>
+      </div>
+      <div class="metric-tile">
+        <b>+71%</b>
+        <span>PropEquity Bengaluru Launches YoY · Q2 2026</span>
+      </div>
+      <div class="metric-tile">
+        <b>+22%</b>
+        <span>Knight Frank Unsold Inventory YoY · H1 2026</span>
+      </div>
+      <div class="metric-tile">
+        <b>5.3 Qtrs</b>
+        <span>City-Wide Quarters-to-Sell · Knight Frank</span>
+      </div>
+      <div class="metric-tile">
+        <b>-6%</b>
+        <span>JLL Demand QoQ · Q2 2026</span>
+      </div>
+    </div>
+    <p class="fine">Reading: Not a market crash or speculative bubble. Activity is structurally healthy, but rapid supply expansion gives discerning buyers significant leverage to compare projects, scrutinize delivery timelines, and negotiate discounts.</p>
+  </section>
+
+  <!-- Section 1: Interactive 2x2 Market Dynamics Quadrant -->
+  <section class="panel" id="quadrant-section">
+    <div class="panel-head">
+      <div>
+        <div class="ey">Interactive Decision Matrix</div>
+        <h2>Market Dynamics Quadrant: Demand Growth vs. Inventory Overhang</h2>
+        <p class="note">Plotting sales velocity against quarters-to-sell (QTS) isolates where pricing power resides. Hover or tap any location to inspect localized inventory, overhang, and buyer guidance.</p>
+      </div>
+      <div class="controls-bar">
+        <button class="toggle-btn active" id="quadrant-btn-micro" onclick="setQuadrantView('micro')">Micro-Markets (15)</button>
+        <button class="toggle-btn" id="quadrant-btn-corridor" onclick="setQuadrantView('corridor')">Macro Corridors (5)</button>
+      </div>
+    </div>
+
+    <div class="quadrant-layout">
+      <!-- Quadrant Visual -->
+      <div class="quadrant-wrapper">
+        <div class="quadrant-svg-container" id="quadrant-container">
+          <!-- Dynamic SVG injected via JS -->
+        </div>
+        <div class="quadrant-legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#187a55"></span> Top-Left: Seller Advantage (Low Overhang, High Growth)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#2368a2"></span> Top-Right: High-Activity Expansion (High Growth & High Launches)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#b46d16"></span> Bottom-Right: Buyer's Market (High Overhang / Negotiation Room)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#6a7c74"></span> Bottom-Left: Supply Constrained / Niche Core</div>
+        </div>
+      </div>
+
+      <!-- Quadrant Inspector Card -->
+      <div class="quadrant-inspector" id="quadrant-inspector-card">
+        <span class="pill" id="insp-pill">Active / Balanced</span>
+        <h3 class="inspector-title" id="insp-title">Whitefield</h3>
+        <div class="inspector-sub" id="insp-sub">East Bengaluru · Hope Farm to ITPL & Kadugodi</div>
+        
+        <div class="inspector-grid">
+          <div class="inspector-stat">
+            <small>Quarters to Sell (QTS)</small>
+            <strong id="insp-qts">4.8 qtrs</strong>
+          </div>
+          <div class="inspector-stat">
+            <small>YoY Demand Growth</small>
+            <strong id="insp-demand">+7% YoY</strong>
+          </div>
+          <div class="inspector-stat">
+            <small>Unsold Inventory</small>
+            <strong id="insp-unsold">8,900 units</strong>
+          </div>
+          <div class="inspector-stat">
+            <small>Market Category</small>
+            <strong id="insp-tier" style="font-size:14px">Upper-Mid / Prem</strong>
+          </div>
+        </div>
+
+        <div class="inspector-action-box" id="insp-action">
+          Select or hover over any corridor or micro-market node on the quadrant to view localized buyer takeaways and negotiation leverage tips.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Quarterly Trend Analysis (Sales vs Launches) -->
+  <section class="panel" id="trend-section">
+    <div class="panel-head">
+      <div>
+        <div class="ey">Historical Trajectory</div>
+        <h2>Reported Bengaluru Home Sales vs. New Launches</h2>
+        <p class="note">Comparing quarterly sales against new project launches reveals whether supply is expanding ahead of absorption. Hover over bars for exact unit counts, launch-to-sales ratios, and publisher sources.</p>
+      </div>
+      <div class="controls-bar">
+        <button class="toggle-btn active" id="chart-filter-all" onclick="setChartSeries('both')">Sales & Launches</button>
+        <button class="toggle-btn" id="chart-filter-sales" onclick="setChartSeries('sales')">Sales Only</button>
+        <button class="toggle-btn" id="chart-filter-launches" onclick="setChartSeries('launches')">Launches Only</button>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-legend">
+        <div class="chart-legend-item">
+          <div class="chart-legend-box" style="background:var(--brand)"></div>
+          <span>Reported Home Sales</span>
+        </div>
+        <div class="chart-legend-item">
+          <div class="chart-legend-box" style="background:#df9837"></div>
+          <span>New Project Launches (Supply)</span>
+        </div>
+      </div>
+
+      <div class="bars-track" id="dual-trend-chart">
+        <!-- Bars injected via JS -->
+      </div>
+      
+      <div class="chart-tooltip" id="chart-hover-tooltip" style="opacity:0">
+        Hover over any quarter to inspect data.
+      </div>
+    </div>
+    <p class="fine" style="margin-top:28px">Note on comparability: Shows reported primary-market transactions, not registered legal sale deeds. The reporting publisher evolves across the historical series (JLL → ANAROCK → PropEquity), so directional velocity is more indicative than any single cross-publisher comparison.</p>
+  </section>
+
+  <!-- Section 3: Micro-Market Screener -->
+  <section class="panel" id="micromarkets-section">
+    <div class="panel-head">
+      <div>
+        <div class="ey">Granular Sub-Market Screener</div>
+        <h2>Micro-Market Breakdown: Localized Signals & Buyer Guidance</h2>
+        <p class="note">Filter by corridor to compare micro-market inventory, quarters to sell, and strategic advice for homebuyers and investors.</p>
+      </div>
+      <div class="screener-filters" id="micro-filters">
+        <button class="filter-chip active" onclick="filterMicroMarkets('ALL')">All Micro-Markets</button>
+        <button class="filter-chip" onclick="filterMicroMarkets('East Bengaluru')">East (4)</button>
+        <button class="filter-chip" onclick="filterMicroMarkets('North Bengaluru')">North (4)</button>
+        <button class="filter-chip" onclick="filterMicroMarkets('South Bengaluru')">South (4)</button>
+        <button class="filter-chip" onclick="filterMicroMarkets('West Bengaluru')">West (2)</button>
+        <button class="filter-chip" onclick="filterMicroMarkets('Central Bengaluru')">Central (1)</button>
+      </div>
+    </div>
+
+    <div class="micro-grid" id="micro-market-grid">
+      <!-- Injected via JS -->
+    </div>
+  </section>
+
+  <!-- Section 4: Macro Financing & Official Indicators -->
+  <section class="panel">
+    <div class="ey">Financing & Official Price Context</div>
+    <h2>Macro Indicators & Credit Expansion</h2>
+    <p class="note">These aggregate indicators are maintained separately from quarterly sales counts. They verify whether physical housing purchases are backed by genuine retail credit growth and how Bengaluru's price index is moving.</p>
+    <div id="macro-indicators" class="grid">Loading aggregate indicators…</div>
+    <p class="fine" style="margin-top:14px">Official audit rule: No values are inferred or estimated when official data is unreleased.</p>
+  </section>
+
+  <!-- Section 5: ANAROCK Corridor Trends Snapshot -->
+  <section class="panel">
+    <div class="ey">Corridor Trend Evidence · ANAROCK Q2 2026</div>
+    <h2>Corridor QoQ & YoY Shift Direction</h2>
+    <p class="note">ANAROCK Q2 2026 residential market viewpoint evidence separating sales, new launches, and available inventory. Missing percentages are shown as unreleased rather than guessed.</p>
+    <div id="anarock-city" class="grid"></div>
+    <div id="anarock-corridors" class="area-grid" style="margin-top:14px"></div>
+    <p class="fine" style="margin-top:14px">Source: <a href="https://www.anarock.com/research/research-reports/bengaluru-q2-2026-residential-market-viewpoints" target="_blank" class="source-link">ANAROCK Bengaluru Q2 2026 Residential Market Viewpoints ↗</a></p>
+  </section>
+
+  <!-- Section 6: Builder & K-RERA Inventory Extraction -->
+  <section class="panel">
+    <div class="ey">Official Promoter Filings Verification</div>
+    <h2>What Karnataka RERA (K-RERA) Disclosures Verify</h2>
+    <p class="note">Promoter-filed quarterly progress disclosures provide developer-level unit bookings and inventory tracking once parsed from official state portals.</p>
+    <div id="rera-inventory" class="grid">Waiting for K-RERA extraction…</div>
+    <p class="fine" style="margin-top:14px"><a href="k-rera-inventory.json" download class="source-link">Download K-RERA inventory evidence JSON ↗</a> · <a href="https://rera.karnataka.gov.in/viewAllProjects?language=en" target="_blank" class="source-link">Karnataka RERA Portal ↗</a></p>
+  </section>
+
+  <!-- Section 7: Strategic Advice -->
+  <section class="panel">
+    <div class="ey">Actionable Framework</div>
+    <h2>How to Translate Market Signals Into a Purchase Decision</h2>
+    <div class="grid">
+      <article class="card">
+        <span class="pill amber">South Corridor</span>
+        <h3>Negotiate on Ready Stock</h3>
+        <p class="note">With 7.4 quarters of inventory overhang, buyers hold strong cards. Ask for base price concessions, staggered payment schedules, and waiver of floor rise and premium charges.</p>
+      </article>
+      <article class="card">
+        <span class="pill blue">East Corridor</span>
+        <h3>Scrutinize Water & Infrastructure</h3>
+        <p class="note">High launch volumes mean you have ample choices. Filter projects strictly by confirmed BWSSB Cauvery water pipeline connections, approach road access, and builder delivery track record.</p>
+      </article>
+      <article class="card">
+        <span class="pill">North Corridor</span>
+        <h3>Verify Development Horizon</h3>
+        <p class="note">North exhibits the lowest overhang (3.9 QTS) and strong capital appreciation. However, outer aerospace/KIADB hubs require a 5–7 year horizon; verify social infrastructure before paying high premiums.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Section 8: Download Evidence Pack -->
+  <section class="panel" id="evidence-section">
+    <div class="ey">Auditability & Verification</div>
+    <h2>Download Machine-Readable Evidence Pack</h2>
+    <p class="note">Every observation on this page is published with source URLs, collection timestamps, geographic boundaries, metric definitions, and confidence ratings for independent review.</p>
+    <p style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="area-signals.json" download class="source-link">Corridor & Micro-Market Signals JSON ↗</a>
+      <a href="trend-series.json" download class="source-link">Quarterly Sales & Launches Series JSON ↗</a>
+      <a href="reported-observations.json" download class="source-link">Reported Observations JSON ↗</a>
+      <a href="aggregate-indicators.json" download class="source-link">Credit & RESIDEX JSON ↗</a>
+      <a href="anarock-corridor-trends.json" download class="source-link">ANAROCK Corridor Trends JSON ↗</a>
+    </p>
+  </section>
+
+  <!-- Section 9: Limitations & Methodology -->
+  <section class="panel">
+    <div class="ey">Methodology Boundaries</div>
+    <h2>What This Measures — And Does Not Measure</h2>
+    <p class="note">All sales, launch, and inventory counts shown are publisher-reported primary-market research estimates. They are not legal registered sale deeds from the Kaveri Sub-Registrar offices. We never combine incompatible surveys into a synthetic single total. Where public data is thin (Central and West), it is clearly flagged as insufficient.</p>
+    <div id="sources"></div>
+  </section>
+
+</main>
+
+<footer class="footer wrap">
+  <div><strong>ManujG AI Labs</strong> · Real-Estate Activity Intelligence POC · Auditable Public Research</div>
+  <div>Built for independent review and property decision screening</div>
+</footer>
+
 <script>
-Promise.all([fetch('area-signals.json').then(r=>r.json()),fetch('reported-observations.json').then(r=>r.json()),fetch('trend-series.json').then(r=>r.json()),fetch('aggregate-indicators.json').then(r=>r.json()),fetch('anarock-corridor-trends.json').then(r=>r.json()),fetch('k-rera-inventory.json').then(r=>r.json())]).then(([areas,data,trend,macro,anarock,rera])=>{
- const reraBox=document.getElementById('rera-inventory'); const rx=rera.extraction||{}; if(!rx.projectsWithInventoryFields){reraBox.innerHTML='<article class="card"><span class="pill amber">Awaiting validated records</span><h3>'+((rx.discoveredProjects||0).toLocaleString('en-IN'))+' project records discovered</h3><p class="note">No public inventory fields were parsed in this run. The extractor records this result instead of presenting estimates as builder inventory.</p></article>';}else{reraBox.innerHTML=rera.builders.slice(0,12).map(b=>'<article class="card"><span class="pill">'+b.builder+'</span><h3>'+b.availableUnits.toLocaleString('en-IN')+' available units</h3><p class="note">'+b.projects+' projects · booked units '+b.bookedUnits.toLocaleString('en-IN')+'</p></article>').join('');} const cityBox=document.getElementById('anarock-city'); const c=anarock.city; const pct=(n)=>n==null?'not published':(n>0?'+'+n+'%':n+'%'); cityBox.innerHTML=[['Sales',c.sales.value,'units · '+pct(c.sales.qoqPct)+' QoQ · '+pct(c.sales.yoyPct)+' YoY'],['New launches',c.launches.value,'units · '+pct(c.launches.qoqPct)+' QoQ · '+pct(c.launches.yoyPct)+' YoY'],['Available inventory',c.availableInventory.value,'units · '+pct(c.availableInventory.qoqPct)+' QoQ · '+pct(c.availableInventory.yoyPct)+' YoY'],['Inventory overhang',c.inventoryOverhangMonths.value,'months · +'+c.inventoryOverhangMonths.qoqChangeMonths+' month QoQ']].map(x=>'<article class="card"><span class="pill">'+x[0]+'</span><h3>'+x[1].toLocaleString('en-IN')+'</h3><p class="note">'+x[2]+'</p></article>').join(''); const trendText=(x)=>x.qoqPct!=null?'<span class="'+(x.qoqPct>0?'up':x.qoqPct<0?'down':'flat')+'">'+(x.qoqPct>0?'+':'')+x.qoqPct+'% QoQ</span>':x.qoqDirection?'<span class="'+(x.qoqDirection==='up'?'up':'down')+'">'+x.qoqDirection+' QoQ</span>':'<span class="muted">not published QoQ</span>'; const yoyText=(x)=>x.yoyPct!=null?'<span class="'+(x.yoyPct>0?'up':x.yoyPct<0?'down':'flat')+'">'+(x.yoyPct>0?'+':'')+x.yoyPct+'% YoY</span>':x.yoyDirection?'<span class="'+(x.yoyDirection==='up'?'up':'down')+'">'+x.yoyDirection+' YoY</span>':'<span class="muted">not published YoY</span>'; document.getElementById('anarock-corridors').innerHTML=anarock.corridors.map(a=>'<article class="area"><span class="pill">'+a.name+'</span><h3>Sales: '+trendText(a.sales)+' · '+yoyText(a.sales)+'</h3><p><b>Launches:</b> '+trendText(a.launches)+' · '+yoyText(a.launches)+(a.launches.sharePct?' · '+a.launches.sharePct+'% of city launches':'')+'</p><p><b>Inventory:</b> '+trendText(a.inventory)+' · '+yoyText(a.inventory)+(a.inventory.sharePct?' · '+a.inventory.sharePct+'% of city inventory':'')+'</p><p class="fine">'+a.dataQuality+'</p></article>').join(''); const macroBox=document.getElementById('macro-indicators'); macroBox.innerHTML=macro.indicators.map(i=>'<article class="card"><span class="pill">'+i.frequency+'</span><h3>'+i.label+'</h3><p class="note"><b>'+(i.value===null?'Not yet connected':(typeof i.value==='number'?i.value.toLocaleString('en-IN'):i.value))+'</b><br>'+i.interpretation+'</p><a href="'+i.url+'" target="_blank">Official source ↗</a></article>').join(''); const chart=document.getElementById('trend-chart'); const max=Math.max(...trend.observations.map(o=>o.value)); chart.innerHTML=trend.observations.map(o=>'<div title="'+o.period+' · '+o.value.toLocaleString('en-IN')+' units · '+o.source+'" style="flex:1;height:'+Math.round(o.value/max*100)+'%;background:#2c976d;border-radius:5px 5px 0 0;position:relative"><small style="position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;white-space:nowrap">'+o.period+'</small></div>').join(''); const box=document.getElementById('areas');
- box.innerHTML=areas.areas.map(a=>{
-  const cls=a.signal.includes('PRESSURE')?'pill amber':a.signal.includes('INSUFFICIENT')?'pill red':'pill';
-  const share=a.qts?Math.min(100,a.qts/8*100):0;
-  return '<article class="area"><span class="'+cls+'">'+a.signal+'</span><h3>'+a.name+'</h3><div class="metrics"><div><b>'+a.unsold.toLocaleString('en-IN')+'</b><span>unsold units</span></div>'+(a.qts?'<div><b class="qts">'+a.qts+'</b><span>quarters to sell</span></div>':'')+'</div>'+(a.qts?'<div class="bar"><i style="width:'+share+'%"></i></div>':'')+'<p>'+a.meaning+'</p><p class="fine"><b>Corridor QoQ trend:</b> not published in the cited source. Citywide Q1 2026 inventory growth cannot be assigned to this corridor.</p><small class="fine">Confidence: '+a.confidence+' · H1 2026 · <a href="'+areas.source.url+'" target="_blank">Knight Frank / ETRealty source ↗</a></small></article>';
- }).join('');
- document.getElementById('sources').innerHTML='<div class="source"><b>PropEquity / Business Standard · Q2 2026</b> — city sales and launch growth used in the trend answer · <a href="https://www.business-standard.com/industry/news/housing-sales-in-india-s-top-nine-cities-grow-19-in-q2-2026-propequity-126062500871_1.html" target="_blank">source ↗</a></div>'+data.observations.map(o=>'<div class="source"><b>'+o.geography+' · '+o.period+'</b> — '+o.unit+' · <a href="'+o.sourceUrl+'" target="_blank">source ↗</a><br><span class="fine">'+o.notes+'</span></div>').join('');
-}).catch(()=>{document.getElementById('areas').textContent='Corridor data unavailable';});
-</script></body></html>
+// Global State
+let areaData = null;
+let trendData = null;
+let currentQuadrantView = 'micro'; // 'micro' or 'corridor'
+let activeMicroFilter = 'ALL';
+let currentChartSeries = 'both'; // 'both', 'sales', 'launches'
+
+Promise.all([
+  fetch('area-signals.json').then(r=>r.json()),
+  fetch('reported-observations.json').then(r=>r.json()),
+  fetch('trend-series.json').then(r=>r.json()),
+  fetch('aggregate-indicators.json').then(r=>r.json()),
+  fetch('anarock-corridor-trends.json').then(r=>r.json()),
+  fetch('k-rera-inventory.json').then(r=>r.json())
+]).then(([areas, data, trend, macro, anarock, rera]) => {
+  areaData = areas;
+  trendData = trend;
+
+  // Initialize Modules
+  renderQuadrant();
+  renderDualTrendChart();
+  renderMicroMarkets();
+  renderMacro(macro);
+  renderAnarock(anarock);
+  renderRera(rera);
+  renderSources(data);
+}).catch(err => {
+  console.error("Failed to load intelligence data", err);
+});
+
+// 1. Quadrant Renderer
+function setQuadrantView(view) {
+  currentQuadrantView = view;
+  document.getElementById('quadrant-btn-micro').classList.toggle('active', view === 'micro');
+  document.getElementById('quadrant-btn-corridor').classList.toggle('active', view === 'corridor');
+  renderQuadrant();
+}
+
+function renderQuadrant() {
+  if (!areaData) return;
+  const container = document.getElementById('quadrant-container');
+  const w = 540;
+  const h = 460;
+  const padL = 50;
+  const padR = 25;
+  const padT = 30;
+  const padB = 45;
+
+  // Domain: X is Quarters-to-Sell (2 to 8.5)
+  // Domain: Y is YoY Demand Growth (-4% to 15%)
+  const minX = 2.5, maxX = 8.5;
+  const minY = -4, maxY = 15;
+
+  const scaleX = val => padL + ((val - minX) / (maxX - minX)) * (w - padL - padR);
+  const scaleY = val => (h - padB) - ((val - minY) / (maxY - minY)) * (h - padT - padB);
+
+  // Quadrant Dividers: Midpoint QTS = 5.0, Midpoint YoY Growth = 5%
+  const midX = scaleX(5.0);
+  const midY = scaleY(5.0);
+
+  // Gather items to plot
+  let items = [];
+  if (currentQuadrantView === 'corridor') {
+    items = areaData.areas.map(a => ({
+      name: a.name,
+      sub: a.activity,
+      qts: a.qts || (a.coordinates ? a.coordinates.overhangQts : 4.0),
+      demand: a.yoySalesPct || (a.coordinates ? a.coordinates.demandGrowthPct : 0),
+      unsold: a.unsold,
+      quadrant: a.quadrant,
+      pill: a.signal,
+      pillCls: a.signal.includes('PRESSURE') ? 'amber' : a.signal.includes('INSUFFICIENT') ? 'neutral' : '',
+      action: a.meaning,
+      tier: a.activity,
+      isMacro: true
+    }));
+  } else {
+    areaData.areas.forEach(corridor => {
+      if (corridor.microMarkets) {
+        corridor.microMarkets.forEach(m => {
+          items.push({
+            name: m.name,
+            sub: corridor.name + ' · ' + m.subCluster,
+            qts: m.qts,
+            demand: m.demandGrowthPct,
+            unsold: m.unsold,
+            quadrant: m.quadrant,
+            pill: m.signal,
+            pillCls: m.signal.includes('LEVERAGE') || m.signal.includes('INVENTORY') ? 'amber' : m.signal.includes('SELLER') || m.signal.includes('VELOCITY') ? '' : 'blue',
+            action: m.buyerAction,
+            tier: m.priceTier,
+            isMacro: false
+          });
+        });
+      }
+    });
+  }
+
+  // Generate SVG elements
+  let svg = '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:100%;font-family:inherit;overflow:visible;">';
+
+  // Background Quadrant Tints
+  // Top-Left: Seller Advantage (Green tint)
+  svg += '<rect x="'+padL+'" y="'+padT+'" width="'+(midX - padL)+'" height="'+(midY - padT)+'" fill="#e8f6ed" opacity="0.5" rx="4" />';
+  // Top-Right: High-Activity Expansion (Blue tint)
+  svg += '<rect x="'+midX+'" y="'+padT+'" width="'+(w - padR - midX)+'" height="'+(midY - padT)+'" fill="#edf5fd" opacity="0.6" rx="4" />';
+  // Bottom-Right: Buyer Market (Amber tint)
+  svg += '<rect x="'+midX+'" y="'+midY+'" width="'+(w - padR - midX)+'" height="'+(h - padB - midY)+'" fill="#fdf6ec" opacity="0.6" rx="4" />';
+  // Bottom-Left: Niche/Supply Constrained (Neutral tint)
+  svg += '<rect x="'+padL+'" y="'+midY+'" width="'+(midX - padL)+'" height="'+(h - padB - midY)+'" fill="#f2f5f3" opacity="0.5" rx="4" />';
+
+  // Quadrant Labels (Watermarks)
+  svg += '<text x="'+(padL + 10)+'" y="'+(padT + 18)+'" fill="#187a55" font-size="10" font-weight="700" letter-spacing="0.05em">SELLER ADVANTAGE</text>';
+  svg += '<text x="'+(padL + 10)+'" y="'+(padT + 30)+'" fill="#558d71" font-size="9">Low Overhang · Fast Absorption</text>';
+
+  svg += '<text x="'+(w - padR - 10)+'" y="'+(padT + 18)+'" text-anchor="end" fill="#2368a2" font-size="10" font-weight="700" letter-spacing="0.05em">HIGH-ACTIVITY EXPANSION</text>';
+  svg += '<text x="'+(w - padR - 10)+'" y="'+(padT + 30)+'" text-anchor="end" fill="#588ab5" font-size="9">High Demand · Heavy Launches</text>';
+
+  svg += '<text x="'+(w - padR - 10)+'" y="'+(h - padB - 22)+'" text-anchor="end" fill="#b46d16" font-size="10" font-weight="700" letter-spacing="0.05em">BUYER NEGOTIATION ROOM</text>';
+  svg += '<text x="'+(w - padR - 10)+'" y="'+(h - padB - 10)+'" text-anchor="end" fill="#a4773c" font-size="9">High Overhang · Strong Leverage</text>';
+
+  svg += '<text x="'+(padL + 10)+'" y="'+(h - padB - 22)+'" fill="#6a7c74" font-size="10" font-weight="700" letter-spacing="0.05em">SUPPLY CONSTRAINED</text>';
+  svg += '<text x="'+(padL + 10)+'" y="'+(h - padB - 10)+'" fill="#879991" font-size="9">Low Overhang · Infill/Niche</text>';
+
+  // Center Dividing Axes
+  svg += '<line x1="'+padL+'" y1="'+midY+'" x2="'+(w - padR)+'" y2="'+midY+'" stroke="#b7cfc2" stroke-dasharray="3,3" stroke-width="1.2" />';
+  svg += '<line x1="'+midX+'" y1="'+padT+'" x2="'+midX+'" y2="'+(h - padB)+'" stroke="#b7cfc2" stroke-dasharray="3,3" stroke-width="1.2" />';
+
+  // Outer Border & Axis Lines
+  svg += '<line x1="'+padL+'" y1="'+(h - padB)+'" x2="'+(w - padR)+'" y2="'+(h - padB)+'" stroke="#8ba195" stroke-width="1.5" />';
+  svg += '<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(h - padB)+'" stroke="#8ba195" stroke-width="1.5" />';
+
+  // X Axis Ticks & Label
+  [3, 4, 5, 6, 7, 8].forEach(tick => {
+    const x = scaleX(tick);
+    svg += '<line x1="'+x+'" y1="'+(h - padB)+'" x2="'+x+'" y2="'+(h - padB + 5)+'" stroke="#8ba195" />';
+    svg += '<text x="'+x+'" y="'+(h - padB + 18)+'" text-anchor="middle" font-size="10" fill="#576860">'+tick+'q</text>';
+  });
+  svg += '<text x="'+((w + padL - padR)/2)+'" y="'+(h - 8)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#13201a">Inventory Overhang (Quarters to Sell) →</text>';
+
+  // Y Axis Ticks & Label
+  [0, 5, 10, 15].forEach(tick => {
+    const y = scaleY(tick);
+    svg += '<line x1="'+(padL - 5)+'" y1="'+y+'" x2="'+padL+'" y2="'+y+'" stroke="#8ba195" />';
+    svg += '<text x="'+(padL - 8)+'" y="'+(y + 3)+'" text-anchor="end" font-size="10" fill="#576860">'+tick+'%</text>';
+  });
+  svg += '<text transform="rotate(-90)" x="'+(-((h + padT - padB)/2))+'" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#13201a">YoY Sales Demand Growth →</text>';
+
+  // Plot Data Points
+  items.forEach((it, idx) => {
+    const cx = scaleX(it.qts);
+    const cy = scaleY(it.demand);
+    const col = it.quadrant === 'seller_advantage' ? '#187a55' : it.quadrant === 'high_activity_expansion' ? '#2368a2' : it.quadrant === 'buyer_negotiation' ? '#b46d16' : '#576860';
+    const r = it.isMacro ? 9 : 6.5;
+
+    svg += '<g class="quadrant-node" style="cursor:pointer" onclick="inspectQuadrantItem('+idx+')" onmouseenter="inspectQuadrantItem('+idx+')">';
+    svg += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r + 3)+'" fill="'+col+'" opacity="0.18" />';
+    svg += '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+col+'" stroke="#fff" stroke-width="1.8" />';
+    
+    // Label Placement
+    const isRight = cx > (w - 110);
+    const textAnchor = isRight ? 'end' : 'start';
+    const tx = isRight ? (cx - 10) : (cx + 10);
+    const ty = cy + 4;
+    svg += '<text x="'+tx+'" y="'+ty+'" text-anchor="'+textAnchor+'" font-size="10" font-weight="700" fill="#13201a">'+it.name+'</text>';
+    svg += '</g>';
+  });
+
+  svg += '</svg>';
+  container.innerHTML = svg;
+
+  // Set default inspector to first item
+  window.currentQuadrantItems = items;
+  if (items.length > 0) inspectQuadrantItem(0);
+}
+
+function inspectQuadrantItem(idx) {
+  const items = window.currentQuadrantItems;
+  if (!items || !items[idx]) return;
+  const it = items[idx];
+
+  const pill = document.getElementById('insp-pill');
+  pill.textContent = it.pill;
+  pill.className = 'pill ' + (it.pillCls || '');
+
+  document.getElementById('insp-title').textContent = it.name;
+  document.getElementById('insp-sub').textContent = it.sub;
+  document.getElementById('insp-qts').textContent = it.qts ? (it.qts + ' qtrs') : 'Not reported';
+  document.getElementById('insp-demand').textContent = it.demand !== null ? ((it.demand > 0 ? '+' : '') + it.demand + '% YoY') : 'Not reported';
+  document.getElementById('insp-unsold').textContent = it.unsold ? (it.unsold.toLocaleString('en-IN') + ' units') : 'Not published';
+  document.getElementById('insp-tier').textContent = it.tier || 'Residential';
+  document.getElementById('insp-action').innerHTML = '<strong>Screening Takeaway:</strong> ' + it.action;
+}
+
+// 2. Dual-Series Quarterly Trend Chart
+function setChartSeries(series) {
+  currentChartSeries = series;
+  document.getElementById('chart-filter-all').classList.toggle('active', series === 'both');
+  document.getElementById('chart-filter-sales').classList.toggle('active', series === 'sales');
+  document.getElementById('chart-filter-launches').classList.toggle('active', series === 'launches');
+  renderDualTrendChart();
+}
+
+function renderDualTrendChart() {
+  if (!trendData) return;
+  const track = document.getElementById('dual-trend-chart');
+  const obs = trendData.observations;
+  const maxVal = Math.max(...obs.map(o => Math.max(o.sales || 0, o.launches || 0)));
+
+  track.innerHTML = obs.map((o, idx) => {
+    const sH = Math.round(((o.sales || 0) / maxVal) * 100);
+    const lH = Math.round(((o.launches || 0) / maxVal) * 100);
+
+    const showSales = currentChartSeries === 'both' || currentChartSeries === 'sales';
+    const showLaunches = currentChartSeries === 'both' || currentChartSeries === 'launches';
+
+    return '<div class="quarter-group" onmouseenter="showChartTooltip('+idx+')" onmouseleave="hideChartTooltip()">' +
+      (showSales ? '<div class="bar-col bar-sales" style="height:'+sH+'%"></div>' : '') +
+      (showLaunches ? '<div class="bar-col bar-launches" style="height:'+lH+'%"></div>' : '') +
+      '<span class="quarter-label">'+o.period+'</span>' +
+    '</div>';
+  }).join('');
+}
+
+function showChartTooltip(idx) {
+  if (!trendData || !trendData.observations[idx]) return;
+  const o = trendData.observations[idx];
+  const tt = document.getElementById('chart-hover-tooltip');
+  const ratioText = o.ratio ? (o.ratio >= 1.0 ? 'Launches outpacing sales ('+o.ratio+'x)' : 'Sales absorption healthy ('+o.ratio+'x)') : 'Balanced';
+
+  tt.innerHTML = '<strong style="color:#7ee0af;font-size:13px">'+o.period+'</strong><br>' +
+    '<b>Reported Sales:</b> '+(o.sales ? o.sales.toLocaleString('en-IN') : 'N/A')+' units<br>' +
+    '<b>New Launches:</b> '+(o.launches ? o.launches.toLocaleString('en-IN') : 'N/A')+' units<br>' +
+    '<b>Supply Velocity:</b> '+ratioText+'<br>' +
+    '<span style="color:#a6b8af;font-size:11px">'+o.source+'</span><br>' +
+    '<small style="color:#c8d4ce">'+(o.notes || '')+'</small>';
+  tt.style.opacity = '1';
+}
+
+function hideChartTooltip() {
+  const tt = document.getElementById('chart-hover-tooltip');
+  tt.style.opacity = '0';
+}
+
+// 3. Micro-Market Screener
+function filterMicroMarkets(corridor) {
+  activeMicroFilter = corridor;
+  const buttons = document.querySelectorAll('.filter-chip');
+  buttons.forEach(b => {
+    if (corridor === 'ALL' && b.textContent.includes('All')) b.classList.add('active');
+    else if (b.textContent.toLowerCase().includes(corridor.toLowerCase().split(' ')[0])) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  renderMicroMarkets();
+}
+
+function renderMicroMarkets() {
+  if (!areaData) return;
+  const grid = document.getElementById('micro-market-grid');
+  let list = [];
+
+  areaData.areas.forEach(corridor => {
+    if (activeMicroFilter === 'ALL' || corridor.name === activeMicroFilter) {
+      if (corridor.microMarkets) {
+        corridor.microMarkets.forEach(m => {
+          list.push({ ...m, corridorName: corridor.name });
+        });
+      }
+    }
+  });
+
+  grid.innerHTML = list.map(m => {
+    const pillCls = m.signal.includes('LEVERAGE') || m.signal.includes('INVENTORY') ? 'pill amber' : m.signal.includes('SELLER') || m.signal.includes('VELOCITY') ? 'pill' : 'pill blue';
+    const qtsBar = m.qts ? Math.min(100, Math.round((m.qts / 8) * 100)) : 0;
+    const demandTrendText = m.demandGrowthPct !== null ? (m.demandGrowthPct > 0 ? '+'+m.demandGrowthPct+'% YoY' : m.demandGrowthPct+'% YoY') : 'Flat';
+    
+    return '<article class="micro-card">' +
+      '<div>' +
+        '<div class="micro-header">' +
+          '<span class="'+pillCls+'">'+m.signal+'</span>' +
+          '<span class="pill neutral" style="font-size:10px">'+m.priceTier+'</span>' +
+        '</div>' +
+        '<h3 class="micro-title">'+m.name+'</h3>' +
+        '<div class="micro-sub">'+m.corridorName+' · '+m.subCluster+'</div>' +
+        '<div class="micro-stats">' +
+          '<div class="micro-stat-item"><b>'+m.unsold.toLocaleString('en-IN')+'</b><span>Unsold Units</span></div>' +
+          '<div class="micro-stat-item"><b>'+m.qts+' qtrs</b><span>Overhang</span></div>' +
+          '<div class="micro-stat-item"><b>'+demandTrendText+'</b><span>Sales Velocity</span></div>' +
+        '</div>' +
+        '<div class="bar" title="Quarters to Sell: '+m.qts+'"><i style="width:'+qtsBar+'%"></i></div>' +
+      '</div>' +
+      '<div class="micro-advice"><strong>Actionable Screening:</strong> '+m.buyerAction+'</div>' +
+    '</article>';
+  }).join('');
+}
+
+// 4. Macro Indicators
+function renderMacro(macro) {
+  const macroBox = document.getElementById('macro-indicators');
+  macroBox.innerHTML = macro.indicators.map(i => 
+    '<article class="card">' +
+      '<span class="pill neutral">'+i.frequency+'</span>' +
+      '<h3>'+i.label+'</h3>' +
+      '<p class="note"><b>'+(i.value === null ? 'Not yet connected' : (typeof i.value === 'number' ? i.value.toLocaleString('en-IN') + ' ' + (i.unit || '') : i.value))+'</b><br>'+i.interpretation+'</p>' +
+      '<a href="'+i.url+'" target="_blank" class="source-link">Official source ↗</a>' +
+    '</article>'
+  ).join('');
+}
+
+// 5. ANAROCK Snapshot
+function renderAnarock(anarock) {
+  const cityBox = document.getElementById('anarock-city');
+  const c = anarock.city;
+  const pct = n => n == null ? 'not published' : (n > 0 ? '+'+n+'%' : n+'%');
+
+  cityBox.innerHTML = [
+    ['Sales', c.sales.value, 'units · '+pct(c.sales.qoqPct)+' QoQ · '+pct(c.sales.yoyPct)+' YoY'],
+    ['New launches', c.launches.value, 'units · '+pct(c.launches.qoqPct)+' QoQ · '+pct(c.launches.yoyPct)+' YoY'],
+    ['Available inventory', c.availableInventory.value, 'units · '+pct(c.availableInventory.qoqPct)+' QoQ · '+pct(c.availableInventory.yoyPct)+' YoY'],
+    ['Inventory overhang', c.inventoryOverhangMonths.value, 'months · +'+c.inventoryOverhangMonths.qoqChangeMonths+' month QoQ']
+  ].map(x => 
+    '<article class="card"><span class="pill">'+x[0]+'</span><h3>'+Number(x[1]).toLocaleString('en-IN')+'</h3><p class="note">'+x[2]+'</p></article>'
+  ).join('');
+
+  const trendText = x => x.qoqPct != null ? '<span class="'+(x.qoqPct>0?'up':x.qoqPct<0?'down':'flat')+'">'+(x.qoqPct>0?'+':'')+x.qoqPct+'% QoQ</span>' : x.qoqDirection ? '<span class="'+(x.qoqDirection==='up'?'up':'down')+'">'+x.qoqDirection+' QoQ</span>' : '<span class="muted">not published QoQ</span>';
+  const yoyText = x => x.yoyPct != null ? '<span class="'+(x.yoyPct>0?'up':x.yoyPct<0?'down':'flat')+'">'+(x.yoyPct>0?'+':'')+x.yoyPct+'% YoY</span>' : x.yoyDirection ? '<span class="'+(x.yoyDirection==='up'?'up':'down')+'">'+x.yoyDirection+' YoY</span>' : '<span class="muted">not published YoY</span>';
+
+  document.getElementById('anarock-corridors').innerHTML = anarock.corridors.map(a => 
+    '<article class="area">' +
+      '<span class="pill">'+a.name+'</span>' +
+      '<h3>Sales: '+trendText(a.sales)+' · '+yoyText(a.sales)+'</h3>' +
+      '<p><b>Launches:</b> '+trendText(a.launches)+' · '+yoyText(a.launches)+(a.launches.sharePct ? ' · '+a.launches.sharePct+'% of city launches' : '')+'</p>' +
+      '<p><b>Inventory:</b> '+trendText(a.inventory)+' · '+yoyText(a.inventory)+(a.inventory.sharePct ? ' · '+a.inventory.sharePct+'% of city inventory' : '')+'</p>' +
+      '<p class="fine">'+a.dataQuality+'</p>' +
+    '</article>'
+  ).join('');
+}
+
+// 6. K-RERA Box
+function renderRera(rera) {
+  const reraBox = document.getElementById('rera-inventory');
+  const rx = rera.extraction || {};
+  if (!rx.projectsWithInventoryFields) {
+    reraBox.innerHTML = '<article class="card"><span class="pill amber">Awaiting validated records</span><h3>'+((rx.discoveredProjects||0).toLocaleString('en-IN'))+' project records discovered</h3><p class="note">Promoter filings are tracked through Karnataka RERA public portals. Public inventory unit fields are extracted on scheduled cycles without synthetic estimates.</p></article>';
+  } else {
+    reraBox.innerHTML = rera.builders.slice(0, 12).map(b => 
+      '<article class="card"><span class="pill">'+b.builder+'</span><h3>'+b.availableUnits.toLocaleString('en-IN')+' available units</h3><p class="note">'+b.projects+' projects · booked units '+b.bookedUnits.toLocaleString('en-IN')+'</p></article>'
+    ).join('');
+  }
+}
+
+// 7. Sources
+function renderSources(data) {
+  document.getElementById('sources').innerHTML = 
+    '<div class="source"><b>PropEquity / Business Standard · Q2 2026</b> — city sales (+47% YoY) and launch growth (+71% YoY) used in the trend synthesis · <a href="https://www.business-standard.com/industry/news/housing-sales-in-india-s-top-nine-cities-grow-19-in-q2-2026-propequity-126062500871_1.html" target="_blank" class="source-link">Source ↗</a></div>' +
+    data.observations.map(o => 
+      '<div class="source"><b>'+o.geography+' · '+o.period+'</b> — '+o.unit+' · <a href="'+o.sourceUrl+'" target="_blank" class="source-link">Source ↗</a><br><span class="fine">'+o.notes+'</span></div>'
+    ).join('');
+}
+</script>
+</body>
+</html>

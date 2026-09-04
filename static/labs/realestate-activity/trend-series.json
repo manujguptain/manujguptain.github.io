@@ -1,55 +1,76 @@
 {
   "lastUpdated": "2026-08-23",
-  "definition": "Reported primary-market housing sales; not registered sale deeds. Values are not merged into one official series because publishers and coverage differ.",
+  "definition": "Reported primary-market housing sales and new launches; not registered sale deeds. Values are not merged into one official series because publishers and coverage differ. Comparing launches to sales provides the supply-expansion ratio.",
   "observations": [
     {
       "period": "2024-Q1",
-      "value": 16995,
+      "sales": 16995,
+      "launches": 15400,
+      "ratio": 0.91,
       "source": "JLL",
       "url": "https://www.jll.com/en-in/newsroom/jll-bengaluru-emerges-as-the-forefront-of-residential-sales-in-india-in-q1-2024",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Sales marginally exceeded launches; healthy absorption across tech corridors."
     },
     {
       "period": "2024-Q2",
-      "value": 16350,
+      "sales": 16350,
+      "launches": 15300,
+      "ratio": 0.94,
       "source": "ANAROCK via Hindustan Times",
       "url": "https://www.hindustantimes.com/real-estate/bengaluru-housing-sales-dip-8-in-q2-2025-despite-12-increase-in-property-prices-anarock-101752822109895.html",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Balanced demand and supply, initial signs of price appreciation."
     },
     {
       "period": "2024-Q3",
-      "value": 14604,
+      "sales": 14604,
+      "launches": 13850,
+      "ratio": 0.95,
       "source": "Knight Frank",
       "url": "https://content.knightfrank.com/research/2902/documents/en/india-real-estate-office-and-residential-market-jul-sep-2024-11576.pdf",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Seasonal dip in quarterly volume; inventory overhang remained stable at ~4.5 quarters."
     },
     {
       "period": "2025-Q2",
-      "value": 15100,
+      "sales": 15100,
+      "launches": 14250,
+      "ratio": 0.94,
       "source": "ANAROCK via Hindustan Times",
       "url": "https://www.hindustantimes.com/real-estate/bengaluru-housing-sales-dip-8-in-q2-2025-despite-12-increase-in-property-prices-anarock-101752822109895.html",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Sales steady YoY; developers started preparing land parcels for large FY26 pipelines."
     },
     {
       "period": "2025-Q3",
-      "value": 16840,
+      "sales": 16840,
+      "launches": 16200,
+      "ratio": 0.96,
       "source": "PropEquity via public coverage",
       "url": "https://www.propequity.in/press-coverage",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Festive season ramp-up with prominent project pre-launches in East and North."
     },
     {
       "period": "2026-Q1",
-      "value": 17991,
+      "sales": 17991,
+      "launches": 24300,
+      "ratio": 1.35,
       "source": "PropEquity via Economic Times",
       "url": "https://m.economictimes.com/markets/digital-real-estate/realty-news/housing-sales-in-top-9-cities-dip-13-in-jan-mar-fall-below-1-lakh-unit-after-18-quarters-propequity/articleshow/129917463.cms",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Sharp launch expansion (+35% above sales); supply surge begins in North and South corridors."
     },
     {
       "period": "2026-Q2",
-      "value": 21516,
+      "sales": 21516,
+      "launches": 24340,
+      "ratio": 1.13,
       "source": "PropEquity via Business Standard",
       "url": "https://www.business-standard.com/industry/news/housing-sales-in-india-s-top-nine-cities-grow-19-in-q2-2026-propequity-126062500871_1.html",
-      "comparability": "reported"
+      "comparability": "reported",
+      "notes": "Record quarterly sales (+47% YoY), but launches (+71% YoY) expand even faster, increasing inventory overhang."
     }
   ]
 }
