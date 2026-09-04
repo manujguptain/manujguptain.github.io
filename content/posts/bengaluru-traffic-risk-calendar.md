@@ -6,7 +6,8 @@ comments: true
 Summary: "An experiment using public historical traffic patterns, holidays, long weekends, weather and area-specific peak timings to estimate when Bengaluru roads may be easier or harder than usual."
 categories: ["AI", "Mobility", "Experiments"]
 tags: ["bengaluru", "traffic", "mobility", "poc"]
-aliases: ["/lab/bengaluru-traffic-risk-calendar/"]
+url: "/notes/bengaluru-traffic-risk-calendar/"
+aliases: ["/posts/bengaluru-traffic-risk-calendar/", "/lab/bengaluru-traffic-risk-calendar/"]
 ---
 
 Can public information be combined into a simple calendar that helps people decide **when** to travel in Bengaluru?
