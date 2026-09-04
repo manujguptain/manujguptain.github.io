@@ -6,6 +6,8 @@ comments: true
 summary: "Three current inputs to an Indian IT scenario-mapping experiment: H-1B and family mobility, AI-led employment uncertainty, and Japanese GCC growth."
 categories: ["Indian IT", "AI", "GCCs"]
 tags: ["h-1b", "ai", "gcc", "japan", "indian-it"]
+url: "/notes/indian-it-h1b-ai-japanese-gccs/"
+aliases: ["/posts/indian-it-h1b-ai-japanese-gccs/"]
 ---
 
 I have been reading about a few developments that may affect Indian IT. They are not the complete picture, but they are useful inputs into a small scenario-mapping experiment I am building.
