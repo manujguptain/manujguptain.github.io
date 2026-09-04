@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "0.1",
+  "modelVersion": "illustrative-0.1",
+  "description": "Demonstration Indian IT causal model. Coefficients are illustrative, not empirically validated.",
+  "geography": "India",
+  "horizons": ["short", "medium", "long"],
+  "transforms": ["linear", "logistic", "threshold", "saturating", "step", "inverse"],
+  "inputs": ["aiSpend", "adoption", "productivity", "pricing", "reskilling", "capability", "gdp", "insourcing"],
+  "feedbackLoops": [],
+  "edges": [
+    {"source":"aiSpend","target":"integration","polarity":"positive","weight":1.35,"lag":0,"confidence":0.62},
+    {"source":"adoption","target":"integration","polarity":"positive","weight":0.48,"lag":1,"confidence":0.58},
+    {"source":"reskilling","target":"capacity","polarity":"positive","weight":0.70,"lag":2,"confidence":0.55},
+    {"source":"capability","target":"capacity","polarity":"positive","weight":0.62,"lag":1,"confidence":0.60},
+    {"source":"insourcing","target":"captured","polarity":"negative","weight":0.18,"lag":1,"confidence":0.49}
+  ]
+}

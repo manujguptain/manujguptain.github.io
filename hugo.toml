@@ -12,8 +12,7 @@ theme = 'PaperMod'
   ShowSearch = false
 
   
-  # Both "Lab" and "Journal" appear on the homepage feed
-  mainSections = ["posts", "lab"] 
+  mainSections = ["posts"]
 
   # --- HOMEPAGE HERO SECTION ---
   [params.homeInfoParams]
@@ -45,9 +44,9 @@ R&D Leader and Program Manager. I focus on the discipline of delivery—taking c
   weight = 10
 
 [[menu.main]]
-  identifier = "lab"
-  name = "Lab"
-  url = "/lab/"
+  identifier = "labs"
+  name = "Labs"
+  url = "/labs/"
   weight = 20
 
 
@@ -58,9 +57,9 @@ R&D Leader and Program Manager. I focus on the discipline of delivery—taking c
    weight = 40
 
 [[menu.main]]
-  identifier = "Notes"
+  identifier = "notes"
   name = "Notes"
-  url = "/posts/"
+  url = "/notes/"
   weight = 50
 
 [[menu.main]]

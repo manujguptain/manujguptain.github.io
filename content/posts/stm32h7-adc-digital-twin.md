@@ -6,6 +6,7 @@ comments: true
 summary: "Before you spin a PCB, you should know whether your hardware choices will meet your accuracy targets. Here is a look at how I used AI to rapidly build a digital twin of the STM32H7 ADC to visualize these constraints."
 categories: ["Embedded Systems", "AI Prototyping"]
 tags: ["stm32", "digital-twin", "metrology", "simulation", "gemini"]
+aliases: ["/lab/stm32h7-adc-digital-twin/"]
 ---
 
 Before you spin a PCB or write a line of firmware, you should know whether your hardware choices will meet your accuracy targets. For industrial metering, this is not a nice-to-have—it is the difference between a design that passes certification and one that doesn’t.
@@ -98,4 +99,4 @@ The fact that we can now conceptualize, draft, and spin up a complex visual simu
 
 ---
 
-### [Try the Live ADC Simulator →](/tools/stm32h7-adc-simulator)
+### [Try the Live ADC Simulator →](/labs/stm32h7-adc-simulator/)

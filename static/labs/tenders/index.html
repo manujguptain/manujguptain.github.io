@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>India Technology Tender Intelligence | ManujG AI Labs</title>
+  <meta name="description" content="Track India technology tenders across software, AI, cybersecurity, cloud, electronics and digital transformation with source-linked public procurement data.">
+  <link rel="canonical" href="https://manujg.com/tenders/">
+  <meta property="og:title" content="India Technology Tender Intelligence">
+  <meta property="og:description" content="Source-linked technology tender discovery for Indian public procurement.">
+  <meta property="og:url" content="https://manujg.com/tenders/">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"India Technology Tender Intelligence","url":"https://manujg.com/tenders/","description":"Source-linked technology tender discovery for Indian public procurement.","applicationCategory":"BusinessApplication","operatingSystem":"Web"}
+  </script>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">ManujG AI Labs</p>
+      <h1>India Technology Tender Intelligence</h1>
+      <p class="lede">A source-linked starting point for technology opportunities in Indian public procurement.</p>
+      <p class="trust">Data is collected from official procurement sources. Always verify deadlines, eligibility and tender documents on the official listing.</p>
+    </header>
+    <section class="controls" aria-label="Tender filters">
+      <label>Search <input id="search" type="search" placeholder="software, AI, cybersecurity…"></label>
+      <label>Category <select id="category"><option value="">All categories</option></select></label>
+      <label>Status <select id="status"><option value="">All statuses</option><option value="active">Active</option></select></label>
+    </section>
+    <p id="state" class="state">Loading tender data…</p>
+    <p id="health" class="health" hidden></p>
+    <section id="results" class="results" aria-live="polite"></section>
+    <footer>Official source links are provided for verification. This service is an independent research tool and is not affiliated with the Government of India.</footer>
+  </main>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

@@ -2,17 +2,38 @@
 title: "The Lab"
 summary: "Personal projects and experiments."
 layout: "list"
-url: "/lab/"
+url: "/labs/"
+aliases: ["/lab/", "/tools/"]
 ---
 
-<div style="text-align: right; margin-bottom: 2rem; font-size: 0.9em;">
-  <a href="/tools/" style="text-decoration: none; border-bottom: 1px solid currentColor; opacity: 0.8; transition: opacity 0.2s;">View Tools & Applications &rarr;</a>
-</div>
+Labs is where the interactive projects and experiments live. Notes about them are published separately in **[Notes](/notes/)**.
 
-I have always liked to build things.
+### [Indian IT Scenario Simulator](/labs/Scenario_Simulator/)
 
-The Lab is where I keep my projects and experiments. It is a space for me to try out new ideas and see how things work firsthand. It might be a technical challenge, smart home automation, or just something I am curious about at the moment.
+**Type:** Scenario-mapping experiment · **Status:** MVP
 
-I do this because I enjoy the process of figuring things out. It keeps me sharp, it’s fun, and it gives me a place to share what I am currently tinkering with.
+An interactive model for exploring how evidence and assumptions change the probabilities of expansion, compression and mixed transition in Indian IT.
 
-Everything here is a work in progress.
+### [Bengaluru Traffic-Risk Calendar](/labs/bengaluru-traffic/)
+
+**Type:** Mobility experiment · **Status:** POC
+
+A calendar view of likely traffic conditions using holiday and historical-pattern inputs.
+
+### [Bengaluru Real Estate Activity](/labs/realestate-activity/)
+
+**Type:** Property-market experiment · **Status:** POC
+
+An evidence-led view of Bengaluru market activity.
+
+### [India Technology Tender Intelligence](/labs/tenders/)
+
+**Type:** Data product experiment · **Status:** MVP
+
+Daily public-technology tender discovery and filtering.
+
+### [Passport Photo Editor](/labs/passport-photo/)
+
+**Type:** Browser utility · **Status:** Live
+
+A private, browser-based passport-photo editor.

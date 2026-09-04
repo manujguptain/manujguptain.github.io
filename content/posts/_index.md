@@ -1,8 +1,10 @@
 ---
 title: "Notes"
 description: "Observations on leadership, resilient systems, and navigating transitions."
+url: "/notes/"
+aliases: ["/posts/"]
 ---
 
-While the **[Lab](/lab/)** is where I document technical builds and automations, this space is broader. 
+Notes are where I write about things I am reading, building, observing or trying to understand. That includes technology, engineering, leadership, systems and the changes around us.
 
-These are my notes on leadership, the discipline of delivery, and the mechanics of resilient systems—whether we are talking about engineering environments, organizational design, or the transitions we navigate ourselves.
+Interactive projects live in **[Labs](/labs/)**. A Note can link to the relevant Lab when there is one.

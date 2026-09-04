@@ -4,6 +4,7 @@ date: 2026-02-20
 draft: false
 comments: true
 tags: ["automation", "google-apps-script", "productivity", "gemini-ai", "google-tasks", "power-automate"]
+aliases: ["/lab/google-apps-script-automation/"]
 ---
 
 Push notifications just don't work for important tasks. If you are driving, running errands, or simply focused on something else, it is way too easy to swipe an alert away and completely forget about it. That might be fine for a casual reminder to water the plants, but for things with hard deadlines—like paying a utility bill or making a time-sensitive phone call—missing a notification is a real problem.

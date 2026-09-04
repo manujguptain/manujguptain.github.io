@@ -3,6 +3,7 @@ title: "Passport Photo Editor"
 date: 2026-03-22
 description: "Free, 100% browser-based passport photo editor. Crop, adjust, and print to any international standard — no uploads, no cost, completely private."
 layout: "single"
+aliases: ["/tools/passport-photo-editor/"]
 ---
 
 I got tired of paying for something that a browser can do perfectly well. So I vibe-coded this up — **free for everyone, forever**.
@@ -20,7 +21,7 @@ Everything runs locally in your browser. No photo ever leaves your device. No ac
 * **Download options** — single photo or full print-ready sheet. Choose JPEG (recommended for passport submissions) or your original format.
 * **100% private** — all processing happens in your browser. Nothing is uploaded anywhere.
 
-> **[→ Launch the Passport Photo Editor](https://manujg.com/tools/passport-photo/passport-photo-editor.html)**
+> **[→ Launch the Passport Photo Editor](/labs/passport-photo/)**
 
 ---
 

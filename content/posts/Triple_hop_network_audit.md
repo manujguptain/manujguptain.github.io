@@ -4,6 +4,7 @@ date: 2026-03-30
 tags: ["python", "networking", "vibe-coding", "labs"]
 summary: "My connection kept dropping — short blips, 5 to 50 seconds. Too short for a speed test to catch. So I built something that could."
 draft: false
+aliases: ["/lab/triple_hop_network_audit/"]
 ---
 
 ## The Problem
